@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Account Lookup</title>
     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -157,6 +159,52 @@
             padding-left: 0 !important;  
         }
 
+        /* ====================================================================== */
+/* 4. RESPONSIVE DESIGN: MEDIA QUERIES */
+/* ====================================================================== */
+
+@media (max-width: 768px) { /* Trigger stacking on tablets and phones */
+    .container {
+        /* Reduce padding on the main box */
+        padding: 30px 20px;
+    }
+
+    /* Target the container holding the logo, label, and input */
+    #input-group {
+        /* Change from horizontal row to vertical column stacking */
+        flex-direction: column;
+        align-items: center; 
+        width: 100%;
+    }
+    
+    /* Center the logo when stacked and remove right margin */
+    #site-logo {
+        margin: 0 auto 10px auto; 
+    }
+
+    /* Adjust the label to be full width when stacked */
+    #input-group label {
+        display: block;
+        text-align: center;
+        margin-right: 0; 
+        margin-bottom: 5px;
+    }
+
+    /* Ensure input box uses the full width available */
+    #accountNumber {
+        width: 100%;
+        box-sizing: border-box; 
+        margin-bottom: 15px; 
+    }
+
+    /* Ensure the button is full width on small screens */
+    button {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+
         #modal-content ul li {
             /* Kills vertical space between items */
             margin: 0 !important;        
@@ -169,10 +217,7 @@
         }
     </style>
 </head>
-
 <body>
-
-
 
 <div class="container">
     <h1>Water Bill Inquiry</h1>
@@ -204,7 +249,6 @@
 // ======================================================================
 // JAVASCRIPT LOGIC
 // ======================================================================
-
 
 // 🚨🚨🚨 CRITICAL: REPLACE THIS URL WITH YOUR DEPLOYED WEB APP URL 🚨🚨🚨
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxqw1ujDkYy5rzDQc_sITyVdB5D4TVPJE7DLs1oQhQmOp2VE_MAXnf4x6f_WgKrxqwO/exec'; 
