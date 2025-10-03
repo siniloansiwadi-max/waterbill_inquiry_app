@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Lookup</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ====================================================================== */
+        /* 1. BASE STYLING, GRADIENT, AND CENTERING */
+        /* ====================================================================== */
+        body { 
+            /* Gradient: Blue transitioning to yellow */
+            background: linear-gradient(135deg, #00BFFF, #FFD700); 
+            min-height: 100vh; 
+            margin: 0;
+            padding: 0;
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            font-family: 'Montserrat', sans-serif; 
+            color: #333; 
+        }
+        
+        .container {
+            /* Input box container */
+            background-color: rgba(255, 255, 255, 0.95); 
+            padding: 40px 60px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 25px;
+        }
+
+        input, button { 
+            padding: 12px 20px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Loading Animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .spinner {
+            border: 4px solid #f3f3f3; 
+            border-top: 4px solid #007bff; 
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        #loading-message {
+            margin-top: 15px;
+            color: #007bff;
+            font-weight: bold;
+            display: none; 
+        }
+
+
+        /* --- NEW STYLING FOR ALIGNING LOGO AND INPUT --- */
+        #input-group {
+            /* Use Flexbox to put contents side-by-side */
+        display: flex;
+        align-items: center; /* Vertically align items in the middle */
+        justify-content: center; /* Center the group horizontally */
+        margin-bottom: 20px; /* Space below the logo/input row */
+        }
+
+        /* Redefine logo styles for the new inline position */
+        #site-logo {
+        width: 40px; 
+        height: 40px;
+        /* Add space to the right of the logo */
+        margin-right: 15px; 
+        /* Ensure the logo aligns cleanly with the text */
+        vertical-align: middle; 
+        }
+
+        /* Adjust the label to be inline or block */
+        #input-group label {
+        margin-right: 10px;
+        }
+
+        /* ====================================================================== */
+        /* 2. MODAL BOX AND POP-UP STYLING */
+        /* ====================================================================== */
+        #modal-container {
+            position: fixed; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent overlay */
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; 
+        }
+
+        /* The Modal Box (Container for content) */
+        #modal-content {
+            background-color: white;
+            padding: 20px; /* Space inside the modal box */
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            
+            max-width: 400px; /* Final desired max-width */
+            width: 90%;
+            
+            text-align: left;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* The Yellow 'New Inquiry' Button */
+        #new-inquiry-button {
+            background-color: #FFD700;
+            color: #333;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            float: right;
+            margin-top: 15px;
+        }
+        
+        /* ====================================================================== */
+        /* 3. VERTICAL GAP FIXES (The source of our headaches!) */
+        /* ====================================================================== */
+        #modal-content ul {
+            /* Kills vertical space above/below the entire list */
+            margin: 0 !important;        
+            padding-left: 0 !important;  
+        }
+
+        #modal-content ul li {
+            /* Kills vertical space between items */
+            margin: 0 !important;        
+            padding: 0 !important;       
+            line-height: 1.1; /* Tightens the line height to reduce vertical gap */
+        }
+        
+        #modal-result h3 {
+            margin-top: 0; /* Remove space above the results title */
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+<div class="container">
+    <h1>Water Bill Inquiry</h1>
+    
+    <div id="input-group">
+        <img src="siwadilogo.png" alt="Company Logo" id="site-logo">
+        
+        <label for="accountNumber">Enter Account Number:</label>
+        <input type="text" id="accountNumber" placeholder="e.g., 011-101-001 or 011101001">
+    </div>
+    
+    <button onclick="fetchAccountData()">Search</button>
+
+    <div id="loading-message">
+        <div class="spinner"></div> Please wait...
+    </div>
+</div>
+
+<div id="modal-container">
+    <div id="modal-content">
+        <div id="modal-result">
+            </div>
+        
+        <button id="new-inquiry-button" onclick="closeModal()">New Inquiry</button>
+    </div>
+</div>
+    
+<script>
+// ======================================================================
+// JAVASCRIPT LOGIC
+// ======================================================================
+
+
+// 🚨🚨🚨 CRITICAL: REPLACE THIS URL WITH YOUR DEPLOYED WEB APP URL 🚨🚨🚨
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxqw1ujDkYy5rzDQc_sITyVdB5D4TVPJE7DLs1oQhQmOp2VE_MAXnf4x6f_WgKrxqwO/exec'; 
+
+// 🎯 DISPLAY MAPPING: 
+// [Key] is the EXACT header name from your Google Sheet (Case-Sensitive)
+// [Value] is the friendly label you want to show in the modal.
+const DISPLAY_MAP = {
+    'Account No.': 'Account Number', 
+    'Name': 'Name',
+    'Address': 'Billing Address', 
+    'No.': 'Meter Number',  
+    'BALANCE': 'Water Bill',
+    'AROBALANCE': 'S.C. / Materials', 
+    'Total': 'Total Amount Due',          
+    'Due Date': 'Payment Due Date',       
+    'Status for App': 'Account Status'            
+};
+
+// Get references to DOM elements
+const loadingMessage = document.getElementById('loading-message');
+const inputElement = document.getElementById('accountNumber');
+const modalContainer = document.getElementById('modal-container');
+const modalResult = document.getElementById('modal-result');
+
+// --- Helper function to close the pop-up ---
+function closeModal() {
+    modalContainer.style.display = 'none';
+    modalResult.innerHTML = ''; 
+    inputElement.value = ''; 
+    inputElement.focus();
+}
+
+// --- Main Fetch Function ---
+async function fetchAccountData() {
+    
+    // 1. Get raw input from the user and clean it
+    let rawAccountNumber = inputElement.value.trim();
+    
+    // 2. Normalize the Account Number: Remove ALL hyphens, spaces, and dashes
+    const searchKey = rawAccountNumber.replace(/[\s\-\–]/g, ''); 
+    
+    // Check if the cleaned input is empty
+    if (!searchKey) {
+        alert("Please enter an account number.");
+        return;
+    }
+    
+    loadingMessage.style.display = 'block';
+
+    // 3. Use the standardized searchKey for the API call
+    const apiUrl = `${WEB_APP_URL}?account=${searchKey}`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        // Use the original raw input for the display title, as it looks cleaner
+        let resultTitle = `Results for Account: ${rawAccountNumber}`;
+        let resultHtml = '';
+
+        if (data.error) {
+            resultTitle = `Search Failed for ${rawAccountNumber}`;
+            // The API search will use the clean 'searchKey', but the error message will be shown
+            resultHtml = `<p style="color: red; font-weight: bold;">Error: ${data.error} (Searched for: ${searchKey})</p>`; 
+        } else {
+            resultHtml = formatResult(data); 
+        }
+
+        // Inject content and show modal
+        modalResult.innerHTML = `
+            <h3 style="color: #333;">${resultTitle}</h3>
+            <div style="border: 1px solid #ccc; padding: 10px; background-color: #f7f7f7; border-radius: 5px;">
+                ${resultHtml}
+            </div>
+        `;
+        modalContainer.style.display = 'flex'; 
+
+    } catch (error) {
+        // Handle network/fetch errors
+        if (modalContainer) {
+             modalResult.innerHTML = `<h3>Network Error</h3><p>Could not connect to the API. Check console for details.</p>`;
+             modalContainer.style.display = 'flex';
+        }
+        console.error('Fetch error:', error);
+    } finally {
+        loadingMessage.style.display = 'none';
+    }
+}
+
+// --- New Helper Function for Name Masking ---
+function maskName(fullName) {
+    if (!fullName || typeof fullName !== 'string') return '';
+    
+    // Convert to uppercase for consistency before processing
+    const nameParts = fullName.toUpperCase().trim().split(/\s+/);
+    
+    let maskedParts = nameParts.map((part, index) => {
+        if (part.length === 0) {
+            return '';
+        }
+        
+        // Masking logic:
+        if (index === 0) {
+            // First word (First Name): Keep first two letters, mask the rest
+            const visiblePart = part.substring(0, 2);
+            const maskedPart = part.substring(2).replace(/[A-Z]/g, '*');
+            return visiblePart + maskedPart;
+        } else {
+            // Subsequent words (Middle/Last Names): Keep first letter, mask the rest
+            const visiblePart = part.substring(0, 1);
+            const maskedPart = part.substring(1).replace(/[A-Z]/g, '*');
+            return visiblePart + maskedPart;
+        }
+    });
+
+    return maskedParts.join(' ');
+}
+
+
+// --- Formatter Function (Uses the new maskName function) ---
+function formatResult(data) {
+    let output = '<ul style="list-style-type: none;">'; 
+    
+    for (const sheetHeader in DISPLAY_MAP) {
+        if (data.hasOwnProperty(sheetHeader)) {
+            let value = String(data[sheetHeader]).replace(/"/g, ''); 
+            const displayLabel = DISPLAY_MAP[sheetHeader];
+
+            // 1. Check if the field is the Name field to apply masking
+            if (displayLabel.toUpperCase() === 'NAME' || 
+                displayLabel.toUpperCase() === 'CUSTOMER NAME') {
+                
+                value = maskName(value);
+            }
+            
+            // 2. Apply Date Formatting
+            if (displayLabel.includes('Date') && value) { 
+                const dateObj = new Date(value); 
+                if (!isNaN(dateObj.getTime())) { 
+                    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                    const day = String(dateObj.getDate()).padStart(2, '0');
+                    const year = String(dateObj.getFullYear()).slice(-2);
+                    value = `${month}-${day}-${year}`;
+                }
+            }
+            
+            // 3. Apply Currency Formatting
+            if (displayLabel.includes('Charge') || displayLabel.includes('Amount')) {
+                 value = `₱ ${parseFloat(value).toFixed(2)}`;
+            }
+
+            // 4. Append the list item
+            output += `
+                <li>
+                    <strong style="color: #007bff;">${displayLabel}:</strong> ${value}
+                </li>
+            `;
+        }
+    }
+    output += '</ul>';
+    return output;
+}
+
+</script>
+
+</body>
+</html>
