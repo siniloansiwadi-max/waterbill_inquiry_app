@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Account Lookup</title>
+    <title>Water Bill Inquiry</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -13,7 +13,6 @@
         /* 1. BASE STYLING, GRADIENT, AND CENTERING */
         /* ====================================================================== */
         body { 
-            /* Gradient: Blue transitioning to yellow */
             background: linear-gradient(135deg, #00BFFF, #FFD700); 
             min-height: 100vh; 
             margin: 0;
@@ -27,7 +26,7 @@
         }
         
         .container {
-            /* Input box container */
+            /* Main input box container */
             background-color: rgba(255, 255, 255, 0.95); 
             padding: 40px 60px;
             border-radius: 10px;
@@ -82,29 +81,23 @@
             display: none; 
         }
 
-
-        /* --- NEW STYLING FOR ALIGNING LOGO AND INPUT --- */
+        /* --- LOGO AND INPUT ALIGNMENT --- */
         #input-group {
-            /* Use Flexbox to put contents side-by-side */
-        display: flex;
-        align-items: center; /* Vertically align items in the middle */
-        justify-content: center; /* Center the group horizontally */
-        margin-bottom: 20px; /* Space below the logo/input row */
+            display: flex;
+            align-items: center; 
+            justify-content: center; 
+            margin-bottom: 20px; 
         }
 
-        /* Redefine logo styles for the new inline position */
         #site-logo {
-        width: 40px; 
-        height: 40px;
-        /* Add space to the right of the logo */
-        margin-right: 15px; 
-        /* Ensure the logo aligns cleanly with the text */
-        vertical-align: middle; 
+            width: 40px; 
+            height: 40px;
+            margin-right: 15px; 
+            vertical-align: middle; 
         }
 
-        /* Adjust the label to be inline or block */
         #input-group label {
-        margin-right: 10px;
+            margin-right: 10px;
         }
 
         /* ====================================================================== */
@@ -116,28 +109,27 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent overlay */
+            background-color: rgba(0, 0, 0, 0.7); 
             display: none; 
             justify-content: center;
             align-items: center;
             z-index: 1000; 
         }
 
-        /* The Modal Box (Container for content) */
         #modal-content {
             background-color: white;
-            padding: 20px; /* Space inside the modal box */
+            padding: 20px; 
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            
-            max-width: 400px; /* Final desired max-width */
+            max-width: 400px; 
             width: 90%;
-            
             text-align: left;
             font-family: 'Montserrat', sans-serif;
+            /* Added for address wrapping */
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
-        /* The Yellow 'New Inquiry' Button */
         #new-inquiry-button {
             background-color: #FFD700;
             color: #333;
@@ -151,70 +143,80 @@
         }
         
         /* ====================================================================== */
-        /* 3. VERTICAL GAP FIXES (The source of our headaches!) */
+        /* 3. VERTICAL GAP FIXES (For clean list display) */
         /* ====================================================================== */
         #modal-content ul {
-            /* Kills vertical space above/below the entire list */
-            margin: 0 !important;        
+            margin: 0 !important; 
             padding-left: 0 !important;  
         }
 
-        /* ====================================================================== */
-/* 4. RESPONSIVE DESIGN: MEDIA QUERIES */
-/* ====================================================================== */
-
-@media (max-width: 768px) { /* Trigger stacking on tablets and phones */
-    .container {
-        /* Reduce padding on the main box */
-        padding: 30px 20px;
-    }
-
-    /* Target the container holding the logo, label, and input */
-    #input-group {
-        /* Change from horizontal row to vertical column stacking */
-        flex-direction: column;
-        align-items: center; 
-        width: 100%;
-    }
-    
-    /* Center the logo when stacked and remove right margin */
-    #site-logo {
-        margin: 0 auto 10px auto; 
-    }
-
-    /* Adjust the label to be full width when stacked */
-    #input-group label {
-        display: block;
-        text-align: center;
-        margin-right: 0; 
-        margin-bottom: 5px;
-    }
-
-    /* Ensure input box uses the full width available */
-    #accountNumber {
-        width: 100%;
-        box-sizing: border-box; 
-        margin-bottom: 15px; 
-    }
-
-    /* Ensure the button is full width on small screens */
-    button {
-        width: 100%;
-        margin-right: 0;
-    }
-}
-
-
         #modal-content ul li {
-            /* Kills vertical space between items */
-            margin: 0 !important;        
-            padding: 0 !important;       
-            line-height: 1.1; /* Tightens the line height to reduce vertical gap */
+            margin: 0 !important; 
+            padding: 0 !important; 
+            line-height: 1.1; /* Tightens the line height */
         }
         
         #modal-result h3 {
-            margin-top: 0; /* Remove space above the results title */
+            margin-top: 0; 
         }
+
+        /* ====================================================================== */
+        /* 4. RESPONSIVE DESIGN: MEDIA QUERIES */
+        /* ====================================================================== */
+
+        @media (max-width: 768px) { 
+            .container {
+                padding: 30px 20px;
+            }
+
+            #input-group {
+                /* Stack elements vertically on small screens */
+                flex-direction: column;
+                align-items: center; 
+                width: 100%;
+            }
+            
+            #site-logo {
+                margin: 0 auto 10px auto; 
+            }
+
+            #input-group label {
+                display: block;
+                text-align: center;
+                margin-right: 0; 
+                margin-bottom: 5px;
+            }
+
+            #accountNumber {
+                width: 100%;
+                box-sizing: border-box; 
+                margin-bottom: 15px; 
+            }
+
+            button {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+
+    /* --- Styling for the New Services Button --- */
+    #services-button {
+    /* Base color matching your scheme */
+    background-color: #FFD700; 
+    color: #333; /* Dark text for contrast */
+    padding: 12px 25px;
+    border: 2px solid #e0c800; /* Subtle border */
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    transition: background-color 0.3s;
+    }
+
+    #services-button:hover {
+    background-color: #e0c800;
+    }
+    
     </style>
 </head>
 <body>
@@ -226,13 +228,20 @@
         <img src="siwadilogo.png" alt="Company Logo" id="site-logo">
         
         <label for="accountNumber">Enter Account Number:</label>
-        <input type="text" id="accountNumber" placeholder="e.g., 011-101-001 or 011101001">
+        <input type="text" 
+               id="accountNumber" 
+               placeholder="e.g., 011-101-001 or 011101001"
+               autofocus> 
     </div>
     
     <button onclick="fetchAccountData()">Search</button>
 
     <div id="loading-message">
         <div class="spinner"></div> Please wait...
+    </div>
+    
+    <div id="session-inquiry-count" style="margin-top: 20px; font-weight: bold; color: #555;">
+        Inquiries this Session: 0
     </div>
 </div>
 
@@ -244,18 +253,26 @@
         <button id="new-inquiry-button" onclick="closeModal()">New Inquiry</button>
     </div>
 </div>
+
+</div> 
+<div class="new-button-container" style="margin-top: 25px;">
+    <a href="services.html">
+        <button id="services-button">Siwadi Services</button>
+    </a>
+</div>
     
 <script>
 // ======================================================================
 // JAVASCRIPT LOGIC
 // ======================================================================
 
-// 🚨🚨🚨 CRITICAL: REPLACE THIS URL WITH YOUR DEPLOYED WEB APP URL 🚨🚨🚨
+// 1. GLOBAL VARIABLE: Initial counter that tracks searches in the current session.
+let sessionCounter = 0; 
+
+// 🚨🚨🚨 CRITICAL: PASTE YOUR DEPLOYED WEB APP URL HERE 🚨🚨🚨
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxqw1ujDkYy5rzDQc_sITyVdB5D4TVPJE7DLs1oQhQmOp2VE_MAXnf4x6f_WgKrxqwO/exec'; 
 
-// 🎯 DISPLAY MAPPING: 
-// [Key] is the EXACT header name from your Google Sheet (Case-Sensitive)
-// [Value] is the friendly label you want to show in the modal.
+// 🎯 DISPLAY MAPPING: (Use your exact sheet headers on the left)
 const DISPLAY_MAP = {
     'Account No.': 'Account Number', 
     'Name': 'Name',
@@ -273,6 +290,8 @@ const loadingMessage = document.getElementById('loading-message');
 const inputElement = document.getElementById('accountNumber');
 const modalContainer = document.getElementById('modal-container');
 const modalResult = document.getElementById('modal-result');
+const counterElement = document.getElementById('session-inquiry-count');
+const searchButton = document.querySelector('button'); // Reference for disabling
 
 // --- Helper function to close the pop-up ---
 function closeModal() {
@@ -282,83 +301,22 @@ function closeModal() {
     inputElement.focus();
 }
 
-// --- Main Fetch Function ---
-async function fetchAccountData() {
-    
-    // 1. Get raw input from the user and clean it
-    let rawAccountNumber = inputElement.value.trim();
-    
-    // 2. Normalize the Account Number: Remove ALL hyphens, spaces, and dashes
-    const searchKey = rawAccountNumber.replace(/[\s\-\–]/g, ''); 
-    
-    // Check if the cleaned input is empty
-    if (!searchKey) {
-        alert("Please enter an account number.");
-        return;
-    }
-    
-    loadingMessage.style.display = 'block';
-
-    // 3. Use the standardized searchKey for the API call
-    const apiUrl = `${WEB_APP_URL}?account=${searchKey}`;
-
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        // Use the original raw input for the display title, as it looks cleaner
-        let resultTitle = `Results for Account: ${rawAccountNumber}`;
-        let resultHtml = '';
-
-        if (data.error) {
-            resultTitle = `Search Failed for ${rawAccountNumber}`;
-            // The API search will use the clean 'searchKey', but the error message will be shown
-            resultHtml = `<p style="color: red; font-weight: bold;">Error: ${data.error} (Searched for: ${searchKey})</p>`; 
-        } else {
-            resultHtml = formatResult(data); 
-        }
-
-        // Inject content and show modal
-        modalResult.innerHTML = `
-            <h3 style="color: #333;">${resultTitle}</h3>
-            <div style="border: 1px solid #ccc; padding: 10px; background-color: #f7f7f7; border-radius: 5px;">
-                ${resultHtml}
-            </div>
-        `;
-        modalContainer.style.display = 'flex'; 
-
-    } catch (error) {
-        // Handle network/fetch errors
-        if (modalContainer) {
-             modalResult.innerHTML = `<h3>Network Error</h3><p>Could not connect to the API. Check console for details.</p>`;
-             modalContainer.style.display = 'flex';
-        }
-        console.error('Fetch error:', error);
-    } finally {
-        loadingMessage.style.display = 'none';
-    }
-}
-
-// --- New Helper Function for Name Masking ---
+// --- Helper function for Name Masking ---
 function maskName(fullName) {
     if (!fullName || typeof fullName !== 'string') return '';
     
-    // Convert to uppercase for consistency before processing
     const nameParts = fullName.toUpperCase().trim().split(/\s+/);
     
     let maskedParts = nameParts.map((part, index) => {
-        if (part.length === 0) {
-            return '';
-        }
+        if (part.length === 0) return '';
         
-        // Masking logic:
         if (index === 0) {
-            // First word (First Name): Keep first two letters, mask the rest
+            // First Name: JUAN -> JU**
             const visiblePart = part.substring(0, 2);
             const maskedPart = part.substring(2).replace(/[A-Z]/g, '*');
             return visiblePart + maskedPart;
         } else {
-            // Subsequent words (Middle/Last Names): Keep first letter, mask the rest
+            // Last Names: DELA -> D***
             const visiblePart = part.substring(0, 1);
             const maskedPart = part.substring(1).replace(/[A-Z]/g, '*');
             return visiblePart + maskedPart;
@@ -369,7 +327,8 @@ function maskName(fullName) {
 }
 
 
-// --- Formatter Function (Uses the new maskName function) ---
+
+// --- Formatter Function (The final, robust version) ---
 function formatResult(data) {
     let output = '<ul style="list-style-type: none;">'; 
     
@@ -413,6 +372,63 @@ function formatResult(data) {
     return output;
 }
 
+
+// --- Main Fetch Function ---
+async function fetchAccountData() {
+    
+    let rawAccountNumber = inputElement.value.trim();
+    const searchKey = rawAccountNumber.replace(/[\s\-\–]/g, ''); 
+    
+    if (!searchKey) {
+        alert("Please enter an account number.");
+        return;
+    }
+    
+    // Hide old result and disable button to prevent double clicks
+    modalContainer.style.display = 'none'; 
+    loadingMessage.style.display = 'block';
+    searchButton.disabled = true; 
+
+    const apiUrl = `${WEB_APP_URL}?account=${searchKey}`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        let resultTitle = `Results for Account: ${rawAccountNumber}`;
+        let resultHtml = '';
+
+        if (data.error) {
+            resultTitle = `Search Failed for ${rawAccountNumber}`;
+            resultHtml = `<p style="color: red; font-weight: bold;">Error: ${data.error}</p>`;
+        } else {
+            // SUCCESS: Increment and update session counter
+            sessionCounter++;
+            counterElement.textContent = `Inquiries this Session: ${sessionCounter}`;
+            
+            resultHtml = formatResult(data); 
+        }
+
+        // Inject content and show modal
+        modalResult.innerHTML = `
+            <h3 style="color: #333;">${resultTitle}</h3>
+            <div style="border: 1px solid #ccc; padding: 10px; background-color: #f7f7f7; border-radius: 5px;">
+                ${resultHtml}
+            </div>
+        `;
+        modalContainer.style.display = 'flex'; 
+
+    } catch (error) {
+        if (modalContainer) {
+             modalResult.innerHTML = `<h3>Network Error</h3><p>Could not connect to the API. Check console for details.</p>`;
+             modalContainer.style.display = 'flex';
+        }
+        console.error('Fetch error:', error);
+    } finally {
+        loadingMessage.style.display = 'none';
+        searchButton.disabled = false; // Re-enable button
+    }
+}
 </script>
 
 </body>
