@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Bill Calculator</title>
+    <!-- Load the Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ====================================================================== */
+        /* 1. BASE STYLING & MOBILE RESPONSIVENESS */
+        /* ====================================================================== */
+        body { 
+            background: linear-gradient(135deg, #00BFFF, #FFD700); 
+            min-height: 100vh; 
+            margin: 0;
+            padding: 20px 10px;
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            font-family: 'Montserrat', sans-serif; 
+            color: #333; 
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95); 
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007bff;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        select, input[type="number"], button { 
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        button {
+            margin-top: 25px;
+            background-color: #007bff; 
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        .back-button {
+            display: block;
+            margin-top: 20px;
+            background-color: #FFD700;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        /* Result Area Styling */
+        #result-area {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px dashed #007bff;
+            border-radius: 8px;
+            text-align: left;
+            background-color: #e9f7ff;
+            display: none; /* Starts hidden */
+        }
+
+        #result-area h2 {
+            color: #0056b3;
+            margin-top: 0;
+            border-bottom: 1px solid #007bff;
+            padding-bottom: 10px;
+            font-size: 1.4em;
+        }
+        
+        .breakdown p {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+
+        .total-charge {
+            margin-top: 15px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #d90000;
+            border-top: 2px solid #007bff;
+            padding-top: 10px;
+        }
+
+        .charge-detail {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* Loading Indicator */
+        #loading-message {
+            margin-top: 15px;
+            color: #007bff;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="services.html" class="back-button">
+        &larr; Back to Services Menu
+    </a>
+
+    <div class="container">
+        <h1>Water Bill Estimate Calculator</h1>
+        
+        <form id="calculator-form">
+            <label for="classification">Select Classification:</label>
+            <select id="classification" required>
+                <!-- Options populated by JavaScript -->
+            </select>
+            
+            <label for="consumption">Enter Water Consumption (cu meters):</label>
+            <input type="number" id="consumption" min="0" value="10" required>
+            
+            <div id="loading-message">Calculating...</div>
+
+            <button type="submit">Calculate Bill</button>
+        </form>
+
+        <div id="result-area">
+            <!-- Detailed results will appear here -->
+        </div>
+    </div>
+
+
+    <script>
+        const RATES = [
+            // Note: The rate array order is: [11-20, 21-30, 31-40, 41-50, 51-Up]
+            { id: 'res-gov-1-2', class: 'RESIDENTIAL/GOVERNMENT', meter: '1/2"', minCharge: 200.00, rates: [21.13, 23.25, 26.00, 30.00, 34.40] },
+            { id: 'com-1-2', class: 'COMMERCIAL', meter: '1/2"', minCharge: 400.00, rates: [42.26, 46.50, 52.00, 60.00, 68.80] },
+            { id: 'com-3-4', class: 'COMMERCIAL', meter: '3/4"', minCharge: 640.00, rates: [42.26, 46.50, 52.00, 60.00, 68.80] },
+            { id: 'com-1', class: 'COMMERCIAL', meter: '1"', minCharge: 1280.00, rates: [42.26, 46.50, 52.00, 60.00, 68.80] },
+            { id: 'semi-a-1-2', class: "SEMI-COM'L. A", meter: '1/2"', minCharge: 350.00, rates: [36.98, 40.69, 45.50, 52.50, 60.20] },
+            { id: 'semi-b-1-2', class: "SEMI-COM'L. B", meter: '1/2"', minCharge: 300.00, rates: [31.70, 34.88, 39.00, 45.00, 51.60] },
+            { id: 'semi-c-1-2', class: "SEMI-COM'L. C", meter: '1/2"', minCharge: 250.00, rates: [26.41, 29.06, 32.50, 37.50, 43.00] },
+            { id: 'bulk-1-2', class: 'BULK/WHOLESALE', meter: '1/2"', minCharge: 600.00, rates: [63.39, 69.75, 78.00, 90.00, 103.20] },
+        ];
+
+        // Helper to format currency
+        const formatCurrency = (amount) => `₱ ${amount.toFixed(2)}`;
+
+        // Function to populate the classification dropdown
+        function populateClassification() {
+            const select = document.getElementById('classification');
+            select.innerHTML = '<option value="" disabled selected>--- Select Classification ---</option>';
+            
+            RATES.forEach(rate => {
+                const option = document.createElement('option');
+                option.value = rate.id;
+                option.textContent = `${rate.class} (${rate.meter})`;
+                select.appendChild(option);
+            });
+        }
+
+        // Main calculation function
+        function calculateBill(event) {
+            event.preventDefault(); // Stop form from submitting
+            
+            const selectedId = document.getElementById('classification').value;
+            const consumption = parseFloat(document.getElementById('consumption').value);
+            const resultArea = document.getElementById('result-area');
+            
+            // Clear previous results
+            resultArea.style.display = 'none';
+            resultArea.innerHTML = '';
+            
+            if (!selectedId || isNaN(consumption) || consumption < 0) {
+                resultArea.innerHTML = '<h2>Error</h2><p>Please select a classification and enter valid consumption.</p>';
+                resultArea.style.display = 'block';
+                return;
+            }
+
+            const rateData = RATES.find(r => r.id === selectedId);
+            if (!rateData) return;
+
+            let totalCommodityCharge = 0;
+            let currentConsumption = consumption;
+            const breakdown = [];
+            const minVolume = 10;
+            
+            // 1. Minimum Charge (First 10 cubic meters)
+            let currentBlockConsumption = Math.min(currentConsumption, minVolume);
+
+            breakdown.push({
+                desc: `Minimum Charge (First ${minVolume} cu meters)`,
+                volume: currentBlockConsumption,
+                rate: 'N/A',
+                charge: rateData.minCharge
+            });
+            
+            totalCommodityCharge += rateData.minCharge;
+            currentConsumption -= currentBlockConsumption;
+            
+            // 2. Excess Commodity Charges (Consumption > 10 $m^3$)
+            
+            const blocks = [
+                { start: 11, end: 20, rateIndex: 0 },
+                { start: 21, end: 30, rateIndex: 1 },
+                { start: 31, end: 40, rateIndex: 2 },
+                { start: 41, end: 50, rateIndex: 3 },
+                { start: 51, end: Infinity, rateIndex: 4 }
+            ];
+
+            let cumulativeCharge = rateData.minCharge;
+            let totalVolumeCharge = 0;
+            let blockStartVolume = minVolume; // Starts checking after the minimum volume
+
+            blocks.forEach((block, index) => {
+                if (currentConsumption > 0) {
+                    const blockVolume = block.end === Infinity ? Infinity : (block.end - block.start + 1);
+                    const consumptionInBlock = Math.min(currentConsumption, blockVolume);
+                    
+                    if (consumptionInBlock > 0) {
+                        const ratePerCubicMeter = rateData.rates[block.rateIndex];
+                        const charge = consumptionInBlock * ratePerCubicMeter;
+                        
+                        breakdown.push({
+                            desc: block.end === Infinity 
+                                ? `Commodity Charge (${blockStartVolume + 1} cu meters and Up)`
+                                : `Commodity Charge (${blockStartVolume + 1} - ${block.end} cu meters)`,
+                            volume: consumptionInBlock,
+                            rate: ratePerCubicMeter,
+                            charge: charge
+                        });
+
+                        totalVolumeCharge += charge;
+                        currentConsumption -= consumptionInBlock;
+                        blockStartVolume += consumptionInBlock;
+                    }
+                }
+            });
+
+            // 3. Final Total Calculation
+            const finalTotalBill = rateData.minCharge + totalVolumeCharge;
+
+            // 4. Display Results
+            let html = '<h2>Estimated Monthly Bill</h2>';
+            html += `<p><strong>Classification:</strong> ${rateData.class} (${rateData.meter})</p>`;
+            html += `<p><strong>Total Consumption:</strong> ${consumption.toFixed(2)} cu meters</p>`;
+            html += `<div class="breakdown"><h3>Charge Breakdown:</h3>`;
+            
+            breakdown.forEach(item => {
+                if (item.volume > 0) {
+                    html += `<div class="charge-detail">`;
+                    html += `<span>${item.desc}:</span>`;
+                    if (item.rate !== 'N/A') {
+                        html += `<span>${item.volume.toFixed(2)} cu meters @ ${formatCurrency(item.rate)}/cu meter = ${formatCurrency(item.charge)}</span>`;
+                    } else {
+                        html += `<span>${formatCurrency(item.charge)}</span>`;
+                    }
+                    html += `</div>`;
+                }
+            });
+
+            html += `</div>`;
+            html += `<div class="total-charge">ESTIMATED TOTAL BILL: ${formatCurrency(finalTotalBill)}</div>`;
+
+            resultArea.innerHTML = html;
+            resultArea.style.display = 'block';
+        }
+
+        // Run initialization function when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            populateClassification();
+            document.getElementById('calculator-form').addEventListener('submit', calculateBill);
+        });
+
+    </script>
+</body>
+</html>
