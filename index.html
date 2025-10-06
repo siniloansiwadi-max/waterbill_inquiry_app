@@ -257,7 +257,7 @@
 </div> 
 <div class="new-button-container" style="margin-top: 25px;">
     <a href="services.html">
-        <button id="services-button">Siwadi Services</button>
+        <button id="services-button">Other Services</button>
     </a>
 </div>
     
@@ -269,8 +269,14 @@
 // 1. GLOBAL VARIABLE: Initial counter that tracks searches in the current session.
 let sessionCounter = 0; 
 
-// 🚨🚨🚨 CRITICAL: PASTE YOUR DEPLOYED WEB APP URL HERE 🚨🚨🚨
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxqw1ujDkYy5rzDQc_sITyVdB5D4TVPJE7DLs1oQhQmOp2VE_MAXnf4x6f_WgKrxqwO/exec'; 
+// ---------------------------
+// TWO Web App URLs (UPDATED)
+// ---------------------------
+// DATA_WEB_APP_URL: your existing inquiry script (same as original WEB_APP_URL)
+const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxqw1ujDkYy5rzDQc_sITyVdB5D4TVPJE7DLs1oQhQmOp2VE_MAXnf4x6f_WgKrxqwO/exec';
+
+// LOG_WEB_APP_URL: replace this placeholder with your activity-log script's web app URL
+const LOG_WEB_APP_URL  = 'https://script.google.com/macros/s/AKfycbxQKyzoU1AczxwzSiM24DA7TNRsUmiXocgH-TBY7JoM5Xux9wVNZUWBB6ycD4sr-pBE/exec';
 
 // 🎯 DISPLAY MAPPING: (Use your exact sheet headers on the left)
 const DISPLAY_MAP = {
@@ -389,7 +395,8 @@ async function fetchAccountData() {
     loadingMessage.style.display = 'block';
     searchButton.disabled = true; 
 
-    const apiUrl = `${WEB_APP_URL}?account=${searchKey}`;
+    // <-- use DATA_WEB_APP_URL for fetching data
+    const apiUrl = `${DATA_WEB_APP_URL}?account=${searchKey}`;
 
     try {
         const response = await fetch(apiUrl);
@@ -407,6 +414,19 @@ async function fetchAccountData() {
             counterElement.textContent = `Inquiries this Session: ${sessionCounter}`;
             
             resultHtml = formatResult(data); 
+
+            // -----------------------------
+            // CALL ACTIVITY LOG (non-blocking)
+            // -----------------------------
+            // only if account and name exist in response
+            try {
+                if (data['Account No.'] && data['Name']) {
+                    logInquiry(data['Account No.'], data['Name']);
+                }
+            } catch (xx) {
+                // keep UI robust — don't break on logging errors
+                console.error('logInquiry error', xx);
+            }
         }
 
         // Inject content and show modal
@@ -427,6 +447,31 @@ async function fetchAccountData() {
     } finally {
         loadingMessage.style.display = 'none';
         searchButton.disabled = false; // Re-enable button
+    }
+}
+
+
+// ------------------------------------------------------------------
+// logInquiry: sends account, name and timestamp to your LOG_WEB_APP_URL
+// ------------------------------------------------------------------
+async function logInquiry(accountNo, name) {
+    if (!LOG_WEB_APP_URL || LOG_WEB_APP_URL.indexOf('PASTE_YOUR_LOG_SCRIPT_URL_HERE') !== -1) {
+        // placeholder not replaced — skip logging to avoid accidental requests
+        console.warn('LOG_WEB_APP_URL not configured. Replace the placeholder with your log script URL.');
+        return;
+    }
+    try {
+        const params = new URLSearchParams({
+            account: accountNo,
+            name: name,
+            timestamp: new Date().toISOString()
+        });
+        // fire-and-forget log call
+        await fetch(`${LOG_WEB_APP_URL}?${params.toString()}`, { method: 'GET', mode: 'no-cors' });
+        console.log('Inquiry logged:', accountNo, name);
+    } catch (err) {
+        // don't disturb the user flow for logging errors
+        console.error('Failed to log inquiry:', err);
     }
 }
 </script>
