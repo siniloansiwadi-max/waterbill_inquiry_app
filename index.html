@@ -9,6 +9,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
+
+        /* ====================================================================== */
+        /* ❄️ FALLING SNOW STYLING - ADD THIS TO EXISTING CSS */
+        /* ====================================================================== */
+        #snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
         /* ====================================================================== */
         /* 1. BASE STYLING, GRADIENT, AND CENTERING */
         /* ====================================================================== */
@@ -221,6 +249,9 @@
 </head>
 <body>
 
+<!-- ❄️ FALLING SNOW - ADD THIS LINE -->
+<div id="snow"></div>
+
 <div class="container">
     <h1>Water Bill Inquiry</h1>
     
@@ -262,6 +293,39 @@
 </div>
     
 <script>
+
+// ======================================================================
+// ❄️ FALLING SNOW FUNCTIONALITY
+// ======================================================================
+function createSnow() {
+    const snowContainer = document.getElementById('snow');
+    if (!snowContainer) return;
+    
+    const snowflakes = 80; // Number of snowflakes
+    
+    for (let i = 0; i < snowflakes; i++) {
+        const snowflake = document.createElement('div');
+        snowflake.classList.add('snowflake');
+        
+        // Random properties for each snowflake
+        const size = Math.random() * 5 + 2;
+        const left = Math.random() * 100;
+        const animationDuration = Math.random() * 5 + 5;
+        const animationDelay = Math.random() * 5;
+        
+        snowflake.style.width = `${size}px`;
+        snowflake.style.height = `${size}px`;
+        snowflake.style.left = `${left}vw`;
+        snowflake.style.animationDuration = `${animationDuration}s`;
+        snowflake.style.animationDelay = `${animationDelay}s`;
+        
+        snowContainer.appendChild(snowflake);
+    }
+}
+
+// Start snow when page loads
+window.addEventListener('load', createSnow);
+
 // ======================================================================
 // JAVASCRIPT LOGIC
 // ======================================================================
@@ -478,3 +542,4 @@ async function logInquiry(accountNo, name) {
 
 </body>
 </html>
+
