@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Added Christmas-themed fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
     <style>
 
@@ -60,11 +62,95 @@
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
             text-align: center;
+            position: relative;
+        }
+
+        /* ====================================================================== */
+        /* CHRISTMAS GREETING STYLING - NEW SECTION */
+        /* ====================================================================== */
+        .christmas-greeting {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #C41E3A; /* Christmas red */
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 
+                2px 2px 0 #228B22, /* Christmas green shadow */
+                0 0 10px rgba(255, 215, 0, 0.5); /* Gold glow */
+            animation: christmasGlow 2s ease-in-out infinite alternate;
+            position: relative;
+        }
+
+        .christmas-greeting::before,
+        .christmas-greeting::after {
+            content: '🎄';
+            font-size: 1.8rem;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: bellSwing 3s ease-in-out infinite;
+        }
+
+        .christmas-greeting::before {
+            left: -40px;
+        }
+
+        .christmas-greeting::after {
+            right: -40px;
+        }
+
+        /* Animation for the Christmas greeting */
+        @keyframes christmasGlow {
+            0% {
+                text-shadow: 
+                    2px 2px 0 #228B22,
+                    0 0 10px rgba(255, 215, 0, 0.5);
+                transform: scale(1);
+            }
+            100% {
+                text-shadow: 
+                    2px 2px 0 #228B22,
+                    0 0 20px rgba(255, 215, 0, 0.8),
+                    0 0 30px rgba(255, 215, 0, 0.6);
+                transform: scale(1.02);
+            }
+        }
+
+        /* Bell swinging animation for decorations */
+        @keyframes bellSwing {
+            0%, 100% {
+                transform: translateY(-50%) rotate(-15deg);
+            }
+            50% {
+                transform: translateY(-50%) rotate(15deg);
+            }
+        }
+
+        /* Optional sub-greeting with different font */
+        .christmas-subgreeting {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #228B22; /* Christmas green */
+            margin-top: -5px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            animation: fadeInOut 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 1;
+            }
         }
 
         h1 {
             color: #007bff;
             margin-bottom: 25px;
+            margin-top: 10px;
         }
 
         input, button { 
@@ -126,6 +212,41 @@
 
         #input-group label {
             margin-right: 10px;
+        }
+
+        /* ====================================================================== */
+        /* DISCLAIMER STYLING - NEW SECTION */
+        /* ====================================================================== */
+        .disclaimer {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            border-radius: 5px;
+            text-align: left;
+            font-size: 0.85rem;
+            color: #555;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .disclaimer h4 {
+            margin-top: 0;
+            color: #007bff;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .disclaimer ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .disclaimer li {
+            margin-bottom: 5px;
+            line-height: 1.4;
         }
 
         /* ====================================================================== */
@@ -197,6 +318,33 @@
                 padding: 30px 20px;
             }
 
+            .christmas-greeting {
+                font-size: 2rem;
+                margin-bottom: 5px;
+            }
+
+            .christmas-greeting::before,
+            .christmas-greeting::after {
+                font-size: 1.5rem;
+            }
+
+            .christmas-greeting::before {
+                left: -30px;
+            }
+
+            .christmas-greeting::after {
+                right: -30px;
+            }
+
+            .christmas-subgreeting {
+                font-size: 1.2rem;
+            }
+
+            .disclaimer {
+                padding: 12px;
+                font-size: 0.8rem;
+            }
+
             #input-group {
                 /* Stack elements vertically on small screens */
                 flex-direction: column;
@@ -253,6 +401,10 @@
 <div id="snow"></div>
 
 <div class="container">
+    <!-- CHRISTMAS GREETING - ADDED AT THE TOP -->
+    <div class="christmas-greeting">Merry Christmas!</div>
+    <div class="christmas-subgreeting">Happy Holidays from Our Team</div>
+    
     <h1>Water Bill Inquiry</h1>
     
     <div id="input-group">
@@ -271,8 +423,16 @@
         <div class="spinner"></div> Please wait...
     </div>
     
-    <div id="session-inquiry-count" style="margin-top: 20px; font-weight: bold; color: #555;">
-        Inquiries this Session: 0
+    <!-- DISCLAIMER SECTION - REPLACED SESSION COUNTER -->
+    <div class="disclaimer">
+        <h4>🔒 Important Disclaimer:</h4>
+        <ul>
+            <li>This system is for informational purposes only</li>
+            <li>Customer names are partially masked for privacy protection</li>
+            <li>For official statements, please visit our office</li>
+            <li>GCash payment is not real-time; it takes 3 working days for  </li>
+            <li>us to update all the payments that are done with GCash.</li>
+        </ul>
     </div>
 </div>
 
@@ -327,11 +487,8 @@ function createSnow() {
 window.addEventListener('load', createSnow);
 
 // ======================================================================
-// JAVASCRIPT LOGIC
+// JAVASCRIPT LOGIC (REMOVED SESSION COUNTER LOGIC)
 // ======================================================================
-
-// 1. GLOBAL VARIABLE: Initial counter that tracks searches in the current session.
-let sessionCounter = 0; 
 
 // ---------------------------
 // TWO Web App URLs (UPDATED)
@@ -360,7 +517,6 @@ const loadingMessage = document.getElementById('loading-message');
 const inputElement = document.getElementById('accountNumber');
 const modalContainer = document.getElementById('modal-container');
 const modalResult = document.getElementById('modal-result');
-const counterElement = document.getElementById('session-inquiry-count');
 const searchButton = document.querySelector('button'); // Reference for disabling
 
 // --- Helper function to close the pop-up ---
@@ -473,10 +629,6 @@ async function fetchAccountData() {
             resultTitle = `Search Failed for ${rawAccountNumber}`;
             resultHtml = `<p style="color: red; font-weight: bold;">Error: ${data.error}</p>`;
         } else {
-            // SUCCESS: Increment and update session counter
-            sessionCounter++;
-            counterElement.textContent = `Inquiries this Session: ${sessionCounter}`;
-            
             resultHtml = formatResult(data); 
 
             // -----------------------------
@@ -542,4 +694,3 @@ async function logInquiry(accountNo, name) {
 
 </body>
 </html>
-
