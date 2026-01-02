@@ -3,42 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Siniloan Water District | Home</title>
+  <meta name="description" content="Siniloan Water District Official Portal - Water services, bill inquiry, and connections">
+  <title>SIWADI - Siniloan Water District | Home</title>
   <style>
-    /* ===== Base Reset ===== */
+    /* ===== Base Reset & Variables ===== */
+    :root {
+      --primary-blue: #002b5b;
+      --secondary-blue: #014272;
+      --accent-blue: #0169b4;
+      --light-blue: #e8f0f8;
+      --white: #ffffff;
+      --gray-light: #f5f7fa;
+      --shadow: 0 4px 12px rgba(0, 43, 91, 0.1);
+      --transition: all 0.3s ease;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
     }
 
     body {
-      background: linear-gradient(to bottom right, #e8f0f8, #d9e4ec);
+      background: linear-gradient(135deg, var(--light-blue) 0%, #d9e4ec 100%);
       background-attachment: fixed;
       color: #333;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      line-height: 1.6;
     }
 
     /* ===== Header ===== */
     header {
-      background-color: #002b5b;
-      color: #fff;
-      padding: 15px 10px;
+      background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
+      color: var(--white);
+      padding: 20px 0;
       text-align: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, #00b4d8, #90e0ef);
     }
 
     header h1 {
-      font-size: 1.8rem;
+      font-size: 2.2rem;
       margin-bottom: 8px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
 
     header p {
-      font-size: 0.95rem;
-      line-height: 1.4;
+      font-size: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+      opacity: 0.9;
     }
 
     /* ===== Navigation Bar ===== */
@@ -46,160 +76,453 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      background-color: #014272;
+      background: var(--secondary-blue);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     nav a {
       flex: 1;
-      padding: 14px 18px;
+      min-width: 120px;
+      padding: 16px 20px;
       text-decoration: none;
-      color: #fff;
+      color: var(--white);
       font-size: 1rem;
+      font-weight: 500;
       text-align: center;
-      transition: background 0.3s;
-      min-width: 160px;
+      transition: var(--transition);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
-    nav a:hover,
+    nav a:hover {
+      background: var(--accent-blue);
+      transform: translateY(-2px);
+    }
+
     nav a.active {
-      background-color: #0169b4;
+      background: var(--accent-blue);
+      font-weight: 600;
     }
 
-    /* ===== Main Section ===== */
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background: #90e0ef;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    nav a:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* ===== Main Content ===== */
     main {
       flex: 1;
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: 0 auto;
-      background: #fff;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      max-width: 1200px;
+      margin: 30px auto;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      border-radius: 16px;
+      border: 1px solid rgba(0, 43, 91, 0.1);
+    }
+
+    .welcome-section {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid var(--light-blue);
+    }
+
+    .welcome-section h2 {
+      color: var(--primary-blue);
+      font-size: 2rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .welcome-section p {
+      font-size: 1.1rem;
+      color: #555;
+      max-width: 800px;
+      margin: 0 auto 20px;
+    }
+
+    .quick-stats {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: var(--gray-light);
+      padding: 20px;
       border-radius: 12px;
-      margin-top: 20px;
+      min-width: 200px;
+      text-align: center;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      transition: var(--transition);
+      border-left: 4px solid var(--accent-blue);
     }
 
-    main h2 {
-      margin-bottom: 10px;
-      color: #002b5b;
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     }
 
-    main p {
-      line-height: 1.6;
-      margin-bottom: 20px;
+    .stat-card h3 {
+      color: var(--primary-blue);
+      font-size: 2.5rem;
+      margin-bottom: 5px;
     }
 
-    /* ===== Presentation (Responsive 16:9 but large on desktop) ===== */
-    .presentation-wrapper {
-      position: relative;
+    .stat-card p {
+      color: #666;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* ===== Slideshow Container ===== */
+    .slideshow-container {
       width: 100%;
-      max-width: 1000px; /* ✅ wider for desktop */
-      margin: 20px auto;
-      aspect-ratio: 16 / 9;
-      border-radius: 10px;
+      max-width: 850px;
+      margin: 40px auto;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      position: relative;
     }
 
-    .presentation-wrapper iframe {
+    .slideshow-container::before {
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
+      z-index: 2;
+    }
+
+    .slideshow-container iframe {
+      display: block;
       width: 100%;
-      height: 100%;
-      border: 0;
+      height: 478px;
+      border: none;
+    }
+
+    /* ===== Quick Links Grid ===== */
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 2px solid var(--light-blue);
+    }
+
+    .link-card {
+      background: var(--gray-light);
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--primary-blue);
+      transition: var(--transition);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      border: 2px solid transparent;
+    }
+
+    .link-card:hover {
+      background: var(--white);
+      border-color: var(--accent-blue);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 43, 91, 0.15);
+    }
+
+    .link-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .link-card p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+
+    .link-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      display: block;
     }
 
     /* ===== Footer ===== */
     footer {
-      text-align: center;
-      background: #002b5b;
-      color: white;
-      padding: 15px;
-      font-size: 0.9rem;
+      background: var(--primary-blue);
+      color: var(--white);
+      padding: 25px 20px;
+      font-size: 0.95rem;
       margin-top: auto;
+      text-align: center;
     }
 
-    /* ===== Responsive Fixes ===== */
-    @media (max-width: 900px) {
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .contact-info {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 10px 0;
+    }
+
+    .contact-info div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .copyright {
+      opacity: 0.8;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    /* ===== Responsive Design ===== */
+    @media (max-width: 1024px) {
+      main {
+        margin: 20px;
+        padding: 30px;
+      }
+
+      .slideshow-container {
+        max-width: 90%;
+      }
+    }
+
+    @media (max-width: 768px) {
       header h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
       }
-      header p {
-        font-size: 0.85rem;
-      }
+
       nav {
         flex-direction: column;
       }
+
       nav a {
-        flex: none;
-        font-size: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 14px;
+        justify-content: flex-start;
+        padding-left: 30px;
       }
+
+      .welcome-section h2 {
+        font-size: 1.6rem;
+      }
+
+      .quick-stats {
+        gap: 15px;
+      }
+
+      .stat-card {
+        min-width: 150px;
+        padding: 15px;
+      }
+
+      .stat-card h3 {
+        font-size: 2rem;
+      }
+
+      .quick-links {
+        grid-template-columns: 1fr;
+      }
+
+      .slideshow-container iframe {
+        height: 300px;
+      }
+
+      .contact-info {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
       main {
         padding: 20px;
         margin: 15px;
       }
+
+      header p {
+        font-size: 0.9rem;
+        padding: 0 15px;
+      }
+
+      .welcome-section h2 {
+        font-size: 1.4rem;
+      }
+
+      .stat-card {
+        min-width: 100%;
+      }
+
+      .slideshow-container iframe {
+        height: 250px;
+      }
+    }
+
+    /* ===== Animation for Welcome ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .welcome-section, .slideshow-container, .quick-links {
+      animation: fadeInUp 0.8s ease-out;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Siniloan Water District</h1>
-    <p>"Serbisyong Sapat, Serbisyong Tapat". SIWADI Building, P. Burgos St. Siniloan, Laguna. Tel. No. (049) 501-6656</p>
+    <p>"Serbisyong Tapat, Serbisyong Sapat". SIWADI Building P. Burgos St. Siniloan, Laguna Tel. No. 049-5016656.</p>
   </header>
 
   <nav>
     <a href="services.html" class="active">🏠 Home</a>
     <a href="about.html">🏢 About Us</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSohwI-ApoA9RCKmuyycSnauCCvwsAxziUCuX4qAr44Jd9SA/viewform" target="_blank" rel="noopener">💧 New Connection Inquiry</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSf4tYSuzu4pwxj5kDNthMsheTLev1p19A1sqqJR_AsMSTPq4Q/viewform" target="_blank" rel="noopener">📝 CSM Survey</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSohwI-ApoA9RCKmuyycSnauCCvwsAxziUCuX4qAr44Jd9SA/viewform" 
+       target="_blank" rel="noopener">💧 New Connection</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSf4tYSuzu4pwxj5kDNthMsheTLev1p19A1sqqJR_AsMSTPq4Q/viewform" 
+       target="_blank" rel="noopener">📝 CSM Survey</a>
     <a href="index.html">📄 Bill Inquiry</a>
-    <a href="calculator.html">🧮 Water Bill Calculator</a>
+    <a href="calculator.html">🧮 Bill Calculator</a>
   </nav>
 
   <main>
-    <h2>Home Page</h2>
-    
-<div class="presentation-box">
-  <iframe 
-    src="https://docs.google.com/presentation/d/e/2PACX-1vQzoN_LPMc0OWyH95suDVNvht-0LMVz8tvmr-QFCPpww9nPsM2XPUtpZcTjUSHm2kRDSE8zSY9J_Ivk/pubembed?start=true&loop=true&delayms=3000" 
-    frameborder="0"
-    allowfullscreen="true"
-    mozallowfullscreen="true"
-    webkitallowfullscreen="true">
-  </iframe>
-</div>
+    <section class="welcome-section">
+      <h2>Welcome to SIWADI Portal</h2>
+      <p>Salamat po sa pagbisita sa aming portal. Narito po ang lahat ng serbisyo at impormasyon na maaari ninyong magamit.</p>
+      
+      <div class="quick-stats">
+        <div class="stat-card">
+          <h3>24/7</h3>
+          <p>Customer Service</p>
+        </div>
+        <div class="stat-card">
+          <h3>100%</h3>
+          <p>Water Quality</p>
+        </div>
+        <div class="stat-card">
+          <h3>5000+</h3>
+          <p>Happy Customers</p>
+        </div>
+      </div>
+    </section>
 
-<style>
-  /* ✅ Lock presentation box size */
-  .presentation-box {
-    width: 900px;            /* fixed desktop width */
-    height: 506px;           /* 16:9 ratio (900x506) */
-    margin: 20px auto;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
+    <div class="slideshow-container">
+      <iframe 
+        src="https://docs.google.com/presentation/d/e/2PACX-1vQzoN_LPMc0OWyH95suDVNvht-0LMVz8tvmr-QFCPpww9nPsM2XPUtpZcTjUSHm2kRDSE8zSY9J_Ivk/pubembed?start=true&loop=true&delayms=3000"
+        frameborder="0"
+        allowfullscreen="true"
+        mozallowfullscreen="true"
+        webkitallowfullscreen="true">
+      </iframe>
+    </div>
 
-  .presentation-box iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-  }
-
-  /* ✅ Make it mobile-friendly (still 16:9 but scaled down) */
-  @media (max-width: 950px) {
-    .presentation-box {
-      width: 100%;
-      max-width: 95vw;       /* fit mobile screen width */
-      height: calc(95vw * 9 / 16); /* keep 16:9 ratio dynamically */
-    }
-  }
-</style>
+    <section class="quick-links">
+      <a href="index.html" class="link-card">
+        <span class="link-icon">📄</span>
+        <h3>Bill Inquiry</h3>
+        <p>Check your water bill status and payment details instantly</p>
+        <small>Click to access →</small>
+      </a>
+      
+      <a href="calculator.html" class="link-card">
+        <span class="link-icon">🧮</span>
+        <h3>Bill Calculator</h3>
+        <p>Estimate your water consumption and bill amount</p>
+        <small>Click to access →</small>
+      </a>
+      
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSohwI-ApoA9RCKmuyycSnauCCvwsAxziUCuX4qAr44Jd9SA/viewform" 
+         target="_blank" rel="noopener" class="link-card">
+        <span class="link-icon">💧</span>
+        <h3>New Connection</h3>
+        <p>Apply for new water service connection online</p>
+        <small>Open Form →</small>
+      </a>
+      
+      <a href="about.html" class="link-card">
+        <span class="link-icon">🏢</span>
+        <h3>About SIWADI</h3>
+        <p>Learn about our mission, vision, and services</p>
+        <small>Learn more →</small>
+      </a>
+    </section>
+  </main>
 
   <footer>
-    © 2025 Siniloan Water District - All Rights Reserved
+    <div class="footer-content">
+      <div class="contact-info">
+        <div>📍 P. Burgos St. Siniloan, Laguna</div>
+        <div>📞 049-5016656</div>
+        <div>✉️ contact@siwadi.gov.ph</div>
+      </div>
+      <div class="copyright">
+        © 2025 Siniloan Water District - "Serbisyong Tapat, Serbisyong Sapat"
+      </div>
+    </div>
   </footer>
+
+  <script>
+    // Simple script to highlight current page in nav
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop();
+      const navLinks = document.querySelectorAll('nav a');
+      
+      navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href');
+        if (linkPage === currentPage || 
+            (currentPage === '' && linkPage === 'services.html') ||
+            (currentPage === 'services.html' && linkPage === 'services.html')) {
+          link.classList.add('active');
+        }
+      });
+      
+      // Add loading animation to slideshow
+      const iframe = document.querySelector('.slideshow-container iframe');
+      iframe.addEventListener('load', function() {
+        this.style.opacity = '1';
+        this.style.transition = 'opacity 0.5s ease';
+      });
+    });
+  </script>
 </body>
 </html>
-
