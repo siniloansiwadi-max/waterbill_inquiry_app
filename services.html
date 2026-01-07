@@ -33,17 +33,26 @@
       display: flex;
       flex-direction: column;
       line-height: 1.6;
+      padding-top: 200px; /* Reduced for thinner nav */
     }
 
-    /* ===== Header ===== */
+    /* ===== Fixed Header with image left, text right ===== */
     header {
       background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
       color: var(--white);
-      padding: 20px 0;
-      text-align: center;
+      padding: 15px 40px; /* Reduced padding */
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-      position: relative;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      height: 180px; /* Reduced height */
+      width: 100%;
     }
 
     header::before {
@@ -56,53 +65,69 @@
       background: linear-gradient(to right, #00b4d8, #90e0ef);
     }
 
-    header h1 {
-      font-size: 2.2rem;
-      margin-bottom: 8px;
+    .gm-picture {
+      width: 250px; /* Slightly smaller */
+      height: 190px; /* Slightly smaller */
+      object-fit: cover;
+      flex-shrink: 0;
+      border: none;
+      box-shadow: none;
+    }
+
+    .header-text {
+      flex: 1;
+      text-align: left;
+      padding-right: 20px;
+    }
+
+    .header-text h1 {
+      font-size: 2.2rem; /* Slightly smaller */
+      margin-bottom: 12px; /* Reduced */
       font-weight: 700;
       letter-spacing: 0.5px;
+      line-height: 1.2;
     }
 
-    header p {
-      font-size: 1rem;
+    .header-text p {
+      font-size: 1rem; /* Slightly smaller */
       max-width: 800px;
-      margin: 0 auto;
-      padding: 0 20px;
       opacity: 0.9;
+      line-height: 1.5;
     }
 
-    /* ===== Navigation Bar ===== */
+    /* ===== THINNER Navigation Bar ===== */
     nav {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
       background: var(--secondary-blue);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: fixed;
+      top: 180px; /* Match reduced header height */
+      left: 0;
+      right: 0;
+      z-index: 999;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 6px 0; /* Reduced from 10px */
+      height: 50px; /* Fixed height */
     }
 
     nav a {
-      flex: 1;
-      min-width: 120px;
-      padding: 16px 20px;
+      padding: 8px 20px; /* Reduced from 12px 25px */
       text-decoration: none;
       color: var(--white);
-      font-size: 1rem;
+      font-size: 1rem; /* Reduced from 1.1rem */
       font-weight: 500;
       text-align: center;
       transition: var(--transition);
-      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px; /* Reduced from 8px */
+      height: 38px; /* Fixed height for consistency */
     }
 
     nav a:hover {
       background: var(--accent-blue);
-      transform: translateY(-2px);
+      border-radius: 4px; /* Slightly smaller */
     }
 
     nav a.active {
@@ -110,172 +135,420 @@
       font-weight: 600;
     }
 
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 10%;
-      right: 10%;
-      height: 3px;
-      background: #90e0ef;
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    nav a:hover::after {
-      transform: scaleX(1);
-    }
-
     /* ===== Main Content ===== */
     main {
       flex: 1;
-      padding: 40px;
-      max-width: 1200px;
-      margin: 30px auto;
+      padding: 30px;
+      max-width: 1400px;
+      margin: 40px auto 20px; /* Reduced top margin */
       background: var(--white);
       box-shadow: var(--shadow);
       border-radius: 16px;
       border: 1px solid rgba(0, 43, 91, 0.1);
     }
 
-    .welcome-section {
-      text-align: center;
-      margin-bottom: 40px;
-      padding-bottom: 30px;
+    /* ===== FLEXIBLE WIDE GALLERY - UPDATED FOR TRUE SIZE ON HOVER ===== */
+    .flexible-gallery {
+      margin: 0 auto 50px;
+      padding: 30px 0;
       border-bottom: 2px solid var(--light-blue);
     }
 
-    .welcome-section h2 {
+    .flexible-gallery h2 {
       color: var(--primary-blue);
-      font-size: 2rem;
+      font-size: 2.4rem;
+      text-align: center;
       margin-bottom: 15px;
       font-weight: 700;
     }
 
-    .welcome-section p {
+    .gallery-description {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
+      font-size: 1.2rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Masonry-style flexible grid */
+    .gallery-container {
+      columns: 3;
+      column-gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    /* Gallery item that can hold any orientation */
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 25px;
+      position: relative;
+      border-radius: 16px;
+      overflow: visible;
+      transition: var(--transition);
+      cursor: pointer;
+      background: var(--white);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* HOVER EFFECT: Show true image size */
+    .gallery-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px rgba(0, 43, 91, 0.3);
+      z-index: 100;
+    }
+
+    /* Flexible image container */
+    .image-wrapper {
+      width: 100%;
+      overflow: hidden;
+      background: #f0f0f0;
+      border-radius: 12px;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+
+    /* Normal state - show cropped/preview */
+    .image-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      object-fit: cover;
+      border-radius: 12px;
+      max-height: 400px;
+    }
+
+    /* HOVER STATE: Show true/full size */
+    .gallery-item:hover .image-wrapper {
+      overflow: visible;
+      z-index: 101;
+    }
+
+    .gallery-item:hover .image-wrapper img {
+      object-fit: contain;
+      transform: scale(1.05);
+      max-height: none;
+      position: relative;
+      z-index: 102;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      background: var(--white);
+    }
+
+    /* Add overlay when hovering */
+    .gallery-item:hover::after {
+      content: '🔍 Click to view full size';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 43, 91, 0.9);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      z-index: 103;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* Item info that appears on hover */
+    .item-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, 
+        rgba(0, 43, 91, 0.95) 0%,
+        rgba(0, 43, 91, 0.7) 70%,
+        transparent 100%);
+      color: var(--white);
+      padding: 25px 20px 20px;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      backdrop-filter: blur(5px);
+      border-radius: 0 0 12px 12px;
+      z-index: 104;
+    }
+
+    .gallery-item:hover .item-overlay {
+      transform: translateY(0);
+    }
+
+    .item-overlay h3 {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .item-overlay p {
+      font-size: 1rem;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    /* Gallery navigation */
+    .gallery-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 2px solid var(--light-blue);
+    }
+
+    .gallery-btn {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: var(--white);
+      border: none;
+      padding: 15px 40px;
       font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 6px 20px rgba(0, 43, 91, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .gallery-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 43, 91, 0.3);
+      background: linear-gradient(135deg, var(--secondary-blue), var(--accent-blue));
+    }
+
+    .counter {
+      color: var(--primary-blue);
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    /* ===== Welcome Section ===== */
+    .welcome-section {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 40px 0;
+      background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .welcome-section h2 {
+      color: var(--primary-blue);
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .welcome-section p {
+      font-size: 1.2rem;
       color: #555;
       max-width: 800px;
-      margin: 0 auto 20px;
+      margin: 0 auto 30px;
     }
 
     .quick-stats {
       display: flex;
       justify-content: center;
-      gap: 30px;
-      margin-top: 30px;
+      gap: 40px;
+      margin-top: 40px;
       flex-wrap: wrap;
     }
 
     .stat-card {
-      background: var(--gray-light);
-      padding: 20px;
-      border-radius: 12px;
-      min-width: 200px;
+      background: var(--white);
+      padding: 35px;
+      border-radius: 16px;
+      min-width: 250px;
       text-align: center;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
       transition: var(--transition);
-      border-left: 4px solid var(--accent-blue);
+      border: 3px solid var(--accent-blue);
     }
 
     .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary-blue);
     }
 
     .stat-card h3 {
       color: var(--primary-blue);
-      font-size: 2.5rem;
-      margin-bottom: 5px;
+      font-size: 3rem;
+      margin-bottom: 15px;
     }
 
     .stat-card p {
       color: #666;
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       font-weight: 500;
     }
 
-    /* ===== Slideshow Container ===== */
-    .slideshow-container {
-      width: 100%;
-      max-width: 850px;
-      margin: 40px auto;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-      position: relative;
-    }
-
-    .slideshow-container::before {
-      content: '';
-      position: absolute;
+    /* ===== Modal for fullscreen view ===== */
+    .gallery-modal {
+      display: none;
+      position: fixed;
       top: 0;
       left: 0;
-      right: 0;
-      height: 5px;
-      background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
-      z-index: 2;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.98);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 40px;
     }
 
-    .slideshow-container iframe {
-      display: block;
-      width: 100%;
-      height: 478px;
+    .modal-content {
+      max-width: 95%;
+      max-height: 95vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modal-image {
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+      background: var(--white);
+    }
+
+    .modal-info {
+      color: var(--white);
+      text-align: center;
+      margin-top: 25px;
+      padding: 0 30px;
+      max-width: 800px;
+    }
+
+    .modal-info h3 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+
+    .modal-info p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -60px;
+      right: 0;
+      color: var(--white);
+      font-size: 4rem;
+      cursor: pointer;
+      background: none;
       border: none;
+      transition: var(--transition);
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-modal:hover {
+      color: #90e0ef;
+      transform: scale(1.2);
+    }
+
+    .modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      pointer-events: none;
+    }
+
+    .modal-nav-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      border: none;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      pointer-events: all;
+    }
+
+    .modal-nav-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
     }
 
     /* ===== Quick Links Grid ===== */
     .quick-links {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
       margin-top: 50px;
-      padding-top: 30px;
+      padding-top: 40px;
       border-top: 2px solid var(--light-blue);
     }
 
     .link-card {
       background: var(--gray-light);
-      padding: 25px;
-      border-radius: 12px;
+      padding: 30px;
+      border-radius: 16px;
       text-align: center;
       text-decoration: none;
       color: var(--primary-blue);
       transition: var(--transition);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-      border: 2px solid transparent;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      border: 3px solid transparent;
     }
 
     .link-card:hover {
       background: var(--white);
       border-color: var(--accent-blue);
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 43, 91, 0.15);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(0, 43, 91, 0.2);
     }
 
     .link-card h3 {
-      margin-bottom: 10px;
-      font-size: 1.2rem;
+      margin-bottom: 15px;
+      font-size: 1.4rem;
     }
 
     .link-card p {
       color: #666;
-      font-size: 0.9rem;
-      margin-bottom: 15px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
     }
 
     .link-icon {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
+      font-size: 3.5rem;
+      margin-bottom: 20px;
       display: block;
     }
 
     /* ===== Footer ===== */
     footer {
-      background: var(--primary-blue);
+      background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
       color: var(--white);
-      padding: 25px 20px;
-      font-size: 0.95rem;
+      padding: 30px 20px;
+      font-size: 1rem;
       margin-top: auto;
       text-align: center;
     }
@@ -286,116 +559,293 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 15px;
+      gap: 20px;
     }
 
     .contact-info {
       display: flex;
-      gap: 30px;
+      gap: 40px;
       flex-wrap: wrap;
       justify-content: center;
-      margin: 10px 0;
+      margin: 15px 0;
     }
 
     .contact-info div {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      font-size: 1.1rem;
     }
 
     .copyright {
-      opacity: 0.8;
-      font-size: 0.9rem;
-      margin-top: 10px;
+      opacity: 0.9;
+      font-size: 1rem;
+      margin-top: 15px;
+      max-width: 800px;
     }
 
     /* ===== Responsive Design ===== */
-    @media (max-width: 1024px) {
-      main {
-        margin: 20px;
-        padding: 30px;
+    @media (max-width: 1200px) {
+      .gallery-container {
+        columns: 2;
       }
+      
+      main {
+        max-width: 95%;
+      }
+    }
 
-      .slideshow-container {
-        max-width: 90%;
+    @media (max-width: 992px) {
+      .gallery-container {
+        columns: 2;
+        column-gap: 20px;
+      }
+      
+      .gallery-item {
+        margin-bottom: 20px;
+      }
+      
+      .flexible-gallery h2 {
+        font-size: 2rem;
+      }
+      
+      .stat-card {
+        min-width: 220px;
+        padding: 25px;
+      }
+      
+      .stat-card h3 {
+        font-size: 2.5rem;
+      }
+      
+      .gallery-item:hover .image-wrapper img {
+        max-height: 600px;
       }
     }
 
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.8rem;
+      /* Adjust body padding for mobile */
+      body {
+        padding-top: 210px; /* Adjusted for thinner header */
+      }
+      
+      /* Header responsive adjustments */
+      header {
+        flex-direction: column;
+        text-align: center;
+        padding: 12px;
+        gap: 12px;
+        height: auto;
+        min-height: 160px;
+        position: fixed;
+      }
+      
+      .gm-picture {
+        width: 160px;
+        height: 120px;
+        margin: 0 auto;
+      }
+      
+      .header-text {
+        text-align: center;
+        padding-right: 0;
+      }
+      
+      .header-text h1 {
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+      }
+      
+      .header-text p {
+        font-size: 0.9rem;
+        padding: 0 5px;
       }
 
+      /* Adjust nav position for mobile */
       nav {
-        flex-direction: column;
+        top: 160px; /* Match reduced header height */
+        padding: 4px 0; /* Even thinner on mobile */
+        height: 42px;
       }
 
       nav a {
-        padding: 14px;
-        justify-content: flex-start;
-        padding-left: 30px;
+        padding: 6px 12px; /* Even smaller on mobile */
+        font-size: 0.9rem; /* Smaller font */
+        gap: 4px;
+        height: 34px;
+      }
+
+      /* Adjust main content margin for mobile */
+      main {
+        padding: 20px;
+        margin: 50px 15px 20px; /* Reduced top margin */
+      }
+
+      .gallery-container {
+        columns: 1;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      
+      .flexible-gallery h2 {
+        font-size: 1.8rem;
+      }
+      
+      .gallery-description {
+        font-size: 1.1rem;
+      }
+      
+      .gallery-nav {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .gallery-btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
       }
 
       .welcome-section h2 {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
+      }
+
+      .welcome-section p {
+        font-size: 1.1rem;
       }
 
       .quick-stats {
-        gap: 15px;
-      }
-
-      .stat-card {
-        min-width: 150px;
-        padding: 15px;
-      }
-
-      .stat-card h3 {
-        font-size: 2rem;
-      }
-
-      .quick-links {
-        grid-template-columns: 1fr;
-      }
-
-      .slideshow-container iframe {
-        height: 300px;
-      }
-
-      .contact-info {
-        flex-direction: column;
-        gap: 10px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      main {
-        padding: 20px;
-        margin: 15px;
-      }
-
-      header p {
-        font-size: 0.9rem;
-        padding: 0 15px;
-      }
-
-      .welcome-section h2 {
-        font-size: 1.4rem;
+        gap: 20px;
       }
 
       .stat-card {
         min-width: 100%;
+        max-width: 300px;
       }
 
-      .slideshow-container iframe {
-        height: 250px;
+      .quick-links {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .contact-info {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .modal-content {
+        max-width: 100%;
+        padding: 20px;
+      }
+      
+      .modal-nav-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+      
+      .gallery-item:hover .image-wrapper img {
+        max-height: 500px;
+      }
+      
+      .gallery-item:hover::after {
+        font-size: 0.7rem;
+        padding: 3px 8px;
       }
     }
 
-    /* ===== Animation for Welcome ===== */
-    @keyframes fadeInUp {
+    @media (max-width: 480px) {
+      body {
+        padding-top: 180px; /* Further reduced */
+      }
+      
+      header {
+        padding: 10px;
+        gap: 10px;
+        min-height: 140px;
+      }
+      
+      .gm-picture {
+        width: 120px;
+        height: 90px;
+      }
+      
+      .header-text h1 {
+        font-size: 1.4rem;
+      }
+      
+      .header-text p {
+        font-size: 0.8rem;
+      }
+      
+      nav {
+        top: 140px;
+        padding: 3px 0;
+        height: 38px;
+      }
+      
+      nav a {
+        padding: 4px 8px;
+        font-size: 0.85rem;
+        gap: 3px;
+        height: 32px;
+      }
+
+      main {
+        padding: 15px;
+        margin: 45px 10px 15px;
+      }
+
+      .flexible-gallery h2 {
+        font-size: 1.6rem;
+      }
+      
+      .gallery-item {
+        margin-bottom: 15px;
+      }
+      
+      .item-overlay {
+        padding: 15px;
+      }
+      
+      .item-overlay h3 {
+        font-size: 1.2rem;
+      }
+
+      .welcome-section h2 {
+        font-size: 1.5rem;
+      }
+
+      .welcome-section p {
+        font-size: 1rem;
+      }
+      
+      .stat-card {
+        padding: 20px;
+      }
+      
+      .stat-card h3 {
+        font-size: 2rem;
+      }
+      
+      .link-card {
+        padding: 20px;
+      }
+      
+      .link-icon {
+        font-size: 2.8rem;
+      }
+      
+      .gallery-item:hover .image-wrapper img {
+        max-height: 400px;
+      }
+    }
+
+    /* ===== Animations ===== */
+    @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -403,63 +853,178 @@
       }
     }
 
-    .welcome-section, .slideshow-container, .quick-links {
-      animation: fadeInUp 0.8s ease-out;
+    .gallery-item {
+      animation: fadeIn 0.6s ease-out backwards;
     }
+
+    .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+    .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+    .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+    .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+    .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+    .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+    .gallery-item:nth-child(7) { animation-delay: 0.7s; }
+    .gallery-item:nth-child(8) { animation-delay: 0.8s; }
   </style>
 </head>
 <body>
+
   <header>
-    <h1>Siniloan Water District</h1>
-    <p>"Serbisyong Tapat, Serbisyong Sapat". SIWADI Building P. Burgos St. Siniloan, Laguna Tel. No. 049-5016656.</p>
+    <img src="images/solsusan.png" alt="CommDiv" class="gm-picture" 
+         onerror="this.src='https://via.placeholder.com/250x150/002b5b/ffffff?text=SIWADI'">
+    <div class="header-text">
+      <h1>Commercial Division of Siniloan Water District</h1>
+      <p>"Serbisyong Tapat, Serbisyong Sapat". SIWADI Building P. Burgos St. Siniloan, Laguna Tel. No. 049-5016656.</p>
+    </div>
   </header>
 
   <nav>
     <a href="services.html" class="active">🏠 Home</a>
-    <a href="about.html">🏢 About Us</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSohwI-ApoA9RCKmuyycSnauCCvwsAxziUCuX4qAr44Jd9SA/viewform" 
-       target="_blank" rel="noopener">💧 New Connection</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSf4tYSuzu4pwxj5kDNthMsheTLev1p19A1sqqJR_AsMSTPq4Q/viewform" 
-       target="_blank" rel="noopener">📝 CSM Survey</a>
-    <a href="index.html">📄 Bill Inquiry</a>
-    <a href="calculator.html">🧮 Bill Calculator</a>
+    <a href="services2.html">🛠️ Services</a>
+    <a href="about.html">🏢 About SIWADI</a>
   </nav>
 
   <main>
+    <!-- ===== FLEXIBLE PICTURE GALLERY ===== -->
+    <section class="flexible-gallery">
+      <h2>Gallery</h2>
+      <p class="gallery-description">Hover over images to see full size. Click to open in fullscreen view.</p>
+      
+      <div class="gallery-container" id="galleryContainer">
+        <!-- Item 1 - Wide landscape -->
+        <div class="gallery-item" data-index="0">
+          <div class="image-wrapper">
+            <img src="images/building.jpg" alt="SIWADI Main Office Building" 
+                 onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=600&fit=crop'">
+          </div>
+          <div class="item-overlay">
+            <h3>Main Office</h3>
+            <p>Our headquarters at P. Burgos St. serving the Siniloan community</p>
+          </div>
+        </div>
+        
+        <!-- Item 2 - Portrait -->
+        <div class="gallery-item" data-index="1">
+          <div class="image-wrapper">
+            <img src="images/bigas.jpg" alt="Bigas Promo" 
+                 onerror="this.src='https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop'">
+          </div>
+          <div class="item-overlay">
+            <h3>Bigas Promo Winner</h3>
+            <p>Bigas Para sa Maagap raffle promo winner</p>
+          </div>
+        </div>
+        
+        <!-- Item 3 - Square -->
+        <div class="gallery-item" data-index="2">
+          <div class="image-wrapper">
+            <img src="images/plumber.jpg" alt="Magigiting" 
+                 onerror="this.src='https://images.unsplash.com/photo-1523362628745-0c100150b504?w=800&h=800&fit=crop'">
+          </div>
+          <div class="item-overlay">
+            <h3>SIWADI in Action</h3>
+            <p>Our dedicated team at work</p>
+          </div>
+        </div>
+        
+        <!-- Item 4 - Landscape -->
+        <div class="gallery-item" data-index="3">
+          <div class="image-wrapper">
+            <img src="images/employee.jpg" alt="Happy Employees" 
+                 onerror="this.src='https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1200&h=700&fit=crop'">
+          </div>
+          <div class="item-overlay">
+            <h3>SIWADI Team</h3>
+            <p>Our happy and dedicated employees</p>
+          </div>
+        </div>
+        
+        <!-- Item 5 - Portrait -->
+        <div class="gallery-item" data-index="4">
+          <div class="image-wrapper">
+            <img src="images/gmador.jpg" alt="Award Ceremony" 
+                 onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&h=900&fit=crop'">
+          </div>
+          <div class="item-overlay">
+            <h3>Awards & Recognition</h3>
+            <p>GM Ador receiving recognition for excellent service</p>
+          </div>
+        </div>
+        
+        <!-- Item 6 - Wide landscape -->
+        <div class="gallery-item" data-index="5">
+          <div class="image-wrapper">
+            <img src="images/employee2.jpg" alt="The Readers" 
+                 onerror="this.src='https://images.unsplash.com/photo-1559028012-481c04fa702d?w=1200&h=600&fit=crop'">
+          </div>
+          <div class="item-overlay">
+            <h3>The Readers</h3>
+            <p>Team members reviewing important documents</p>
+          </div>
+        </div>
+        
+        <!-- Item 7 - Add more as needed -->
+        <div class="gallery-item" data-index="6">
+          <div class="image-wrapper">
+            <img src="images/senior.jpg" alt="Senior Citizen Discount" 
+                 onerror="this.src='https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?w=1100&h=600&fit=crop'">
+          </div>
+          <div class="item-overlay">
+            <h3>Senior's Discount</h3>
+            <p>Providing special discounts for senior citizens</p>
+          </div>
+        </div>
+        
+        <!-- Item 8 - Portrait -->
+        <div class="gallery-item" data-index="7">
+          <div class="image-wrapper">
+            <img src="images/plumber2.jpg" alt="Masisipag" 
+                 onerror="this.src='https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=800&fit=crop'">
+          </div>
+          <div class="item-overlay">
+            <h3>SIWADI in Action</h3>
+            <p>Our hardworking team ensuring water service</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Gallery Navigation -->
+      <div class="gallery-nav">
+        <button class="gallery-btn" onclick="loadMoreImages()">
+          <span>📸 Load More Pictures</span>
+        </button>
+        <div class="counter">
+          Showing <span id="imageCount">8</span> pictures
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Welcome Section ===== -->
     <section class="welcome-section">
       <h2>Welcome to SIWADI Portal</h2>
       <p>Salamat po sa pagbisita sa aming portal. Narito po ang lahat ng serbisyo at impormasyon na maaari ninyong magamit.</p>
       
-    <!-- Alternative with clock icon -->
+      <!-- Quick Stats -->
       <div class="quick-stats">
-      <div class="stat-card">
-        <div style="font-size: 2rem; margin-bottom: 10px;">🕗</div>
-        <h3>8:00-5:00</h3>
-        <p>Mon-Fri Service Hours</p>
+        <div class="stat-card">
+          <div style="font-size: 2.8rem; margin-bottom: 15px;">🕗</div>
+          <h3>8:00-5:00</h3>
+          <p>Mon-Fri Service Hours</p>
+        </div>
+        <div class="stat-card">
+          <div style="font-size: 2.8rem; margin-bottom: 15px;">💧</div>
+          <h3>100%</h3>
+          <p>Water Quality</p>
+        </div>
+        <div class="stat-card">
+          <div style="font-size: 2.8rem; margin-bottom: 15px;">😊</div>
+          <h3>10,000+</h3>
+          <p>Happy Customers</p>
+        </div>
       </div>
-      <div class="stat-card">
-        <div style="font-size: 2rem; margin-bottom: 10px;">💧</div>
-        <h3>100%</h3>
-        <p>Water Quality</p>
-      </div>
-      <div class="stat-card">
-        <div style="font-size: 2rem; margin-bottom: 10px;">😊</div>
-        <h3>10,000+</h3>
-        <p>Happy Customers</p>
-      </div>
-    </div>
     </section>
 
-    <div class="slideshow-container">
-      <iframe 
-        src="https://docs.google.com/presentation/d/e/2PACX-1vQzoN_LPMc0OWyH95suDVNvht-0LMVz8tvmr-QFCPpww9nPsM2XPUtpZcTjUSHm2kRDSE8zSY9J_Ivk/pubembed?start=true&loop=true&delayms=3000"
-        frameborder="0"
-        allowfullscreen="true"
-        mozallowfullscreen="true"
-        webkitallowfullscreen="true">
-      </iframe>
-    </div>
-
+    <!-- ===== Quick Links ===== -->
     <section class="quick-links">
       <a href="index.html" class="link-card">
         <span class="link-icon">📄</span>
@@ -482,13 +1047,6 @@
         <p>Apply for new water service connection online</p>
         <small>Open Form →</small>
       </a>
-      
-      <a href="about.html" class="link-card">
-        <span class="link-icon">🏢</span>
-        <h3>About SIWADI</h3>
-        <p>Learn about our mission, vision, and services</p>
-        <small>Learn more →</small>
-      </a>
     </section>
   </main>
 
@@ -505,26 +1063,136 @@
     </div>
   </footer>
 
+  <!-- Gallery Modal -->
+  <div id="galleryModal" class="gallery-modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal()">&times;</button>
+      <img id="modalImage" class="modal-image" alt="">
+      <div class="modal-info">
+        <h3 id="modalTitle"></h3>
+        <p id="modalDescription"></p>
+      </div>
+      <div class="modal-nav">
+        <button class="modal-nav-btn prev-modal-btn" onclick="prevImage()">‹</button>
+        <button class="modal-nav-btn next-modal-btn" onclick="nextImage()">›</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Simple script to highlight current page in nav
+    // Gallery functionality
+    let currentModalIndex = 0;
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryModal = document.getElementById('galleryModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    
+    // Add click event to each gallery item
+    galleryItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const index = parseInt(this.getAttribute('data-index'));
+        openModal(index);
+      });
+    });
+    
+    function openModal(index) {
+      currentModalIndex = index;
+      const item = galleryItems[index];
+      const img = item.querySelector('img');
+      const title = item.querySelector('h3').textContent;
+      const description = item.querySelector('p').textContent;
+      
+      modalImage.src = img.src;
+      modalImage.alt = img.alt;
+      modalTitle.textContent = title;
+      modalDescription.textContent = description;
+      
+      galleryModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      
+      modalImage.style.objectFit = 'contain';
+    }
+    
+    function closeModal() {
+      galleryModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+    
+    function nextImage() {
+      currentModalIndex = (currentModalIndex + 1) % galleryItems.length;
+      updateModalContent();
+    }
+    
+    function prevImage() {
+      currentModalIndex = (currentModalIndex - 1 + galleryItems.length) % galleryItems.length;
+      updateModalContent();
+    }
+    
+    function updateModalContent() {
+      const item = galleryItems[currentModalIndex];
+      const img = item.querySelector('img');
+      const title = item.querySelector('h3').textContent;
+      const description = item.querySelector('p').textContent;
+      
+      modalImage.src = img.src;
+      modalImage.alt = img.alt;
+      modalTitle.textContent = title;
+      modalDescription.textContent = description;
+      
+      modalImage.style.objectFit = 'contain';
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (galleryModal.style.display === 'flex') {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+      }
+    });
+    
+    // Close modal when clicking outside
+    galleryModal.addEventListener('click', (e) => {
+      if (e.target === galleryModal) {
+        closeModal();
+      }
+    });
+    
+    // Navigation highlighting
     document.addEventListener('DOMContentLoaded', function() {
       const currentPage = window.location.pathname.split('/').pop();
       const navLinks = document.querySelectorAll('nav a');
       
       navLinks.forEach(link => {
         const linkPage = link.getAttribute('href');
-        if (linkPage === currentPage || 
-            (currentPage === '' && linkPage === 'services.html') ||
-            (currentPage === 'services.html' && linkPage === 'services.html')) {
+        link.classList.remove('active');
+        
+        if ((currentPage === '' && linkPage === 'services.html') ||
+            (currentPage === 'services.html' && linkPage === 'services.html') ||
+            (currentPage === 'services2.html' && linkPage === 'services2.html') ||
+            (currentPage === 'about.html' && linkPage === 'about.html')) {
           link.classList.add('active');
         }
       });
+    });
+    
+    // Load more images function
+    function loadMoreImages() {
+      alert('More pictures would be loaded here. You can add more image items to the gallery.');
+      const countElement = document.getElementById('imageCount');
+      countElement.textContent = galleryItems.length;
+    }
+    
+    // Update image count on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('imageCount').textContent = galleryItems.length;
       
-      // Add loading animation to slideshow
-      const iframe = document.querySelector('.slideshow-container iframe');
-      iframe.addEventListener('load', function() {
-        this.style.opacity = '1';
-        this.style.transition = 'opacity 0.5s ease';
+      // Add preloading for better hover performance
+      galleryItems.forEach(item => {
+        const img = item.querySelector('img');
+        const preloadImg = new Image();
+        preloadImg.src = img.src;
       });
     });
   </script>
