@@ -3,226 +3,700 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Us | SIWADI</title>
+  <meta name="description" content="About Siniloan Water District - History, Mission, Vision, and Services">
+  <title>SIWADI - About Siniloan Water District | History & Mission</title>
   <style>
+    /* ===== Base Reset & Variables ===== */
+    :root {
+      --primary-blue: #002b5b;
+      --secondary-blue: #014272;
+      --accent-blue: #0169b4;
+      --light-blue: #e8f0f8;
+      --white: #ffffff;
+      --gray-light: #f5f7fa;
+      --shadow: 0 4px 12px rgba(0, 43, 91, 0.1);
+      --transition: all 0.3s ease;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
     }
 
     body {
-      background: linear-gradient(to bottom right, #e8f0f8, #d9e4ec);
+      background: linear-gradient(135deg, var(--light-blue) 0%, #d9e4ec 100%);
       background-attachment: fixed;
       color: #333;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      line-height: 1.6;
+      padding-top: 200px; /* Space for fixed header */
     }
 
+    /* ===== Fixed Header with image left, text right ===== */
     header {
-      background-color: #002b5b;
-      color: #fff;
-      padding: 15px 0;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
+      color: var(--white);
+      padding: 15px 40px; /* Reduced padding */
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      height: 180px; /* Reduced height */
+      width: 100%;
     }
 
-    header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 8px;
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, #00b4d8, #90e0ef);
     }
 
+    .gm-picture {
+      width: 250px; /* Slightly smaller */
+      height: 190px; /* Slightly smaller */
+      object-fit: cover;
+      flex-shrink: 0;
+      border: none;
+      box-shadow: none;
+    }
+
+    .header-text {
+      flex: 1;
+      text-align: left;
+      padding-right: 20px;
+    }
+
+    .header-text h1 {
+      font-size: 2.2rem; /* Slightly smaller */
+      margin-bottom: 12px; /* Reduced */
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+
+    .header-text p {
+      font-size: 1rem; /* Slightly smaller */
+      max-width: 800px;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    /* ===== THINNER Navigation Bar ===== */
     nav {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      background-color: #014272;
+      background: var(--secondary-blue);
+      position: fixed;
+      top: 180px; /* Match reduced header height */
+      left: 0;
+      right: 0;
+      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 6px 0; /* Reduced from 10px */
+      height: 50px; /* Fixed height */
     }
 
     nav a {
-      flex: 1;
-      padding: 14px 18px;
+      padding: 8px 20px; /* Reduced from 12px 25px */
       text-decoration: none;
-      color: #fff;
-      font-size: 1rem;
+      color: var(--white);
+      font-size: 1rem; /* Reduced from 1.1rem */
+      font-weight: 500;
       text-align: center;
-      transition: background 0.3s;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px; /* Reduced from 8px */
+      height: 38px; /* Fixed height for consistency */
     }
 
-    nav a:hover,
+    nav a:hover {
+      background: var(--accent-blue);
+      border-radius: 4px; /* Slightly smaller */
+    }
+
     nav a.active {
-      background-color: #0169b4;
+      background: var(--accent-blue);
+      font-weight: 600;
     }
 
+    /* ===== Main Content ===== */
     main {
       flex: 1;
-      padding: 40px 20px;
-      max-width: 1000px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: 40px auto 20px; /* Reduced top margin */
+      background: var(--white);
+      box-shadow: var(--shadow);
+      border-radius: 16px;
+      border: 1px solid rgba(0, 43, 91, 0.1);
+    }
+
+    /* ===== Page Header ===== */
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 3px solid var(--accent-blue);
+    }
+
+    .page-header h2 {
+      color: var(--primary-blue);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .page-header p {
+      color: #666;
+      font-size: 1.2rem;
+      max-width: 800px;
       margin: 0 auto;
-      background: #fff;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ===== About Content ===== */
+    .about-content {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section {
+      margin-bottom: 40px;
+      padding: 25px;
+      background: var(--gray-light);
       border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      border-left: 5px solid var(--accent-blue);
+    }
+
+    .section h2 {
+      color: var(--primary-blue);
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      font-weight: 600;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(0, 43, 91, 0.1);
+    }
+
+    .section h3 {
+      color: var(--secondary-blue);
+      margin: 20px 0 10px;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .section p {
+      margin-bottom: 15px;
+      text-align: justify;
+      color: #555;
+    }
+
+    .section ul {
+      margin: 15px 0;
+      padding-left: 25px;
+    }
+
+    .section li {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .highlight {
+      background: rgba(0, 107, 180, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent-blue);
+      margin: 20px 0;
+    }
+
+    .highlight strong {
+      color: var(--primary-blue);
+    }
+
+    /* ===== Contact Information ===== */
+    .contact-section {
+      background: linear-gradient(135deg, var(--light-blue) 0%, #d9e4ec 100%);
+      border-radius: 16px;
+      padding: 30px;
+      margin-top: 50px;
+      border: 2px solid var(--accent-blue);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
       margin-top: 20px;
+    }
+
+    .contact-card {
+      background: var(--white);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-blue);
+      box-shadow: 0 8px 20px rgba(0, 43, 91, 0.15);
+    }
+
+    .contact-card h4 {
+      color: var(--primary-blue);
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .contact-card p {
+      margin: 8px 0;
+      color: #555;
+    }
+
+    .contact-card a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .contact-card a:hover {
+      color: var(--primary-blue);
+      text-decoration: underline;
+    }
+
+    /* ===== Mission Vision Section ===== */
+    .mv-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .mv-card {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      border-top: 5px solid var(--accent-blue);
+      transition: var(--transition);
+    }
+
+    .mv-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 43, 91, 0.15);
+    }
+
+    .mv-card h3 {
+      color: var(--primary-blue);
+      margin-bottom: 15px;
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+
+    .mv-card p {
+      color: #666;
+      font-size: 1.1rem;
       line-height: 1.7;
     }
 
-    main h2 {
-      margin-bottom: 15px;
-      color: #002b5b;
-      text-align: center;
-    }
-
-    main p {
-      margin-bottom: 15px;
-      text-align: justify;
-    }
-
+    /* ===== Footer ===== */
     footer {
-      text-align: center;
-      background: #002b5b;
-      color: white;
-      padding: 15px;
-      font-size: 0.9rem;
+      background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
+      color: var(--white);
+      padding: 25px 20px;
+      font-size: 0.95rem;
       margin-top: auto;
+      text-align: center;
     }
 
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .contact-info {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 10px 0;
+    }
+
+    .contact-info div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .copyright {
+      opacity: 0.8;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    /* ===== Responsive Design ===== */
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.5rem;
+      /* Adjust body padding for mobile */
+      body {
+        padding-top: 210px; /* Adjusted for thinner header */
       }
+      
+      /* Header responsive adjustments */
+      header {
+        flex-direction: column;
+        text-align: center;
+        padding: 12px;
+        gap: 12px;
+        height: auto;
+        min-height: 160px;
+        position: fixed;
+      }
+      
+      .gm-picture {
+        width: 160px;
+        height: 120px;
+        margin: 0 auto;
+      }
+      
+      .header-text {
+        text-align: center;
+        padding-right: 0;
+      }
+      
+      .header-text h1 {
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+      }
+      
+      .header-text p {
+        font-size: 0.9rem;
+        padding: 0 5px;
+      }
+
+      /* Adjust nav position for mobile */
+      nav {
+        top: 160px; /* Match reduced header height */
+        padding: 4px 0; /* Even thinner on mobile */
+        height: 42px;
+      }
+
       nav a {
-        flex: 100%;
-        font-size: 1.1rem;
+        padding: 6px 12px; /* Even smaller on mobile */
+        font-size: 0.9rem; /* Smaller font */
+        gap: 4px;
+        height: 34px;
       }
+
       main {
         padding: 20px;
-        margin: 15px;
+        margin: 50px 15px 20px; /* Reduced top margin */
+      }
+
+      .page-header h2 {
+        font-size: 2rem;
+      }
+
+      .page-header p {
+        font-size: 1.1rem;
+      }
+
+      .section {
+        padding: 20px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mv-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .contact-info {
+        flex-direction: column;
+        gap: 10px;
       }
     }
+
+    @media (max-width: 480px) {
+      body {
+        padding-top: 180px; /* Further reduced */
+      }
+      
+      header {
+        padding: 10px;
+        gap: 10px;
+        min-height: 140px;
+      }
+      
+      .gm-picture {
+        width: 120px;
+        height: 90px;
+      }
+      
+      .header-text h1 {
+        font-size: 1.4rem;
+      }
+      
+      .header-text p {
+        font-size: 0.8rem;
+      }
+      
+      nav {
+        top: 140px;
+        padding: 3px 0;
+        height: 38px;
+      }
+      
+      nav a {
+        padding: 4px 8px;
+        font-size: 0.85rem;
+        gap: 3px;
+        height: 32px;
+      }
+
+      main {
+        padding: 15px;
+        margin: 45px 10px 15px;
+      }
+
+      .page-header h2 {
+        font-size: 1.6rem;
+      }
+
+      .section h2 {
+        font-size: 1.5rem;
+      }
+
+      .mv-card {
+        padding: 20px;
+      }
+    }
+
+    /* ===== Animations ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section, .mv-card, .contact-section {
+      animation: fadeInUp 0.6s ease-out backwards;
+    }
+
+    .section:nth-child(1) { animation-delay: 0.1s; }
+    .section:nth-child(2) { animation-delay: 0.2s; }
+    .section:nth-child(3) { animation-delay: 0.3s; }
+    .mv-card:nth-child(1) { animation-delay: 0.4s; }
+    .mv-card:nth-child(2) { animation-delay: 0.5s; }
+    .contact-section { animation-delay: 0.6s; }
   </style>
 </head>
 <body>
+  <!-- ===== Updated Header with Image ===== -->
   <header>
-    <h1>Siniloan Water District</h1>
-    <p>"Serbisyong Sapat, Serbisyong Tapat". SIWADI Building P. Burgos St. Siniloan, Laguna Tel. No. 049-5016656.</p>
+    <img src="images/solsusan.png" alt="Siniloan Water District" class="gm-picture" 
+         onerror="this.src='https://via.placeholder.com/250x150/002b5b/ffffff?text=SIWADI'">
+    <div class="header-text">
+      <h1>Commercial Division of Siniloan Water District</h1>
+      <p>"Serbisyong Tapat, Serbisyong Sapat". SIWADI Building P. Burgos St. Siniloan, Laguna Tel. No. 049-5016656.</p>
+    </div>
   </header>
 
+  <!-- ===== Updated Navigation Bar ===== -->
   <nav>
     <a href="services.html">🏠 Home</a>
-    <a href="about.html" class="active">🏢 About Us</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdiEmnTo91X_p8VOxcMmgBZXEBxLhSaz3CvABGqaOFXCEVpPw/viewform" target="_blank" rel="noopener">💧 New Connection Inquiry</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSf4tYSuzu4pwxj5kDNthMsheTLev1p19A1sqqJR_AsMSTPq4Q/viewform" target="_blank" rel="noopener">📝 CSM Survey</a>
-    <a href="index.html">📄 Bill Inquiry</a>
-    <a href="calculator.html">🧮 Water Bill Calculator</a>
+    <a href="services2.html">🛠️ Services</a>
+    <a href="about.html" class="active">🏢 About SIWADI</a>
   </nav>
 
   <main>
-        <h1>HISTORY OF SINILOAN WATER DISTRICT (SIWADI)</h1>
+    <!-- ===== Page Header ===== -->
+    <section class="page-header">
+      <h2>About Siniloan Water District</h2>
+      <p>Discover our rich history, mission, vision, and commitment to serving the Siniloan community</p>
+    </section>
+
+    <!-- ===== About Content ===== -->
+    <div class="about-content">
+      <!-- History Section -->
+      <section class="section">
+        <h2>History of Siniloan Water District (SIWADI)</h2>
         
-        <p>
-            Siniloan Water District (SIWADI) in Laguna is among the many water districts around the country that do not land in the pages of newspapers. If one was to put a face on Siniloan Water District and place it among a crowd, it would stand just like in a group of nameless Filipino faces that make this nation go forward. But its size has not prevented it from aspiring for growth.
-        </p>
+        <p>Siniloan Water District (SIWADI) in Laguna is among the many water districts around the country that do not land in the pages of newspapers. If one was to put a face on Siniloan Water District and place it among a crowd, it would stand just like in a group of nameless Filipino faces that make this nation go forward. But its size has not prevented it from aspiring for growth.</p>
 
-        <p>
-            Looking back at the early years, Siniloan has an existing water supply system constructed by **Bureau of Public Works** then turned over to the National Waterworks and Sewerage Authority, then to the Municipal Government of Siniloan. During that time, it has two pumping station but only one is operational, one small-capacity spring (Butadero) which was also tapped by the system. Majority of the consumers use the water from the system for washing purposes only due to its bad odor and poor water quality. Water for drinking was taken from shallow wells and free flowing wells. Many residents use booster pumps and jetmatic hand pumps tapped in the distribution lines. This causes negative pressure in the system, thus waste water enters the distribution lines thru leakages that result to poor water quality.
-        </p>
+        <p>Looking back at the early years, Siniloan has an existing water supply system constructed by <strong>Bureau of Public Works</strong> then turned over to the National Waterworks and Sewerage Authority, then to the Municipal Government of Siniloan. During that time, it has two pumping station but only one is operational, one small-capacity spring (Butadero) which was also tapped by the system. Majority of the consumers use the water from the system for washing purposes only due to its bad odor and poor water quality. Water for drinking was taken from shallow wells and free flowing wells. Many residents use booster pumps and jetmatic hand pumps tapped in the distribution lines. This causes negative pressure in the system, thus waste water enters the distribution lines thru leakages that result to poor water quality.</p>
         
-        <p>
-            The need for an adequate and reliable water supply has been regarded by town officials as of foremost necessity to the people. Therefore, sustaining its existence has been given importance accordingly.
-        </p>
+        <p>The need for an adequate and reliable water supply has been regarded by town officials as of foremost necessity to the people. Therefore, sustaining its existence has been given importance accordingly.</p>
 
-        <h2>Formation of SIWADI</h2>
-        <p>
-            In **1988**, Ms. Sonia Costelo, a **LWUA** personnel who is also a resident of Siniloan proposed and explained to the Siniloan local officials the benefits of establishing a water district in a municipality, as likewise provided for under **PD 198**. Hence, a public hearing was conducted by Sangguniang Bayan on April 29, 1988 at the Leonides de Leon Hall, Siniloan Elementary School for the purpose of determining the consensus of whether or not to form a water district. Result of the public hearing showed that the people favor for the formation of Siniloan Water District covering the whole Municipality of Siniloan.
-        </p>
+        <h3>Formation of SIWADI</h3>
+        <p>In <strong>1988</strong>, Ms. Sonia Costelo, a <strong>LWUA</strong> personnel who is also a resident of Siniloan proposed and explained to the Siniloan local officials the benefits of establishing a water district in a municipality, as likewise provided for under <strong>PD 198</strong>. Hence, a public hearing was conducted by Sangguniang Bayan on April 29, 1988 at the Leonides de Leon Hall, Siniloan Elementary School for the purpose of determining the consensus of whether or not to form a water district. Result of the public hearing showed that the people favor for the formation of Siniloan Water District covering the whole Municipality of Siniloan.</p>
 
-        <p>
-            On **January 18, 1989**, the Sangguniang Bayan of Siniloan under the leadership of Mayor Cenon C. Realeza passed **Resolution No. 19, Series of 1989** forming the Siniloan Water District. This resolution was filed with the Local Water Utilities Administration (LWUA) and LWUA found out that the Water District met all the minimum requirements including the appointment of the five (5) Board of Directors representing the major sectors of the community, namely:
-            <br>
-            **Board of Directors:** Mr. Juan O. Javier, Mr. Jose M. Reyes, Engr. Isidoro V. Realeza, Mrs. Evelia V. Religioso and Atty. Esther R. Realeza representing the civic, education, professional, business and women sector, respectively.
-        </p>
+        <div class="highlight">
+          <p><strong>Board of Directors (Initial):</strong> Mr. Juan O. Javier, Mr. Jose M. Reyes, Engr. Isidoro V. Realeza, Mrs. Evelia V. Religioso and Atty. Esther R. Realeza representing the civic, education, professional, business and women sector, respectively.</p>
+        </div>
 
-        <p>
-            The board looked for a General Manager through advertisement but no one was interested. Engr. Isidoro V. Realeza resigned as member of the Board of Directors and accepted the position of the **General Manager**. Engr. Alden R. Mayor was appointed as his replacement in the Board. Completion of all the requirements including Certification Program were accomplished which eventually led to the issuance of the **Conditional Certificate of Conformance (CCC) No. 395 on April 24, 1989**. With its creation, SIWADI took over the ownership and management of the waterworks system from the Municipal Government in accordance with Presidential Decree No. 198.
-        </p>
+        <p>On <strong>January 18, 1989</strong>, the Sangguniang Bayan of Siniloan under the leadership of Mayor Cenon C. Realeza passed <strong>Resolution No. 19, Series of 1989</strong> forming the Siniloan Water District. This resolution was filed with the Local Water Utilities Administration (LWUA) and LWUA found out that the Water District met all the minimum requirements including the appointment of the five (5) Board of Directors.</p>
 
-        <h2>Early Challenges and Financial Status</h2>
-        <p>
-            When SIWADI took over the system, there was not much of a legacy—no office, no staff, no funds, not even an old plumbing tool to start with. The District was confronted with strings of operational depression, plagued with problems like poor and unsafe water, insufficient water supply, and breakdown of the pumping facility. Pressure was very low in most parts of the service area.
-        </p>
-        <p>
-            Registered service connections turned over by the municipal government totaled **227 without water meters**, all of which were billed a flat rate (P35.00 per month). Consumers refused to pay their monthly water bill due to poor service. The General Manager was the only personnel. The Municipal Government gave a subsidy of **P500.00 a month** for twelve months (P6,000.00 total in one year).
-        </p>
+        <p>The board looked for a General Manager through advertisement but no one was interested. Engr. Isidoro V. Realeza resigned as member of the Board of Directors and accepted the position of the <strong>General Manager</strong>. Engr. Alden R. Mayor was appointed as his replacement in the Board. Completion of all the requirements including Certification Program were accomplished which eventually led to the issuance of the <strong>Conditional Certificate of Conformance (CCC) No. 395 on April 24, 1989</strong>. With its creation, SIWADI took over the ownership and management of the waterworks system from the Municipal Government in accordance with Presidential Decree No. 198.</p>
 
-        <h2>Improvement and Expansion</h2>
-        <p>
-            A Program of Work (POW) was prepared for the immediate rehabilitation of the water system. **LWUA approved the P2.6 Million Level III Loan on September 19, 1990.** This amount was used for the construction of 2 pumping stations, disinfection facility, leak detection and repair, rehabilitation of Butadero Spring and reservoir, purchase of generator sets, pumps, and office equipment. **SIWADI started its full operation on August 23, 1991.**
-        </p>
-        <p>
-            The water system was improved after the implementation of the Interim Improvement Project (IIP). SIWADI’s operation expanded continually with additional loans of **P3.821 Million in March 1997** from LWUA and through corporate-generated funds.
-        </p>
-        <p>
-            For the past **21 years**, Siniloan Water District has achieved an increase in water service connections from 227 in 1989 to **more than 4,598 connections** at present. SIWADI now serves **fourteen barangays** of Siniloan and the project of annexing the Municipality of Famy is now finished, made possible through a **P8.239 Million Level III Loan from LWUA in 2007**.
-        </p>
+        <h3>Early Challenges and Financial Status</h3>
+        <p>When SIWADI took over the system, there was not much of a legacy—no office, no staff, no funds, not even an old plumbing tool to start with. The District was confronted with strings of operational depression, plagued with problems like poor and unsafe water, insufficient water supply, and breakdown of the pumping facility. Pressure was very low in most parts of the service area.</p>
+        
+        <p>Registered service connections turned over by the municipal government totaled <strong>227 without water meters</strong>, all of which were billed a flat rate (P35.00 per month). Consumers refused to pay their monthly water bill due to poor service. The General Manager was the only personnel. The Municipal Government gave a subsidy of <strong>P500.00 a month</strong> for twelve months (P6,000.00 total in one year).</p>
 
-        <h2>Acknowledgments and Categorization</h2>
-        <p>
-            The achievement was made possible by the generosity and benevolence of many individuals:
-        </p>
+        <h3>Improvement and Expansion</h3>
+        <p>A Program of Work (POW) was prepared for the immediate rehabilitation of the water system. <strong>LWUA approved the P2.6 Million Level III Loan on September 19, 1990.</strong> This amount was used for the construction of 2 pumping stations, disinfection facility, leak detection and repair, rehabilitation of Butadero Spring and reservoir, purchase of generator sets, pumps, and office equipment. <strong>SIWADI started its full operation on August 23, 1991.</strong></p>
+        
+        <p>The water system was improved after the implementation of the Interim Improvement Project (IIP). SIWADI's operation expanded continually with additional loans of <strong>P3.821 Million in March 1997</strong> from LWUA and through corporate-generated funds.</p>
+        
+        <p>For the past <strong>21 years</strong>, Siniloan Water District has achieved an increase in water service connections from 227 in 1989 to <strong>more than 4,598 connections</strong> at present. SIWADI now serves <strong>fourteen barangays</strong> of Siniloan and the project of annexing the Municipality of Famy is now finished, made possible through a <strong>P8.239 Million Level III Loan from LWUA in 2007</strong>.</p>
+
+        <h3>Acknowledgments and Categorization</h3>
+        <p>The achievement was made possible by the generosity and benevolence of many individuals:</p>
         <ul>
-            <li>Dynamic and hardworking Members of the Board of Directors who helped formulate policies.</li>
-            <li>The determined officials and employees of the Water District.</li>
-            <li>Volunteer individuals who helped in the installation of pump and motor.</li>
-            <li>Sangguniang Panlalawigan of Laguna under **Gov. Joey D. Lina** (provided P1,000,000.00 calamity aid in 1996).</li>
-            <li>**Congressman Magdaleno Palacol** (allocated P900,000.00 from his Country Wide Development Fund in 1997).</li>
-            <li>The unwavering support from Local Water Utilities Administration.</li>
-            <li>The support of local and provincial officials, civic groups, and loyal concessionaires.</li>
+          <li>Dynamic and hardworking Members of the Board of Directors who helped formulate policies.</li>
+          <li>The determined officials and employees of the Water District.</li>
+          <li>Volunteer individuals who helped in the installation of pump and motor.</li>
+          <li>Sangguniang Panlalawigan of Laguna under <strong>Gov. Joey D. Lina</strong> (provided P1,000,000.00 calamity aid in 1996).</li>
+          <li><strong>Congressman Magdaleno Palacol</strong> (allocated P900,000.00 from his Country Wide Development Fund in 1997).</li>
+          <li>The unwavering support from Local Water Utilities Administration.</li>
+          <li>The support of local and provincial officials, civic groups, and loyal concessionaires.</li>
         </ul>
 
-        <p>
-            On **December 15, 2010**, the request for upward classification from **Small to Big Water District** was approved by LWUA. In March 2012, based on the LWD-MaCRO evaluation, Siniloan Water District falls under **Category C**.
-        </p>
+        <p>On <strong>December 15, 2010</strong>, the request for upward classification from <strong>Small to Big Water District</strong> was approved by LWUA. In March 2012, based on the LWD-MaCRO evaluation, Siniloan Water District falls under <strong>Category C</strong>.</p>
         
-        <p>
-            The vision, the dream, the expectation to provide dependable and satisfactory service and deliver safe and potable water continues with steady steps and assured footings for success.
-        </p>
-        
-        <!-- NEW CONTACT INFORMATION SECTION -->
-        <div class="contact-info">
-            <h2>Contact Information</h2>
-            
-            <div class="contact-detail">
-                <strong>Commercial Division:</strong> 
-                Telefax No.: <a href="tel:0495016656">(049) 501-6656</a>
-            </div>
-            
-            <div class="contact-detail">
-                <strong>Admin & Finance Division:</strong> 
-                Tel. No.: <a href="tel:0495013620">(049) 501-3620</a>
-            </div>
+        <p>The vision, the dream, the expectation to provide dependable and satisfactory service and deliver safe and potable water continues with steady steps and assured footings for success.</p>
+      </section>
 
-            <div class="contact-detail">
-                <strong>Office of the General Manager:</strong> 
-                Telefax No.: <a href="tel:0495016656">(049) 501-6656</a> & <a href="tel:0495013620">(049) 501-3620</a>
-            </div>
-            
-            <div class="contact-detail">
-                <strong>Email Address:</strong> 
-                <a href="mailto:siniloanwd@yahoo.com">siniloanwd@yahoo.com</a>
-            </div>
-            
-            <div class="contact-detail">
-                <strong>Facebook Page:</strong> 
-                <a href="https://www.facebook.com/SiniloanWaterDistrict" target="_blank">SiniloanWaterDistrict</a>
-            </div>
-            
+      <!-- Mission & Vision Section -->
+      <div class="mv-container">
+        <div class="mv-card">
+          <h3>🏆 Our Mission</h3>
+          <p>The mission of Siniloan Water District is to provide dependable supply of safe, clean and potable water to its clientele in an efficient, responsive and affordable manner.</p>
         </div>
-        <!-- END CONTACT INFORMATION SECTION -->
+        
+        <div class="mv-card">
+          <h3>🎯 Our Vision</h3>
+          <p>Siniloan Water District will be a dynamic partner dedicated in providing essential services to our community that improves the quality of life, health and sanitation.</p>
+        </div>
+      </div>
+
+      <!-- Contact Information Section -->
+      <section class="contact-section">
+        <h2>Contact Information</h2>
+        
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h4>📞 Commercial Division</h4>
+            <p><strong>Telefax No.:</strong></p>
+            <p><a href="tel:0495016656">(049) 501-6656</a></p>
+          </div>
+          
+          <div class="contact-card">
+            <h4>💼 Admin & Finance Division</h4>
+            <p><strong>Tel. No.:</strong></p>
+            <p><a href="tel:0495013620">(049) 501-3620</a></p>
+          </div>
+          
+          <div class="contact-card">
+            <h4>👔 Office of the General Manager</h4>
+            <p><strong>Telefax No.:</strong></p>
+            <p><a href="tel:0495016656">(049) 501-6656</a></p>
+            <p><a href="tel:0495013620">(049) 501-3620</a></p>
+          </div>
+          
+          <div class="contact-card">
+            <h4>📧 Email Address</h4>
+            <p><a href="mailto:siniloanwd@yahoo.com">siniloanwd@yahoo.com</a></p>
+          </div>
+          
+          <div class="contact-card">
+            <h4>🌐 Social Media</h4>
+            <p><strong>Facebook Page:</strong></p>
+            <p><a href="https://www.facebook.com/SiniloanWaterDistrict" target="_blank" rel="noopener">
+              SiniloanWaterDistrict
+            </a></p>
+          </div>
+          
+          <div class="contact-card">
+            <h4>📍 Office Address</h4>
+            <p>SIWADI Building, P. Burgos St.</p>
+            <p>Siniloan, Laguna</p>
+            <p>Philippines</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
 
   <footer>
-    © 2025 Siniloan Water District - All Rights Reserved
+    <div class="footer-content">
+      <div class="contact-info">
+        <div>📍 P. Burgos St. Siniloan, Laguna</div>
+        <div>📞 049-5016656</div>
+        <div>✉️ contact@siwadi.gov.ph</div>
+      </div>
+      <div class="copyright">
+        © 2025 Siniloan Water District - "Serbisyong Sapat, Serbisyong Tapat"
+      </div>
+    </div>
   </footer>
+
+  <script>
+    // Navigation highlighting
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop();
+      const navLinks = document.querySelectorAll('nav a');
+      
+      navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href');
+        // Remove active class from all
+        link.classList.remove('active');
+        
+        // Add active class to current page
+        if ((currentPage === 'about.html' && linkPage === 'about.html') ||
+            (currentPage === 'services.html' && linkPage === 'services.html') ||
+            (currentPage === 'services2.html' && linkPage === 'services2.html')) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
