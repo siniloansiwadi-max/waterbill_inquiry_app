@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SIWADI Services - GCash Payment, New Connection, Water Rates">
+  <title>SIWADI - Services | GCash, New Connection, Rates</title>
+  <style>
+    /* ===== Base Reset & Variables ===== */
+    :root {
+      --primary-blue: #002b5b;
+      --secondary-blue: #014272;
+      --accent-blue: #0169b4;
+      --light-blue: #e8f0f8;
+      --white: #ffffff;
+      --gray-light: #f5f7fa;
+      --shadow: 0 4px 12px rgba(0, 43, 91, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--light-blue) 0%, #d9e4ec 100%);
+      background-attachment: fixed;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      padding-top: 200px; /* Space for fixed header */
+    }
+
+    /* ===== Fixed Header with image left, text right ===== */
+    header {
+      background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
+      color: var(--white);
+      padding: 15px 40px; /* Reduced padding */
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      height: 180px; /* Reduced height */
+      width: 100%;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, #00b4d8, #90e0ef);
+    }
+
+    .gm-picture {
+      width: 250px; /* Slightly smaller */
+      height: 190px; /* Slightly smaller */
+      object-fit: cover;
+      flex-shrink: 0;
+      border: none;
+      box-shadow: none;
+    }
+
+    .header-text {
+      flex: 1;
+      text-align: left;
+      padding-right: 20px;
+    }
+
+    .header-text h1 {
+      font-size: 2.2rem; /* Slightly smaller */
+      margin-bottom: 12px; /* Reduced */
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+
+    .header-text p {
+      font-size: 1rem; /* Slightly smaller */
+      max-width: 800px;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    /* ===== THINNER Navigation Bar ===== */
+    nav {
+      display: flex;
+      justify-content: center;
+      background: var(--secondary-blue);
+      position: fixed;
+      top: 180px; /* Match reduced header height */
+      left: 0;
+      right: 0;
+      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 6px 0; /* Reduced from 10px */
+      height: 50px; /* Fixed height */
+    }
+
+    nav a {
+      padding: 8px 20px; /* Reduced from 12px 25px */
+      text-decoration: none;
+      color: var(--white);
+      font-size: 1rem; /* Reduced from 1.1rem */
+      font-weight: 500;
+      text-align: center;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px; /* Reduced from 8px */
+      height: 38px; /* Fixed height for consistency */
+    }
+
+    nav a:hover {
+      background: var(--accent-blue);
+      border-radius: 4px; /* Slightly smaller */
+    }
+
+    nav a.active {
+      background: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    /* ===== Main Content ===== */
+    main {
+      flex: 1;
+      padding: 30px;
+      max-width: 1200px;
+      margin: 40px auto 20px; /* Reduced top margin */
+      background: var(--white);
+      box-shadow: var(--shadow);
+      border-radius: 16px;
+      border: 1px solid rgba(0, 43, 91, 0.1);
+    }
+
+    /* ===== Page Header ===== */
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 3px solid var(--accent-blue);
+    }
+
+    .page-header h2 {
+      color: var(--primary-blue);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .page-header p {
+      color: #666;
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* ===== Image Gallery ===== */
+    .services-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+
+    .service-item {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: visible; /* Changed from hidden */
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+      border: 2px solid var(--light-blue);
+      cursor: pointer;
+    }
+
+    .service-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 43, 91, 0.2);
+      border-color: var(--accent-blue);
+      z-index: 10; /* Bring to front on hover */
+    }
+
+    .service-header {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: var(--white);
+      padding: 25px;
+      text-align: center;
+    }
+
+    .service-header h3 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .service-header p {
+      opacity: 0.9;
+      font-size: 1rem;
+    }
+
+    .service-image-container {
+      padding: 25px;
+      text-align: center;
+      position: relative;
+    }
+
+    .service-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      max-height: 400px; /* Limit height in normal state */
+      object-fit: cover; /* Crop in normal state */
+    }
+
+    /* Hover effect: Show original size */
+    .service-item:hover .service-image {
+      transform: scale(1.05);
+      object-fit: contain; /* Show full image on hover */
+      max-height: 600px; /* Allow more height for original size */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      z-index: 20;
+      position: relative;
+    }
+
+    /* Add zoom indicator on hover */
+    .service-item:hover::after {
+      content: '🔍 Click to view full size';
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(0, 43, 91, 0.9);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      z-index: 30;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .image-note {
+      margin-top: 15px;
+      color: #666;
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+
+    /* ===== Modal for Fullscreen View ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 10000; /* Higher than header */
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 40px;
+    }
+
+    .modal-content {
+      max-width: 95%;
+      max-height: 90vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modal-image {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain; /* Show original/full image */
+      border-radius: 8px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+      background: var(--white); /* Background for transparent images */
+    }
+
+    .modal-info {
+      color: var(--white);
+      text-align: center;
+      margin-top: 25px;
+      padding: 0 30px;
+      max-width: 800px;
+    }
+
+    .modal-info h3 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+
+    .modal-info p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -60px;
+      right: 0;
+      color: var(--white);
+      font-size: 4rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: var(--transition);
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-modal:hover {
+      color: #90e0ef;
+      transform: scale(1.2);
+    }
+
+    .modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      pointer-events: none;
+    }
+
+    .modal-nav-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      border: none;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      pointer-events: all;
+    }
+
+    .modal-nav-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    /* ===== Contact Box ===== */
+    .contact-box {
+      background: linear-gradient(135deg, var(--light-blue) 0%, #d9e4ec 100%);
+      border-radius: 16px;
+      padding: 30px;
+      margin-top: 40px;
+      text-align: center;
+      border: 2px solid var(--accent-blue);
+    }
+
+    .contact-box h3 {
+      color: var(--primary-blue);
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #333;
+      font-size: 1.1rem;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
+      color: var(--white);
+      padding: 30px 20px;
+      font-size: 1rem;
+      margin-top: auto;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-contact {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 15px 0;
+    }
+
+    .footer-contact div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+    }
+
+    .copyright {
+      opacity: 0.9;
+      font-size: 1rem;
+      margin-top: 15px;
+      max-width: 800px;
+    }
+
+    /* ===== Animations ===== */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .service-item {
+      animation: fadeIn 0.6s ease-out backwards;
+    }
+
+    .service-item:nth-child(1) { animation-delay: 0.1s; }
+    .service-item:nth-child(2) { animation-delay: 0.2s; }
+    .service-item:nth-child(3) { animation-delay: 0.3s; }
+
+    /* ===== Responsive Design ===== */
+    @media (max-width: 992px) {
+      .services-gallery {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .page-header h2 {
+        font-size: 2rem;
+      }
+      
+      /* Adjust hover effect for tablet */
+      .service-item:hover .service-image {
+        max-height: 500px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      /* Adjust body padding for mobile */
+      body {
+        padding-top: 210px; /* Adjusted for thinner header */
+      }
+      
+      /* Header responsive adjustments */
+      header {
+        flex-direction: column;
+        text-align: center;
+        padding: 12px;
+        gap: 12px;
+        height: auto;
+        min-height: 160px;
+        position: fixed;
+      }
+      
+      .gm-picture {
+        width: 160px;
+        height: 120px;
+        margin: 0 auto;
+      }
+      
+      .header-text {
+        text-align: center;
+        padding-right: 0;
+      }
+      
+      .header-text h1 {
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+      }
+      
+      .header-text p {
+        font-size: 0.9rem;
+        padding: 0 5px;
+      }
+
+      /* Adjust nav position for mobile */
+      nav {
+        top: 160px; /* Match reduced header height */
+        padding: 4px 0; /* Even thinner on mobile */
+        height: 42px;
+      }
+
+      nav a {
+        padding: 6px 12px; /* Even smaller on mobile */
+        font-size: 0.9rem; /* Smaller font */
+        gap: 4px;
+        height: 34px;
+      }
+
+      main {
+        padding: 20px;
+        margin: 50px 15px 20px; /* Reduced top margin */
+      }
+
+      .page-header h2 {
+        font-size: 1.8rem;
+      }
+
+      .page-header p {
+        font-size: 1.1rem;
+      }
+
+      .service-header {
+        padding: 20px;
+      }
+
+      .service-header h3 {
+        font-size: 1.5rem;
+      }
+
+      /* Adjust hover effect for mobile */
+      .service-item:hover .service-image {
+        max-height: 400px;
+      }
+      
+      .service-item:hover::after {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+        top: 10px;
+        right: 10px;
+      }
+
+      .contact-info {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .footer-contact {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .modal-content {
+        max-width: 100%;
+        padding: 20px;
+      }
+      
+      .modal-nav-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding-top: 180px; /* Further reduced */
+      }
+      
+      header {
+        padding: 10px;
+        gap: 10px;
+        min-height: 140px;
+      }
+      
+      .gm-picture {
+        width: 120px;
+        height: 90px;
+      }
+      
+      .header-text h1 {
+        font-size: 1.4rem;
+      }
+      
+      .header-text p {
+        font-size: 0.8rem;
+      }
+      
+      nav {
+        top: 140px;
+        padding: 3px 0;
+        height: 38px;
+      }
+      
+      nav a {
+        padding: 4px 8px;
+        font-size: 0.85rem;
+        gap: 3px;
+        height: 32px;
+      }
+
+      main {
+        padding: 15px;
+        margin: 45px 10px 15px;
+      }
+
+      .page-header h2 {
+        font-size: 1.6rem;
+      }
+
+      .service-header {
+        padding: 15px;
+      }
+      
+      /* Adjust hover effect for small screens */
+      .service-item:hover .service-image {
+        max-height: 350px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== Updated Header with Image ===== -->
+  <header>
+    <img src="images/solsusan.png" alt="Siniloan Water District" class="gm-picture" 
+         onerror="this.src='https://via.placeholder.com/250x150/002b5b/ffffff?text=SIWADI'">
+    <div class="header-text">
+      <h1>Commercial Division of Siniloan Water District</h1>
+      <p>"Serbisyong Tapat, Serbisyong Sapat". SIWADI Building P. Burgos St. Siniloan, Laguna Tel. No. 049-5016656.</p>
+    </div>
+  </header>
+
+  <!-- ===== Updated Navigation Bar ===== -->
+  <nav>
+    <a href="services.html">🏠 Home</a>
+    <a href="services2.html" class="active">🛠️ Services</a>
+    <a href="about.html">🏢 About SIWADI</a>
+  </nav>
+
+  <main>
+    <!-- ===== Page Header ===== -->
+    <section class="page-header">
+      <h2>SIWADI Services</h2>
+      <p>Hover over images to see original size. Click to open in fullscreen view.</p>
+    </section>
+
+    <!-- ===== Services Gallery ===== -->
+    <div class="services-gallery">
+      <!-- Service 1: GCash Tutorial -->
+      <div class="service-item" data-index="0">
+        <div class="service-header">
+          <h3>GCash Payment</h3>
+          <p>Step-by-step guide for paying through GCash</p>
+        </div>
+        <div class="service-image-container">
+          <img src="images/gcash.jpg" alt="GCash Payment Tutorial" class="service-image"
+               onerror="this.src='https://via.placeholder.com/800x500/002b5b/ffffff?text=GCash+Tutorial+Image'">
+          <p class="image-note">Click or hover to view full size</p>
+        </div>
+      </div>
+
+      <!-- Service 2: New Connection -->
+      <div class="service-item" data-index="1">
+        <div class="service-header">
+          <h3>New Connection</h3>
+          <p>Requirements and application process</p>
+        </div>
+        <div class="service-image-container">
+          <img src="images/newconnection.png" alt="New Connection Instructions" class="service-image"
+               onerror="this.src='https://via.placeholder.com/800x500/014272/ffffff?text=New+Connection+Instructions'">
+          <p class="image-note">Click or hover to view full size</p>
+        </div>
+      </div>
+
+      <!-- Service 3: Water Rates -->
+      <div class="service-item" data-index="2">
+        <div class="service-header">
+          <h3>Water Rates</h3>
+          <p>Current water rates and billing information</p>
+        </div>
+        <div class="service-image-container">
+          <img src="images/rates.jpg" alt="Water Rates Schedule" class="service-image"
+               onerror="this.src='https://via.placeholder.com/800x500/0169b4/ffffff?text=Water+Rates+Schedule'">
+          <p class="image-note">Click or hover to view full size</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Contact Information ===== -->
+    <div class="contact-box">
+      <h3>Need Assistance?</h3>
+      <div class="contact-info">
+        <div class="contact-item">
+          <span>📍</span>
+          <span>P. Burgos St. Siniloan, Laguna</span>
+        </div>
+        <div class="contact-item">
+          <span>📞</span>
+          <span>049-5016656</span>
+        </div>
+        <div class="contact-item">
+          <span>✉️</span>
+          <span>contact@siwadi.gov.ph</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-contact">
+        <div>📍 P. Burgos St. Siniloan, Laguna</div>
+        <div>📞 049-5016656</div>
+        <div>✉️ contact@siwadi.gov.ph</div>
+      </div>
+      <div class="copyright">
+        © 2025 Siniloan Water District - "Serbisyong Sapat, Serbisyong Tapat"
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== Modal for Fullscreen View ===== -->
+  <div id="imageModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal()">&times;</button>
+      <img id="modalImage" class="modal-image" alt="">
+      <div class="modal-info">
+        <h3 id="modalTitle"></h3>
+        <p id="modalDescription"></p>
+      </div>
+      <div class="modal-nav">
+        <button class="modal-nav-btn" onclick="prevImage()">‹</button>
+        <button class="modal-nav-btn" onclick="nextImage()">›</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Gallery functionality
+    let currentModalIndex = 0;
+    const serviceItems = document.querySelectorAll('.service-item');
+    const serviceImages = document.querySelectorAll('.service-image');
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    
+    // Service titles and descriptions
+    const serviceData = [
+      {
+        title: "GCash Payment",
+        description: "Step-by-step guide for paying through GCash"
+      },
+      {
+        title: "New Connection",
+        description: "Requirements and application process"
+      },
+      {
+        title: "Water Rates", 
+        description: "Current water rates and billing information"
+      }
+    ];
+    
+    // Add click event to each service item
+    serviceItems.forEach((item, index) => {
+      item.addEventListener('click', function() {
+        openModal(index);
+      });
+    });
+    
+    function openModal(index) {
+      currentModalIndex = index;
+      const img = serviceImages[index];
+      const data = serviceData[index];
+      
+      modalImage.src = img.src;
+      modalImage.alt = img.alt;
+      modalTitle.textContent = data.title;
+      modalDescription.textContent = data.description;
+      
+      imageModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+    
+    function closeModal() {
+      imageModal.style.display = 'none';
+      document.body.style.overflow = 'auto'; // Restore scrolling
+    }
+    
+    function nextImage() {
+      currentModalIndex = (currentModalIndex + 1) % serviceItems.length;
+      updateModalContent();
+    }
+    
+    function prevImage() {
+      currentModalIndex = (currentModalIndex - 1 + serviceItems.length) % serviceItems.length;
+      updateModalContent();
+    }
+    
+    function updateModalContent() {
+      const img = serviceImages[currentModalIndex];
+      const data = serviceData[currentModalIndex];
+      
+      modalImage.src = img.src;
+      modalImage.alt = img.alt;
+      modalTitle.textContent = data.title;
+      modalDescription.textContent = data.description;
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (imageModal.style.display === 'flex') {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+      }
+    });
+    
+    // Close modal when clicking outside
+    imageModal.addEventListener('click', (e) => {
+      if (e.target === imageModal) {
+        closeModal();
+      }
+    });
+    
+    // Navigation highlighting
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop();
+      const navLinks = document.querySelectorAll('nav a');
+      
+      navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href');
+        // Remove active class from all
+        link.classList.remove('active');
+        
+        // Add active class to current page
+        if ((currentPage === 'services2.html' && linkPage === 'services2.html') ||
+            (currentPage === 'services.html' && linkPage === 'services.html') ||
+            (currentPage === 'about.html' && linkPage === 'about.html')) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
