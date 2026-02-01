@@ -486,7 +486,7 @@
 
 <div class="new-button-container">
     <a href="services.html">
-        <button id="services-button">View our gallery</button>
+        <button id="services-button">Visit our gallery</button>
     </a>
 </div>
     
@@ -500,7 +500,7 @@
 // TWO Web App URLs (UPDATED)
 // ---------------------------
 // DATA_WEB_APP_URL: your existing inquiry script (same as original WEB_APP_URL)
-const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxqw1ujDkYy5rzDQc_sITyVdB5D4TVPJE7DLs1oQhQmOp2VE_MAXnf4x6f_WgKrxqwO/exec';
+const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwe0PWj59RsVzeLtdI64AvV8bXi8D9ZMIPOrBgaDzWlYiSU0xARCxp0SK86kkTxAG0T/exec';
 
 // LOG_WEB_APP_URL: replace this placeholder with your activity-log script's web app URL
 const LOG_WEB_APP_URL  = 'https://script.google.com/macros/s/AKfycbxQKyzoU1AczxwzSiM24DA7TNRsUmiXocgH-TBY7JoM5Xux9wVNZUWBB6ycD4sr-pBE/exec';
@@ -510,12 +510,15 @@ const DISPLAY_MAP = {
     'Account No.': 'Account Number', 
     'Name': 'Name',
     'Address': 'Billing Address', 
-    'No.': 'Meter Number',  
+    'No.': 'Meter Number',
+    'Status for App': 'Account Status',
     'BALANCE': 'Water Bill',
     'AROBALANCE': 'S.C. / Materials', 
-    'Total': 'Total Amount Due',          
+    'Total': 'Total Amount Due',  
+    'Reading Date': 'Reading Date',       // NEW: Column L        
     'Due Date': 'Payment Due Date',       
-    'Status for App': 'Account Status'            
+    'Reading Date': 'Reading Date',       // NEW: Column L
+    'Discon Date': 'Disconnection Date'   // NEW: Column M
 };
 
 // Get references to DOM elements
@@ -700,4 +703,3 @@ async function logInquiry(accountNo, name) {
 
 </body>
 </html>
-
