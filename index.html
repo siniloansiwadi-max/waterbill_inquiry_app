@@ -271,23 +271,6 @@
             overflow-wrap: break-word;
             border: 2px solid #e0e0e0;
         }
-
-        #new-inquiry-button {
-            background: linear-gradient(to bottom, #2a5298, #1e3c72);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            float: right;
-            margin-top: 15px;
-            font-size: 0.9rem;
-        }
-
-        #new-inquiry-button:hover {
-            background: linear-gradient(to bottom, #1e3c72, #2a5298);
-        }
         
         /* ====================================================================== */
         /* 8. VERTICAL GAP FIXES (For clean list display) */
@@ -321,6 +304,65 @@
             border-bottom: 2px solid #f0f0f0;
             margin-bottom: 15px;
         }
+
+/* Modal button container */
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Equal-sized buttons */
+.modal-button {
+    flex: 1 1 0;        /* This makes them equal width */
+    min-width: 0;        /* Prevents flex overflow */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: white;
+    transition: all 0.3s ease;
+    white-space: nowrap;  /* Keeps text on one line */
+}
+
+#pay-bills-button {
+    background: linear-gradient(to bottom, #007aff, #0051a8);
+}
+
+#pay-bills-button:hover {
+    background: linear-gradient(to bottom, #0051a8, #003d80);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 122, 255, 0.3);
+}
+
+#new-inquiry-button {
+    background: linear-gradient(to bottom, #2a5298, #1e3c72);
+}
+
+#new-inquiry-button:hover {
+    background: linear-gradient(to bottom, #1e3c72, #0f2a4a);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(30, 60, 114, 0.3);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+    .modal-buttons {
+        flex-direction: column;
+    }
+    
+    .modal-button {
+        width: 100%;
+    }
+    
+    #pay-bills-button, 
+    #new-inquiry-button {
+        white-space: normal;  /* Allows text wrap on mobile */
+    }
+}
+
 
         /* ====================================================================== */
         /* 9. SERVICES BUTTON STYLING */
@@ -480,7 +522,10 @@
         <div id="modal-result">
             </div>
         
-        <button id="new-inquiry-button" onclick="closeModal()">New Inquiry</button>
+        <div class="modal-buttons">
+            <button id="pay-bills-button" class="modal-button" onclick="openGCash()">📱 Open GCash</button>
+            <button id="new-inquiry-button" class="modal-button" onclick="closeModal()">🔄 New Inquiry</button>
+        </div>
     </div>
 </div>
 
@@ -675,7 +720,6 @@ async function fetchAccountData() {
     }
 }
 
-
 // ------------------------------------------------------------------
 // logInquiry: sends account, name and timestamp to your LOG_WEB_APP_URL
 // ------------------------------------------------------------------
@@ -699,8 +743,55 @@ async function logInquiry(accountNo, name) {
         console.error('Failed to log inquiry:', err);
     }
 }
+
+// Function to open GCash app (simplified version)
+function openGCash() {
+    const accountNumber = document.getElementById('accountNumber').value.trim();
+    
+    if (!accountNumber) {
+        alert('Please enter an account number first');
+        return;
+    }
+    
+    // Show which account they're paying for
+    alert(`Opening GCash app for account: ${accountNumber}\n\nPlease manually enter this account number in GCash.`);
+    
+    // Detect mobile device
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const isAndroid = /android/i.test(userAgent);
+    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+    
+    if (isAndroid) {
+        // Android: Use intent with GCash package name
+        const gcashIntent = 'intent://#Intent;package=com.globe.gcash.android;scheme=gcash;end;';
+        window.location.href = gcashIntent;
+        
+        // Fallback to Play Store if app not installed
+        setTimeout(function() {
+            if (confirm("GCash app not found. Install from Play Store?")) {
+                window.location.href = "market://details?id=com.globe.gcash.android";
+            }
+        }, 800);
+    } 
+    else if (isIOS) {
+        // iOS: Try gcash:// scheme
+        window.location.href = 'gcash://';
+        
+        // Fallback to App Store if app not installed
+        setTimeout(function() {
+            if (confirm("GCash app not found. Open App Store?")) {
+                window.location.href = "https://apps.apple.com/ph/app/gcash/id1146801530";
+            }
+        }, 800);
+    }
+    else {
+        // Desktop: Show instructions
+        alert("Please open GCash on your mobile device to pay.\n\nAccount: " + accountNumber);
+    }
+}
+
+
 </script>
 
 </body>
 </html>
-
