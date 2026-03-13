@@ -3,463 +3,386 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Siniloan Water District Official Portal - Water services, bill inquiry, and connections">
-  <title>SIWADI - Siniloan Water District | Home</title>
+  <meta name="description" content="Siniloan Water District Official Portal – streamlined tabs, full background.">
+  <title>SIWADI · professional tabs</title>
   <style>
-    /* ===== Base Reset & Variables ===== */
-    :root {
-      --primary-blue: #002b5b;
-      --secondary-blue: #014272;
-      --accent-blue: #0169b4;
-      --light-blue: #e8f0f8;
-      --white: #ffffff;
-      --gray-light: #f5f7fa;
-      --shadow: 0 4px 12px rgba(0, 43, 91, 0.1);
-      --transition: all 0.3s ease;
-    }
-
+    /* ===== RESET & GLOBAL ===== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
     }
 
     body {
-      background: linear-gradient(135deg, var(--light-blue) 0%, #d9e4ec 100%);
-      background-attachment: fixed;
-      color: #333;
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      background: #0f172a;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      line-height: 1.6;
-      padding-top: 200px; /* Reduced for thinner nav */
+      color: #1e293b;
+      line-height: 1.5;
+      position: relative;
     }
 
-    /* ===== Fixed Header with image left, text right ===== */
+    /* FULLSCREEN BACKGROUND (building.jpg) */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('images/building.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: brightness(0.4) blur(2px);
+      transform: scale(1.02);
+      z-index: -2;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 20, 40, 0.65);
+      z-index: -1;
+    }
+
+    /* ===== FIXED HEADER ===== */
     header {
-      background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
-      color: var(--white);
-      padding: 15px 40px; /* Reduced padding */
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 1000;
-      overflow: hidden;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      padding: 0.75rem 2.5rem;
       display: flex;
       align-items: center;
-      gap: 40px;
-      height: 180px; /* Reduced height */
-      width: 100%;
-    }
-
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(to right, #00b4d8, #90e0ef);
+      gap: 2rem;
+      height: 110px;
+      z-index: 1050;
+      border-bottom: 3px solid #0a5c8c;
     }
 
     .gm-picture {
-      width: 250px; /* Slightly smaller */
-      height: 190px; /* Slightly smaller */
+      width: 88px;
+      height: 88px;
       object-fit: cover;
-      flex-shrink: 0;
-      border: none;
-      box-shadow: none;
-    }
-
-    .header-text {
-      flex: 1;
-      text-align: left;
-      padding-right: 20px;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      background: white;
     }
 
     .header-text h1 {
-      font-size: 2.2rem; /* Slightly smaller */
-      margin-bottom: 12px; /* Reduced */
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      line-height: 1.2;
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: #0a2e5c;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.2rem;
     }
 
     .header-text p {
-      font-size: 1rem; /* Slightly smaller */
-      max-width: 800px;
-      opacity: 0.9;
-      line-height: 1.5;
+      font-size: 1rem;
+      color: #334155;
+      font-weight: 500;
     }
 
-    /* ===== THINNER Navigation Bar ===== */
+    /* ===== NAVIGATION ===== */
     nav {
-      display: flex;
-      justify-content: center;
-      background: var(--secondary-blue);
       position: fixed;
-      top: 180px; /* Match reduced header height */
+      top: 110px;
       left: 0;
       right: 0;
-      z-index: 999;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      padding: 6px 0; /* Reduced from 10px */
-      height: 50px; /* Fixed height */
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      z-index: 1040;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
     }
 
     nav a {
-      padding: 8px 20px; /* Reduced from 12px 25px */
+      color: #0a2e5c;
       text-decoration: none;
-      color: var(--white);
-      font-size: 1rem; /* Reduced from 1.1rem */
-      font-weight: 500;
-      text-align: center;
-      transition: var(--transition);
-      display: flex;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      background: transparent;
+      transition: all 0.2s ease;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 6px; /* Reduced from 8px */
-      height: 38px; /* Fixed height for consistency */
+      gap: 8px;
+      border: 1px solid transparent;
     }
 
     nav a:hover {
-      background: var(--accent-blue);
-      border-radius: 4px; /* Slightly smaller */
+      background: rgba(10, 92, 140, 0.15);
+      border-color: rgba(10, 92, 140, 0.4);
     }
 
     nav a.active {
-      background: var(--accent-blue);
-      font-weight: 600;
+      background: #0a5c8c;
+      color: white;
+      box-shadow: 0 6px 14px rgba(10, 92, 140, 0.4);
     }
 
-    /* ===== Main Content ===== */
+    /* ===== MAIN PANEL ===== */
     main {
       flex: 1;
-      padding: 30px;
-      max-width: 1400px;
-      margin: 40px auto 20px; /* Reduced top margin */
-      background: var(--white);
-      box-shadow: var(--shadow);
-      border-radius: 16px;
-      border: 1px solid rgba(0, 43, 91, 0.1);
+      max-width: 1300px;
+      width: 90%;
+      margin: 160px auto 3rem;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
+      padding: 2.2rem 2.5rem;
+      border: 1px solid rgba(255,255,255,0.5);
     }
 
-    /* ===== FLEXIBLE WIDE GALLERY - UPDATED FOR TRUE SIZE ON HOVER ===== */
-    .flexible-gallery {
-      margin: 0 auto 50px;
-      padding: 30px 0;
-      border-bottom: 2px solid var(--light-blue);
-    }
-
-    .flexible-gallery h2 {
-      color: var(--primary-blue);
-      font-size: 2.4rem;
-      text-align: center;
-      margin-bottom: 15px;
-      font-weight: 700;
-    }
-
-    .gallery-description {
-      text-align: center;
-      color: #666;
-      margin-bottom: 40px;
-      font-size: 1.2rem;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Masonry-style flexible grid */
-    .gallery-container {
-      columns: 3;
-      column-gap: 25px;
-      margin-bottom: 40px;
-    }
-
-    /* Gallery item that can hold any orientation */
-    .gallery-item {
-      break-inside: avoid;
-      margin-bottom: 25px;
-      position: relative;
-      border-radius: 16px;
-      overflow: visible;
-      transition: var(--transition);
-      cursor: pointer;
-      background: var(--white);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    /* HOVER EFFECT: Show true image size */
-    .gallery-item:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 25px 50px rgba(0, 43, 91, 0.3);
-      z-index: 100;
-    }
-
-    /* Flexible image container */
-    .image-wrapper {
-      width: 100%;
-      overflow: hidden;
-      background: #f0f0f0;
-      border-radius: 12px;
-      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-    }
-
-    /* Normal state - show cropped/preview */
-    .image-wrapper img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      object-fit: cover;
-      border-radius: 12px;
-      max-height: 400px;
-    }
-
-    /* HOVER STATE: Show true/full size */
-    .gallery-item:hover .image-wrapper {
-      overflow: visible;
-      z-index: 101;
-    }
-
-    .gallery-item:hover .image-wrapper img {
-      object-fit: contain;
-      transform: scale(1.05);
-      max-height: none;
-      position: relative;
-      z-index: 102;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-      background: var(--white);
-    }
-
-    /* Add overlay when hovering */
-    .gallery-item:hover::after {
-      content: '🔍 Click to view full size';
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(0, 43, 91, 0.9);
-      color: white;
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      z-index: 103;
-      animation: fadeIn 0.3s ease;
-    }
-
-    /* Item info that appears on hover */
-    .item-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, 
-        rgba(0, 43, 91, 0.95) 0%,
-        rgba(0, 43, 91, 0.7) 70%,
-        transparent 100%);
-      color: var(--white);
-      padding: 25px 20px 20px;
-      transform: translateY(100%);
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      backdrop-filter: blur(5px);
-      border-radius: 0 0 12px 12px;
-      z-index: 104;
-    }
-
-    .gallery-item:hover .item-overlay {
-      transform: translateY(0);
-    }
-
-    .item-overlay h3 {
-      font-size: 1.4rem;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: var(--white);
-    }
-
-    .item-overlay p {
-      font-size: 1rem;
-      opacity: 0.9;
-      line-height: 1.5;
-    }
-
-    /* Gallery navigation */
-    .gallery-nav {
+    /* ===== TABBED FEATURE SECTION ===== */
+    .feature-tabs {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 30px;
-      margin-top: 40px;
-      padding-top: 30px;
-      border-top: 2px solid var(--light-blue);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid rgba(10, 92, 140, 0.2);
+      padding-bottom: 0.2rem;
     }
 
-    .gallery-btn {
-      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-      color: var(--white);
+    .tab-btn {
+      background: transparent;
       border: none;
-      padding: 15px 40px;
-      font-size: 1.1rem;
+      padding: 0.9rem 2.2rem;
+      font-size: 1.2rem;
       font-weight: 600;
-      border-radius: 50px;
+      color: #1e3a5f;
+      border-radius: 40px 40px 0 0;
       cursor: pointer;
-      transition: var(--transition);
-      box-shadow: 0 6px 20px rgba(0, 43, 91, 0.2);
-      display: flex;
+      transition: all 0.2s;
+      display: inline-flex;
       align-items: center;
       gap: 10px;
+      opacity: 0.8;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
     }
 
-    .gallery-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(0, 43, 91, 0.3);
-      background: linear-gradient(135deg, var(--secondary-blue), var(--accent-blue));
+    .tab-btn i { font-size: 1.4rem; }
+
+    .tab-btn:hover {
+      opacity: 1;
+      background: rgba(10, 92, 140, 0.08);
     }
 
-    .counter {
-      color: var(--primary-blue);
-      font-weight: 600;
-      font-size: 1.1rem;
+    .tab-btn.active {
+      opacity: 1;
+      color: #0a5c8c;
+      border-bottom: 3px solid #0a5c8c;
+      background: rgba(10, 92, 140, 0.05);
     }
 
-    /* ===== Welcome Section ===== */
-    .welcome-section {
-      text-align: center;
-      margin-bottom: 50px;
-      padding: 40px 0;
-      background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
+    .tab-panel {
+      display: none;
+      animation: fade 0.3s ease;
+      padding: 1.5rem 0.5rem;
     }
 
-    .welcome-section h2 {
-      color: var(--primary-blue);
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      font-weight: 700;
+    .tab-panel.active-panel {
+      display: block;
     }
 
-    .welcome-section p {
-      font-size: 1.2rem;
-      color: #555;
-      max-width: 800px;
-      margin: 0 auto 30px;
+    @keyframes fade { from { opacity: 0.3; } to { opacity: 1; } }
+
+    /* ===== CONTENT INSIDE TABS ===== */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
     }
 
-    .quick-stats {
+    .info-card {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(4px);
+      padding: 1.5rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+      border: 1px solid rgba(255,255,255,0.7);
+    }
+
+    .info-card h3 {
+      color: #0a2e5c;
+      margin-bottom: 0.8rem;
+      font-size: 1.3rem;
       display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 40px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stats-mini {
+      display: flex;
+      gap: 1.5rem;
       flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .stat-badge {
+      background: #0a5c8c;
+      color: white;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 600;
     }
 
-    .stat-card {
-      background: var(--white);
-      padding: 35px;
-      border-radius: 16px;
-      min-width: 250px;
+    .btn {
+      background: #0a5c8c;
+      border: none;
+      color: white;
+      padding: 0.7rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #0a5c8c;
+      color: #0a2e5c;
+    }
+    .btn:hover {
+      transform: scale(1.02);
+      background: #0f4a70;
+    }
+
+    /* ===== GALLERY STYLES (updated) ===== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .gallery-item {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 1.2rem;
+      overflow: hidden;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+      transition: 0.25s ease;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.8);
+      aspect-ratio: 1/1;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 30px rgba(10, 92, 140, 0.25);
+    }
+
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ===== LINK GRID (coming soon) ===== */
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 1.2rem;
+      margin: 1.8rem 0;
+    }
+    .link-tile {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 1.5rem;
+      padding: 1.5rem 1rem;
       text-align: center;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-      transition: var(--transition);
-      border: 3px solid var(--accent-blue);
+      text-decoration: none;
+      color: #0a2e5c;
+      border: 1px solid rgba(255,255,255,0.8);
+      transition: 0.2s;
+      opacity: 0.9;
+    }
+    .link-tile:hover {
+      background: white;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 40, 70, 0.2);
+    }
+    .link-tile .icon {
+      font-size: 2.8rem;
+    }
+    .coming-soon-badge {
+      display: inline-block;
+      background: #0a5c8c;
+      color: white;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      margin-top: 0.5rem;
+      letter-spacing: 0.5px;
     }
 
-    .stat-card:hover {
-      transform: translateY(-10px) scale(1.05);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-      border-color: var(--primary-blue);
-    }
-
-    .stat-card h3 {
-      color: var(--primary-blue);
-      font-size: 3rem;
-      margin-bottom: 15px;
-    }
-
-    .stat-card p {
-      color: #666;
-      font-size: 1.1rem;
-      font-weight: 500;
-    }
-
-    /* ===== Modal for fullscreen view ===== */
+    /* ===== MODAL (fullscreen gallery) ===== */
     .gallery-modal {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.98);
-      z-index: 10000;
-      justify-content: center;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.96);
+      backdrop-filter: blur(12px);
+      z-index: 2000;
       align-items: center;
+      justify-content: center;
       flex-direction: column;
-      padding: 40px;
+    }
+
+    .gallery-modal.active {
+      display: flex;
     }
 
     .modal-content {
-      max-width: 95%;
-      max-height: 95vh;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .modal-image {
-      max-width: 100%;
-      max-height: 85vh;
-      object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
-      background: var(--white);
-    }
-
-    .modal-info {
-      color: var(--white);
+      max-width: 1100px;
+      width: 90%;
       text-align: center;
-      margin-top: 25px;
-      padding: 0 30px;
-      max-width: 800px;
     }
 
-    .modal-info h3 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      color: var(--white);
+    .modal-img {
+      max-width: 100%;
+      max-height: 70vh;
+      border-radius: 1.5rem;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      border: 4px solid white;
     }
 
-    .modal-info p {
+    .modal-caption {
+      color: white;
+      margin-top: 1.2rem;
       font-size: 1.2rem;
-      opacity: 0.9;
-      line-height: 1.6;
     }
 
-    .close-modal {
+    .modal-close {
       position: absolute;
-      top: -60px;
-      right: 0;
-      color: var(--white);
-      font-size: 4rem;
-      cursor: pointer;
+      top: 30px;
+      right: 40px;
+      font-size: 3.5rem;
+      color: white;
       background: none;
       border: none;
-      transition: var(--transition);
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+      z-index: 2001;
     }
 
-    .close-modal:hover {
-      color: #90e0ef;
+    .modal-close:hover {
+      color: #0a5c8c;
       transform: scale(1.2);
     }
 
@@ -470,732 +393,311 @@
       width: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 0 20px;
+      padding: 0 2rem;
       pointer-events: none;
     }
 
     .modal-nav-btn {
-      background: rgba(255, 255, 255, 0.2);
-      color: var(--white);
+      background: rgba(255,255,255,0.2);
+      color: white;
       border: none;
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       font-size: 2rem;
       cursor: pointer;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(10px);
-      pointer-events: all;
+      pointer-events: auto;
+      transition: 0.2s;
+      backdrop-filter: blur(5px);
     }
 
     .modal-nav-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: scale(1.1);
+      background: #0a5c8c;
     }
 
-    /* ===== Quick Links Grid ===== */
-    .quick-links {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      margin-top: 50px;
-      padding-top: 40px;
-      border-top: 2px solid var(--light-blue);
-    }
-
-    .link-card {
-      background: var(--gray-light);
-      padding: 30px;
-      border-radius: 16px;
-      text-align: center;
-      text-decoration: none;
-      color: var(--primary-blue);
-      transition: var(--transition);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-      border: 3px solid transparent;
-    }
-
-    .link-card:hover {
-      background: var(--white);
-      border-color: var(--accent-blue);
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 15px 35px rgba(0, 43, 91, 0.2);
-    }
-
-    .link-card h3 {
-      margin-bottom: 15px;
-      font-size: 1.4rem;
-    }
-
-    .link-card p {
-      color: #666;
-      font-size: 1rem;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-
-    .link-icon {
-      font-size: 3.5rem;
-      margin-bottom: 20px;
-      display: block;
-    }
-
-    /* ===== Footer ===== */
+    /* ===== FOOTER ===== */
     footer {
-      background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
-      color: var(--white);
-      padding: 30px 20px;
-      font-size: 1rem;
-      margin-top: auto;
-      text-align: center;
+      background: rgba(10, 30, 50, 0.85);
+      backdrop-filter: blur(5px);
+      color: white;
+      padding: 1.5rem 2rem;
+      margin-top: 2rem;
+      border-top: 2px solid rgba(255,255,255,0.2);
     }
 
-    .footer-content {
-      max-width: 1200px;
+    .footer-inner {
+      max-width: 1300px;
       margin: 0 auto;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .contact-info {
-      display: flex;
-      gap: 40px;
       flex-wrap: wrap;
-      justify-content: center;
-      margin: 15px 0;
-    }
-
-    .contact-info div {
-      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      font-size: 1.1rem;
+      gap: 1.5rem;
     }
 
-    .copyright {
-      opacity: 0.9;
-      font-size: 1rem;
-      margin-top: 15px;
-      max-width: 800px;
+    .contact-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
     }
 
-    /* ===== Responsive Design ===== */
-    @media (max-width: 1200px) {
-      .gallery-container {
-        columns: 2;
-      }
-      
-      main {
-        max-width: 95%;
-      }
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 800px) {
+      header { padding: 0.5rem 1rem; height: 100px; }
+      .gm-picture { width: 70px; height: 70px; }
+      .header-text h1 { font-size: 1.4rem; }
+      nav { top: 100px; padding: 0.3rem 1rem; flex-wrap: wrap; }
+      nav a { padding: 0.4rem 1rem; font-size: 0.9rem; }
+      main { margin: 140px auto 2rem; padding: 1.5rem; }
+      .tab-btn { padding: 0.6rem 1.2rem; font-size: 1rem; }
+      .two-col { grid-template-columns: 1fr; }
     }
-
-    @media (max-width: 992px) {
-      .gallery-container {
-        columns: 2;
-        column-gap: 20px;
-      }
-      
-      .gallery-item {
-        margin-bottom: 20px;
-      }
-      
-      .flexible-gallery h2 {
-        font-size: 2rem;
-      }
-      
-      .stat-card {
-        min-width: 220px;
-        padding: 25px;
-      }
-      
-      .stat-card h3 {
-        font-size: 2.5rem;
-      }
-      
-      .gallery-item:hover .image-wrapper img {
-        max-height: 600px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      /* Adjust body padding for mobile */
-      body {
-        padding-top: 210px; /* Adjusted for thinner header */
-      }
-      
-      /* Header responsive adjustments */
-      header {
-        flex-direction: column;
-        text-align: center;
-        padding: 12px;
-        gap: 12px;
-        height: auto;
-        min-height: 160px;
-        position: fixed;
-      }
-      
-      .gm-picture {
-        width: 160px;
-        height: 120px;
-        margin: 0 auto;
-      }
-      
-      .header-text {
-        text-align: center;
-        padding-right: 0;
-      }
-      
-      .header-text h1 {
-        font-size: 1.6rem;
-        margin-bottom: 8px;
-      }
-      
-      .header-text p {
-        font-size: 0.9rem;
-        padding: 0 5px;
-      }
-
-      /* Adjust nav position for mobile */
-      nav {
-        top: 160px; /* Match reduced header height */
-        padding: 4px 0; /* Even thinner on mobile */
-        height: 42px;
-      }
-
-      nav a {
-        padding: 6px 12px; /* Even smaller on mobile */
-        font-size: 0.9rem; /* Smaller font */
-        gap: 4px;
-        height: 34px;
-      }
-
-      /* Adjust main content margin for mobile */
-      main {
-        padding: 20px;
-        margin: 50px 15px 20px; /* Reduced top margin */
-      }
-
-      .gallery-container {
-        columns: 1;
-        max-width: 600px;
-        margin: 0 auto;
-      }
-      
-      .flexible-gallery h2 {
-        font-size: 1.8rem;
-      }
-      
-      .gallery-description {
-        font-size: 1.1rem;
-      }
-      
-      .gallery-nav {
-        flex-direction: column;
-        gap: 20px;
-      }
-      
-      .gallery-btn {
-        width: 100%;
-        max-width: 300px;
-        justify-content: center;
-      }
-
-      .welcome-section h2 {
-        font-size: 1.8rem;
-      }
-
-      .welcome-section p {
-        font-size: 1.1rem;
-      }
-
-      .quick-stats {
-        gap: 20px;
-      }
-
-      .stat-card {
-        min-width: 100%;
-        max-width: 300px;
-      }
-
-      .quick-links {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-
-      .contact-info {
-        flex-direction: column;
-        gap: 15px;
-      }
-      
-      .modal-content {
-        max-width: 100%;
-        padding: 20px;
-      }
-      
-      .modal-nav-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-      }
-      
-      .gallery-item:hover .image-wrapper img {
-        max-height: 500px;
-      }
-      
-      .gallery-item:hover::after {
-        font-size: 0.7rem;
-        padding: 3px 8px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding-top: 180px; /* Further reduced */
-      }
-      
-      header {
-        padding: 10px;
-        gap: 10px;
-        min-height: 140px;
-      }
-      
-      .gm-picture {
-        width: 120px;
-        height: 90px;
-      }
-      
-      .header-text h1 {
-        font-size: 1.4rem;
-      }
-      
-      .header-text p {
-        font-size: 0.8rem;
-      }
-      
-      nav {
-        top: 140px;
-        padding: 3px 0;
-        height: 38px;
-      }
-      
-      nav a {
-        padding: 4px 8px;
-        font-size: 0.85rem;
-        gap: 3px;
-        height: 32px;
-      }
-
-      main {
-        padding: 15px;
-        margin: 45px 10px 15px;
-      }
-
-      .flexible-gallery h2 {
-        font-size: 1.6rem;
-      }
-      
-      .gallery-item {
-        margin-bottom: 15px;
-      }
-      
-      .item-overlay {
-        padding: 15px;
-      }
-      
-      .item-overlay h3 {
-        font-size: 1.2rem;
-      }
-
-      .welcome-section h2 {
-        font-size: 1.5rem;
-      }
-
-      .welcome-section p {
-        font-size: 1rem;
-      }
-      
-      .stat-card {
-        padding: 20px;
-      }
-      
-      .stat-card h3 {
-        font-size: 2rem;
-      }
-      
-      .link-card {
-        padding: 20px;
-      }
-      
-      .link-icon {
-        font-size: 2.8rem;
-      }
-      
-      .gallery-item:hover .image-wrapper img {
-        max-height: 400px;
-      }
-    }
-
-    /* ===== Animations ===== */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .gallery-item {
-      animation: fadeIn 0.6s ease-out backwards;
-    }
-
-    .gallery-item:nth-child(1) { animation-delay: 0.1s; }
-    .gallery-item:nth-child(2) { animation-delay: 0.2s; }
-    .gallery-item:nth-child(3) { animation-delay: 0.3s; }
-    .gallery-item:nth-child(4) { animation-delay: 0.4s; }
-    .gallery-item:nth-child(5) { animation-delay: 0.5s; }
-    .gallery-item:nth-child(6) { animation-delay: 0.6s; }
-    .gallery-item:nth-child(7) { animation-delay: 0.7s; }
-    .gallery-item:nth-child(8) { animation-delay: 0.8s; }
   </style>
 </head>
 <body>
 
-  <header>
-    <img src="images/solsusan.png" alt="CommDiv" class="gm-picture" 
-         onerror="this.src='https://via.placeholder.com/250x150/002b5b/ffffff?text=SIWADI'">
-    <div class="header-text">
-      <h1>Commercial Division of Siniloan Water District</h1>
-      <p>"Serbisyong Tapat, Serbisyong Sapat". SIWADI Building P. Burgos St. Siniloan, Laguna Tel. No. 049-5016656.</p>
-    </div>
-  </header>
+<!-- ===== HEADER ===== -->
+<header>
+  
+  <div class="header-text">
+    <h1>Commercial Division · Siniloan Water District</h1>
+    <p>P. Burgos St., Siniloan, Laguna · 049-501-6656</p>
+  </div>
+</header>
 
-  <nav>
-    <a href="services.html" class="active">🏠 Home</a>
-    <a href="services2.html">🛠️ Services</a>
-    <a href="about.html">🏢 About SIWADI</a>
-  </nav>
+<!-- ===== NAVIGATION ===== -->
+<nav>
+  <a href="services.html" class="active">🏠 Home</a>
+  <a href="services2.html">🛠️ Services</a>
+  <a href="about.html">🏢 About</a>
+  <a href="calculator.html">🧮 Bill Calculator</a>
+  <a href="index.html">📄 Bill Inquiry</a>
+</nav>
 
-  <main>
-    <!-- ===== FLEXIBLE PICTURE GALLERY ===== -->
-    <section class="flexible-gallery">
-      <h2>Gallery</h2>
-      <p class="gallery-description">Hover over images to see full size. Click to open in fullscreen view.</p>
-      
-      <div class="gallery-container" id="galleryContainer">
-        <!-- Item 1 - Wide landscape -->
-        <div class="gallery-item" data-index="0">
-          <div class="image-wrapper">
-            <img src="images/readingdate.jpg" alt="Schedule Of Reading For the Month of February" 
-                 onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=600&fit=crop'">
-          </div>
-          <div class="item-overlay">
-            <h3>For the Month of February</h3>
-            <p>Reading Schedule </p>
-          </div>
-        </div>
-        
-        <!-- Item 2 - Portrait -->
-        <div class="gallery-item" data-index="1">
-          <div class="image-wrapper">
-            <img src="images/bigas.jpg" alt="Bigas Promo" 
-                 onerror="this.src='https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop'">
-          </div>
-          <div class="item-overlay">
-            <h3>Bigas Promo Winner</h3>
-            <p>Bigas Para sa Maagap raffle promo winner</p>
-          </div>
-        </div>
-        
-        <!-- Item 3 - Square -->
-        <div class="gallery-item" data-index="2">
-          <div class="image-wrapper">
-            <img src="images/plumber.jpg" alt="Magigiting" 
-                 onerror="this.src='https://images.unsplash.com/photo-1523362628745-0c100150b504?w=800&h=800&fit=crop'">
-          </div>
-          <div class="item-overlay">
-            <h3>SIWADI in Action</h3>
-            <p>Our dedicated team at work</p>
-          </div>
-        </div>
-        
-        <!-- Item 4 - Landscape -->
-        <div class="gallery-item" data-index="3">
-          <div class="image-wrapper">
-            <img src="images/employee.jpg" alt="Happy Employees" 
-                 onerror="this.src='https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1200&h=700&fit=crop'">
-          </div>
-          <div class="item-overlay">
-            <h3>SIWADI Team</h3>
-            <p>Our happy and dedicated employees</p>
-          </div>
-        </div>
-        
-        <!-- Item 5 - Portrait -->
-        <div class="gallery-item" data-index="4">
-          <div class="image-wrapper">
-            <img src="images/gmador.jpg" alt="Award Ceremony" 
-                 onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&h=900&fit=crop'">
-          </div>
-          <div class="item-overlay">
-            <h3>Awards & Recognition</h3>
-            <p>GM Ador receiving recognition for excellent service</p>
-          </div>
-        </div>
-        
-        <!-- Item 6 - Wide landscape -->
-        <div class="gallery-item" data-index="5">
-          <div class="image-wrapper">
-            <img src="images/building.jpg" alt="Siniloan Water District Main Office" 
-                 onerror="this.src='https://images.unsplash.com/photo-1559028012-481c04fa702d?w=1200&h=600&fit=crop'">
-          </div>
-          <div class="item-overlay">
-            <h3>Main Office</h3>
-            <p>Our headquarters at P. Burgos St. serving the Siniloan community</p>
-            
-          </div>
-        </div>
-        
-        <!-- Item 7 - Add more as needed -->
-        <div class="gallery-item" data-index="6">
-          <div class="image-wrapper">
-            <img src="images/senior.jpg" alt="Senior Citizen Discount" 
-                 onerror="this.src='https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?w=1100&h=600&fit=crop'">
-          </div>
-          <div class="item-overlay">
-            <h3>Senior's Discount</h3>
-            <p>Providing special discounts for senior citizens</p>
-          </div>
-        </div>
-        
-        <!-- Item 8 - Portrait -->
-        <div class="gallery-item" data-index="7">
-          <div class="image-wrapper">
-            <img src="images/plumber2.jpg" alt="Masisipag" 
-                 onerror="this.src='https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=800&fit=crop'">
-          </div>
-          <div class="item-overlay">
-            <h3>SIWADI in Action</h3>
-            <p>Our hardworking team ensuring water service</p>
-          </div>
-        </div>
+<!-- ===== MAIN with TABBED INTERFACE ===== -->
+<main>
+  <div class="feature-tabs">
+    <button class="tab-btn active" id="tab1-btn"><i>📊</i> Overview</button>
+    <button class="tab-btn" id="tab2-btn"><i>🖼️</i> Gallery</button>
+    <button class="tab-btn" id="tab3-btn"><i>🔗</i> Quick Links</button>
+  </div>
+
+  <!-- TAB 1: OVERVIEW (cleaned – no winners/reading) -->
+  <div class="tab-panel active-panel" id="panel1">
+    <div class="two-col">
+      <div class="info-card">
+        <h3><i>💧</i> Welcome to SIWADI COMMDIV Portal</h3>
+        <p style="font-size: 1.1rem; margin-bottom: 1rem;">Serbisyong Tapat, Serbisyong Sapat.</p>
+        <p>We provide transparent water service management, online bill inquiry, and new connection applications. Our team is committed to deliver clean and reliable water 24/7.</p>
       </div>
-      
-      <!-- Gallery Navigation -->
-      <div class="gallery-nav">
-        <button class="gallery-btn" onclick="loadMoreImages()">
-          <span>📸 Load More Pictures</span>
-        </button>
-        <div class="counter">
-          Showing <span id="imageCount">8</span> pictures
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Welcome Section ===== -->
-    <section class="welcome-section">
-      <h2>Welcome to SIWADI Portal</h2>
-      <p>Salamat po sa pagbisita sa aming portal. Narito po ang lahat ng serbisyo at impormasyon na maaari ninyong magamit.</p>
-      
-      <!-- Quick Stats -->
-      <div class="quick-stats">
-        <div class="stat-card">
-          <div style="font-size: 2.8rem; margin-bottom: 15px;">🕗</div>
-          <h3>8:00-5:00</h3>
-          <p>Mon-Fri Service Hours</p>
-        </div>
-        <div class="stat-card">
-          <div style="font-size: 2.8rem; margin-bottom: 15px;">💧</div>
-          <h3>100%</h3>
-          <p>Water Quality</p>
-        </div>
-        <div class="stat-card">
-          <div style="font-size: 2.8rem; margin-bottom: 15px;">😊</div>
-          <h3>10,000+</h3>
-          <p>Happy Customers</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Quick Links ===== -->
-    <section class="quick-links">
-      <a href="index.html" class="link-card">
-        <span class="link-icon">📄</span>
-        <h3>Bill Inquiry</h3>
-        <p>Check your water bill status and payment details instantly</p>
-        <small>Click to access →</small>
-      </a>
-      
-      <a href="calculator.html" class="link-card">
-        <span class="link-icon">🧮</span>
-        <h3>Bill Calculator</h3>
-        <p>Estimate your water consumption and bill amount</p>
-        <small>Click to access →</small>
-      </a>
-      
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSohwI-ApoA9RCKmuyycSnauCCvwsAxziUCuX4qAr44Jd9SA/viewform" 
-         target="_blank" rel="noopener" class="link-card">
-        <span class="link-icon">💧</span>
-        <h3>New Connection</h3>
-        <p>Apply for new water service connection online</p>
-        <small>Open Form →</small>
-      </a>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-content">
-      <div class="contact-info">
-        <div>📍 P. Burgos St. Siniloan, Laguna</div>
-        <div>📞 049-5016656</div>
-        <div>✉️ contact@siwadi.gov.ph</div>
-      </div>
-      <div class="copyright">
-        © 2025 Siniloan Water District - "Serbisyong Sapat, Serbisyong Tapat"
+      <div class="info-card">
+        <h3><i>🏢</i> Commercial Division</h3>
+        <p><strong>Office hours:</strong> Mon–Fri 8:00 – 17:00</p>
+        <p><strong>Hotline:</strong> 049-501-6656</p>
+        <a href="#" class="btn" style="margin-top: 1rem;">Contact support</a>
       </div>
     </div>
-  </footer>
-
-  <!-- Gallery Modal -->
-  <div id="galleryModal" class="gallery-modal">
-    <div class="modal-content">
-      <button class="close-modal" onclick="closeModal()">&times;</button>
-      <img id="modalImage" class="modal-image" alt="">
-      <div class="modal-info">
-        <h3 id="modalTitle"></h3>
-        <p id="modalDescription"></p>
-      </div>
-      <div class="modal-nav">
-        <button class="modal-nav-btn prev-modal-btn" onclick="prevImage()">‹</button>
-        <button class="modal-nav-btn next-modal-btn" onclick="nextImage()">›</button>
-      </div>
+    <!-- simple reminder, no winners/reading -->
+    <div style="background: rgba(10,92,140,0.08); border-radius: 2rem; padding: 1rem; margin-top: 2rem; text-align: center;">
+      <p style="color: #0a2e5c;">✅ For inquiries, visit our office or call during business hours.</p>
     </div>
   </div>
 
-  <script>
-    // Gallery functionality
-    let currentModalIndex = 0;
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    const galleryModal = document.getElementById('galleryModal');
-    const modalImage = document.getElementById('modalImage');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDescription = document.getElementById('modalDescription');
-    
-    // Add click event to each gallery item
-    galleryItems.forEach(item => {
-      item.addEventListener('click', function() {
-        const index = parseInt(this.getAttribute('data-index'));
-        openModal(index);
-      });
+  <!-- TAB 2: GALLERY (with the 7 specified images) -->
+  <div class="tab-panel" id="panel2">
+    <h2 style="color:#0a2e5c; margin-bottom: 1.5rem;">📸 SIWADI Moments</h2>
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- exactly 7 images as requested: bigas.jpg, employee.jpg, readingdate.jpg, senior.jpg, gmador.jpg, plumber.jpg, plumber2.jpg -->
+      <div class="gallery-item" data-index="0"><img src="images/bigas.jpg" alt="Bigas" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x400/0a5c8c/ffffff?text=Bigas'"></div>
+      <div class="gallery-item" data-index="1"><img src="images/employee.jpg" alt="Employee" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x400/0a5c8c/ffffff?text=Employee'"></div>
+      <div class="gallery-item" data-index="2"><img src="images/readingdate.jpg" alt="Reading Date" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x400/0a5c8c/ffffff?text=Reading'"></div>
+      <div class="gallery-item" data-index="3"><img src="images/senior.jpg" alt="Senior" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x400/0a5c8c/ffffff?text=Senior'"></div>
+      <div class="gallery-item" data-index="4"><img src="images/gmador.jpg" alt="GM Ador" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x400/0a5c8c/ffffff?text=GM+Ador'"></div>
+      <div class="gallery-item" data-index="5"><img src="images/plumber.jpg" alt="Plumber" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x400/0a5c8c/ffffff?text=Plumber'"></div>
+      <div class="gallery-item" data-index="6"><img src="images/plumber2.jpg" alt="Plumber 2" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x400/0a5c8c/ffffff?text=Plumber+2'"></div>
+    </div>
+    <p style="text-align: center; color: #4a5568;">Click any image to enlarge</p>
+  </div>
+
+  <!-- TAB 3: QUICK LINKS (coming soon, no status/stats) -->
+  <div class="tab-panel" id="panel3">
+    <h3 style="color:#0a2e5c; text-align: center; margin-bottom: 1.5rem;">🔧 Services – Coming Soon</h3>
+    <div class="link-grid">
+      <div class="link-tile">
+        <div class="icon">📄</div>
+        <h4>Bill inquiry</h4>
+        <div class="coming-soon-badge">coming soon</div>
+      </div>
+      <div class="link-tile">
+        <div class="icon">🧮</div>
+        <h4>Calculator</h4>
+        <div class="coming-soon-badge">coming soon</div>
+      </div>
+      <div class="link-tile">
+        <div class="icon">💳</div>
+        <h4>Pay online</h4>
+        <div class="coming-soon-badge">coming soon</div>
+      </div>
+      <div class="link-tile">
+        <div class="icon">🚰</div>
+        <h4>New connection</h4>
+        <div class="coming-soon-badge">coming soon</div>
+      </div>
+      <div class="link-tile">
+        <div class="icon">📞</div>
+        <h4>Report leak</h4>
+        <div class="coming-soon-badge">coming soon</div>
+      </div>
+      <div class="link-tile">
+        <div class="icon">📅</div>
+        <h4>Schedule</h4>
+        <div class="coming-soon-badge">coming soon</div>
+      </div>
+    </div>
+    <div style="background: rgba(255,255,255,0.5); border-radius: 2rem; padding: 1.2rem; text-align: center;">
+      <p style="color: #0a2e5c;">📢 Online services are under development. Please visit our office for assistance.</p>
+    </div>
+  </div>
+</main>
+
+<!-- ===== GALLERY MODAL ===== -->
+<div id="galleryModal" class="gallery-modal">
+  <button class="modal-close" onclick="closeGalleryModal()">&times;</button>
+  <div class="modal-content">
+    <img id="modalImg" class="modal-img" src="" alt="">
+    <div class="modal-caption" id="modalCaption"></div>
+  </div>
+  <div class="modal-nav">
+    <button class="modal-nav-btn" onclick="prevImage()">‹</button>
+    <button class="modal-nav-btn" onclick="nextImage()">›</button>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="contact-row">
+      <span>📍 P. Burgos St., Siniloan, Laguna</span>
+      <span>📞 049-501-6656</span>
+
+    </div>
+    <div style="opacity:0.9;">© 2026 Siniloan Water District</div>
+  </div>
+</footer>
+
+<!-- ===== TAB + GALLERY SCRIPT ===== -->
+<script>
+  (function() {
+    // ----- TAB SWITCHING -----
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const panels = {
+      panel1: document.getElementById('panel1'),
+      panel2: document.getElementById('panel2'),
+      panel3: document.getElementById('panel3')
+    };
+
+    function activateTab(index) {
+      tabBtns.forEach(btn => btn.classList.remove('active'));
+      Object.values(panels).forEach(p => p.classList.remove('active-panel'));
+
+      if (index === 0) {
+        tabBtns[0].classList.add('active');
+        panels.panel1.classList.add('active-panel');
+      } else if (index === 1) {
+        tabBtns[1].classList.add('active');
+        panels.panel2.classList.add('active-panel');
+      } else if (index === 2) {
+        tabBtns[2].classList.add('active');
+        panels.panel3.classList.add('active-panel');
+      }
+    }
+
+    tabBtns[0].addEventListener('click', () => activateTab(0));
+    tabBtns[1].addEventListener('click', () => activateTab(1));
+    tabBtns[2].addEventListener('click', () => activateTab(2));
+
+    // Set active nav (home)
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+      if (link.getAttribute('href') === 'services.html') link.classList.add('active');
+      else link.classList.remove('active');
     });
-    
-    function openModal(index) {
-      currentModalIndex = index;
-      const item = galleryItems[index];
-      const img = item.querySelector('img');
-      const title = item.querySelector('h3').textContent;
-      const description = item.querySelector('p').textContent;
-      
-      modalImage.src = img.src;
-      modalImage.alt = img.alt;
-      modalTitle.textContent = title;
-      modalDescription.textContent = description;
-      
-      galleryModal.style.display = 'flex';
+
+    // ----- GALLERY MODAL (7 images) -----
+    const galleryItems = document.querySelectorAll('#galleryGrid .gallery-item');
+    const modal = document.getElementById('galleryModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalCaption = document.getElementById('modalCaption');
+    let currentIndex = 0;
+
+    // Array of image sources and captions
+    const images = [
+      { src: 'images/bigas.jpg', caption: 'Bigas Promo' },
+      { src: 'images/employee.jpg', caption: 'SIWADI Employees' },
+      { src: 'images/readingdate.jpg', caption: 'Reading Schedule' },
+      { src: 'images/senior.jpg', caption: 'Senior Citizen Discount' },
+      { src: 'images/gmador.jpg', caption: 'GM Ador' },
+      { src: 'images/plumber.jpg', caption: 'Maintenance Team' },
+      { src: 'images/plumber2.jpg', caption: 'Field Work' }
+    ];
+
+    function openGalleryModal(index) {
+      currentIndex = index;
+      updateModal();
+      modal.classList.add('active');
       document.body.style.overflow = 'hidden';
-      
-      modalImage.style.objectFit = 'contain';
     }
-    
-    function closeModal() {
-      galleryModal.style.display = 'none';
+
+    window.closeGalleryModal = function() {
+      modal.classList.remove('active');
       document.body.style.overflow = 'auto';
+    };
+
+    window.prevImage = function() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      updateModal();
+    };
+
+    window.nextImage = function() {
+      currentIndex = (currentIndex + 1) % images.length;
+      updateModal();
+    };
+
+    function updateModal() {
+      const img = images[currentIndex];
+      modalImg.src = img.src;
+      modalImg.onerror = function() {
+        this.src = 'https://via.placeholder.com/800x600/0a5c8c/ffffff?text=Image+Not+Found';
+      };
+      modalCaption.textContent = img.caption;
     }
-    
-    function nextImage() {
-      currentModalIndex = (currentModalIndex + 1) % galleryItems.length;
-      updateModalContent();
-    }
-    
-    function prevImage() {
-      currentModalIndex = (currentModalIndex - 1 + galleryItems.length) % galleryItems.length;
-      updateModalContent();
-    }
-    
-    function updateModalContent() {
-      const item = galleryItems[currentModalIndex];
-      const img = item.querySelector('img');
-      const title = item.querySelector('h3').textContent;
-      const description = item.querySelector('p').textContent;
-      
-      modalImage.src = img.src;
-      modalImage.alt = img.alt;
-      modalTitle.textContent = title;
-      modalDescription.textContent = description;
-      
-      modalImage.style.objectFit = 'contain';
-    }
-    
+
+    // Attach click to each gallery item
+    galleryItems.forEach((item, idx) => {
+      item.addEventListener('click', () => openGalleryModal(idx));
+    });
+
+    // Close on backdrop click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeGalleryModal();
+    });
+
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
-      if (galleryModal.style.display === 'flex') {
-        if (e.key === 'Escape') closeModal();
-        if (e.key === 'ArrowRight') nextImage();
-        if (e.key === 'ArrowLeft') prevImage();
-      }
+      if (!modal.classList.contains('active')) return;
+      if (e.key === 'Escape') closeGalleryModal();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
     });
-    
-    // Close modal when clicking outside
-    galleryModal.addEventListener('click', (e) => {
-      if (e.target === galleryModal) {
-        closeModal();
-      }
-    });
-    
-    // Navigation highlighting
-    document.addEventListener('DOMContentLoaded', function() {
-      const currentPage = window.location.pathname.split('/').pop();
-      const navLinks = document.querySelectorAll('nav a');
-      
-      navLinks.forEach(link => {
-        const linkPage = link.getAttribute('href');
-        link.classList.remove('active');
-        
-        if ((currentPage === '' && linkPage === 'services.html') ||
-            (currentPage === 'services.html' && linkPage === 'services.html') ||
-            (currentPage === 'services2.html' && linkPage === 'services2.html') ||
-            (currentPage === 'about.html' && linkPage === 'about.html')) {
-          link.classList.add('active');
-        }
-      });
-    });
-    
-    // Load more images function
-    function loadMoreImages() {
-      alert('More pictures would be loaded here. You can add more image items to the gallery.');
-      const countElement = document.getElementById('imageCount');
-      countElement.textContent = galleryItems.length;
-    }
-    
-    // Update image count on load
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('imageCount').textContent = galleryItems.length;
-      
-      // Add preloading for better hover performance
-      galleryItems.forEach(item => {
-        const img = item.querySelector('img');
-        const preloadImg = new Image();
-        preloadImg.src = img.src;
-      });
-    });
-  </script>
+  })();
+</script>
+
+<!-- background fallback -->
+<style>
+  body::before {
+    background-image: url('images/building.jpg'), url('https://images.unsplash.com/photo-1559028012-481c04fa702d?w=1600&q=80');
+    background-size: cover, cover;
+  }
+</style>
 </body>
 </html>
