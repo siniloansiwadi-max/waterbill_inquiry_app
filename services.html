@@ -452,6 +452,68 @@
       .tab-btn { padding: 0.6rem 1.2rem; font-size: 1rem; }
       .two-col { grid-template-columns: 1fr; }
     }
+
+    /* ===== ADD THIS SECTION BEFORE </style> ===== */
+    /* ===== MOBILE PERFORMANCE OPTIMIZATION ===== */
+    @media (max-width: 768px) {
+        /* Disable heavy effects on mobile */
+        * {
+            -webkit-backdrop-filter: none !important;
+            backdrop-filter: none !important;
+            filter: none !important;
+            background-attachment: scroll !important;
+        }
+        
+        /* Simplify backgrounds */
+        body::before {
+            filter: brightness(0.5) !important; /* No blur */
+            transform: none !important;
+            background-attachment: scroll !important;
+        }
+        
+        /* Remove hover effects for smoother scrolling */
+        .gallery-item:hover,
+        .service-card:hover,
+        .btn:hover,
+        nav a:hover,
+        .link-tile:hover {
+            transform: none !important;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1) !important;
+        }
+        
+        /* Simplify header for better performance */
+        header {
+            height: 60px;
+            padding: 0.3rem 0.8rem;
+            background: rgba(255, 255, 255, 0.98) !important; /* Less transparent */
+        }
+        
+        .gm-picture {
+            width: 45px;
+            height: 45px;
+        }
+        
+        .header-text h1 {
+            font-size: 1rem;
+        }
+        
+        .header-text p {
+            font-size: 0.7rem;
+        }
+        
+        /* Solid backgrounds instead of glass effect */
+        main, .info-card, .service-card, .contact-card, .gallery-item {
+            background: white !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        
+        /* Simplify shadows */
+        main, .info-card, .service-card, .contact-card {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        }
+    }
+    
   </style>
 </head>
 <body>
@@ -701,4 +763,5 @@
 </style>
 </body>
 </html>
+
 
