@@ -1,828 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Water Bill Inquiry</title>
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Siniloan Water District – history, mission, vision, and contact.">
+  <title>SIWADI · About</title>
+  <style>
+    /* ===== GLOBAL – same as portal (professional, glass, full bg) ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        /* ====================================================================== */
-        /* 1. BASE STYLING - PROFESSIONAL BLUE WITH WHITE BORDERS */
-        /* ====================================================================== */
-        body { 
-            background: linear-gradient(135deg, #1e3c72, #2a5298); /* Professional blue gradient */
-            min-height: 100vh; 
-            margin: 0;
-            padding: 0;
-            display: flex; 
-            flex-direction: column;
-            justify-content: center; 
-            align-items: center; 
-            font-family: 'Montserrat', sans-serif; 
-            color: #333;
-            position: relative;
-            overflow-x: hidden;
-        }
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      background: #0f172a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #1e293b;
+      line-height: 1.6;
+      position: relative;
+    }
 
-        /* White border effect around the edges */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            pointer-events: none;
-            z-index: 0;
-        }
+    /* full‑screen background (building.jpg) */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('images/building.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: brightness(0.4) blur(2px);
+      transform: scale(1.02);
+      z-index: -2;
+    }
 
-        /* Subtle grid pattern for professional look */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-            z-index: 0;
-        }
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 20, 40, 0.65);
+      z-index: -1;
+    }
 
-        /* ====================================================================== */
-        /* 2. MAIN CONTAINER STYLING */
-        /* ====================================================================== */
-        .container {
-            background-color: rgba(255, 255, 255, 0.98); 
-            padding: 40px 60px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 90%;
-        }
+    /* ===== FIXED HEADER (glass) ===== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      padding: 0.75rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      height: 110px;
+      z-index: 1050;
+      border-bottom: 3px solid #0a5c8c;
+    }
 
-        h1 {
-            color: #1e3c72; /* Dark blue matching background */
-            margin-bottom: 30px;
-            margin-top: 0;
-            font-size: 2.2rem;
-            font-weight: 700;
-            position: relative;
-            padding-bottom: 15px;
-        }
+    .gm-picture {
+      width: 88px;
+      height: 88px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      background: white;
+    }
 
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 25%;
-            right: 25%;
-            height: 3px;
-            background: linear-gradient(to right, #1e3c72, #2a5298);
-            border-radius: 2px;
-        }
+    .header-text h1 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: #0a2e5c;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.2rem;
+    }
 
-        /* ====================================================================== */
-        /* 3. INPUT AND BUTTON STYLING */
-        /* ====================================================================== */
-        input, button { 
-            padding: 12px 20px;
-            margin-right: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s ease;
-        }
+    .header-text p {
+      font-size: 1rem;
+      color: #334155;
+      font-weight: 500;
+    }
 
-        #accountNumber {
-            border: 2px solid #e0e0e0;
-            width: 250px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
+    /* ===== NAVIGATION (glass tabs) ===== */
+    nav {
+      position: fixed;
+      top: 110px;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      z-index: 1040;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
 
-        #accountNumber:focus {
-            outline: none;
-            border-color: #2a5298;
-            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
-        }
-        
-        button {
-            background: linear-gradient(to bottom, #2a5298, #1e3c72);
-            color: white;
-            cursor: pointer;
-            border: none;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        button:hover {
-            background: linear-gradient(to bottom, #1e3c72, #2a5298);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
+    nav a {
+      color: #0a2e5c;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      background: transparent;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid transparent;
+    }
 
-        button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+    nav a:hover {
+      background: rgba(10, 92, 140, 0.15);
+      border-color: rgba(10, 92, 140, 0.4);
+    }
 
-        /* ====================================================================== */
-        /* 4. LOADING ANIMATION */
-        /* ====================================================================== */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .spinner {
-            border: 4px solid #f3f3f3; 
-            border-top: 4px solid #2a5298; 
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-right: 10px;
-        }
-        #loading-message {
-            margin-top: 15px;
-            color: #2a5298;
-            font-weight: 600;
-            display: none; 
-        }
+    nav a.active {
+      background: #0a5c8c;
+      color: white;
+      box-shadow: 0 6px 14px rgba(10, 92, 140, 0.4);
+    }
 
-        /* ====================================================================== */
-        /* 5. LOGO AND INPUT GROUP */
-        /* ====================================================================== */
-        #input-group {
-            display: flex;
-            align-items: center; 
-            justify-content: center; 
-            margin-bottom: 25px; 
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #e9ecef;
-        }
+    /* ===== MAIN PANEL (glass card) ===== */
+    main {
+      flex: 1;
+      max-width: 1100px;
+      width: 90%;
+      margin: 160px auto 3rem;   /* space for fixed header+nav */
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
+      padding: 2.2rem 2.5rem;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
 
-        #site-logo {
-            width: 45px; 
-            height: 45px;
-            margin-right: 15px; 
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+      text-align: center;
+      margin-bottom: 2.2rem;
+      padding-bottom: 1rem;
+      border-bottom: 3px solid #0a5c8c;
+    }
 
-        #input-group label {
-            margin-right: 10px;
-            font-weight: 600;
-            color: #495057;
-        }
+    .page-header h2 {
+      color: #0a2e5c;
+      font-size: 2.6rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
 
-        /* ====================================================================== */
-        /* 6. DISCLAIMER STYLING */
-        /* ====================================================================== */
-        .disclaimer {
-            margin-top: 25px;
-            padding: 20px;
-            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
-            border-left: 5px solid #2a5298;
-            border-radius: 8px;
-            text-align: left;
-            font-size: 0.85rem;
-            color: #495057;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            border-top: 1px solid #dee2e6;
-            border-right: 1px solid #dee2e6;
-            border-bottom: 1px solid #dee2e6;
-        }
+    .page-header p {
+      color: #2c3e50;
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0.5rem auto 0;
+    }
 
-        .disclaimer h4 {
-            margin-top: 0;
-            color: #1e3c72;
-            font-size: 1rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    /* ===== ABOUT CONTENT SECTIONS ===== */
+    .about-content {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
 
-        .disclaimer ul {
-            margin: 0;
-            padding-left: 20px;
-        }
+    .section {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(4px);
+      border-radius: 1.8rem;
+      padding: 2rem 2.2rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.05);
+      transition: 0.2s;
+    }
 
-        .disclaimer li {
-            margin-bottom: 8px;
-            line-height: 1.5;
-            position: relative;
-        }
+    .section:hover {
+      background: rgba(255,255,255,0.75);
+    }
 
-        .disclaimer li::before {
-            content: "•";
-            color: #2a5298;
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
-        }
+    .section h2 {
+      color: #0a2e5c;
+      font-size: 1.9rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      border-left: 6px solid #0a5c8c;
+      padding-left: 1.2rem;
+    }
 
-        /* ====================================================================== */
-        /* 7. MODAL BOX STYLING */
-        /* ====================================================================== */
-        #modal-container {
-            position: fixed; 
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(30, 60, 114, 0.9); /* Blue overlay */
-            display: none; 
-            justify-content: center;
-            align-items: center;
-            z-index: 1000; 
-        }
+    .section h3 {
+      color: #0a3b5c;
+      font-size: 1.4rem;
+      margin: 1.5rem 0 1rem;
+      font-weight: 600;
+    }
 
-        #modal-content {
-            background-color: white;
-            padding: 25px; 
-            border-radius: 10px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-            max-width: 450px; 
-            width: 90%;
-            text-align: left;
-            font-family: 'Montserrat', sans-serif;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            border: 2px solid #e0e0e0;
-        }
-        
-        /* ====================================================================== */
-        /* 8. VERTICAL GAP FIXES (For clean list display) */
-        /* ====================================================================== */
-        #modal-content ul {
-            margin: 0 !important; 
-            padding-left: 0 !important;  
-        }
+    .section p {
+      margin-bottom: 1.2rem;
+      color: #1e293b;
+      text-align: justify;
+    }
 
-        #modal-content ul li {
-            margin: 8px 0 !important; 
-            padding: 8px 0 !important; 
-            line-height: 1.4;
-            border-bottom: 1px solid #f0f0f0;
-        }
+    .section ul {
+      margin: 1rem 0 1rem 1.8rem;
+      color: #2d3c4c;
+    }
 
-        #modal-content ul li:last-child {
-            border-bottom: none;
-        }
+    .section li {
+      margin-bottom: 0.4rem;
+    }
 
-        #modal-content ul li strong {
-            color: #1e3c72;
-            min-width: 160px;
-            display: inline-block;
-        }
-        
-        #modal-result h3 {
-            margin-top: 0; 
-            color: #1e3c72;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
-            margin-bottom: 15px;
-        }
+    .highlight {
+      background: rgba(10, 92, 140, 0.08);
+      padding: 1.2rem 1.8rem;
+      border-radius: 1.5rem;
+      border-left: 5px solid #0a5c8c;
+      margin: 1.5rem 0;
+    }
 
-        /* Modal button container */
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
+    /* ===== MISSION / VISION CARDS ===== */
+    .mv-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 2rem 0 2.5rem;
+    }
 
-        /* Equal-sized buttons */
-        .modal-button {
-            flex: 1 1 0;        /* This makes them equal width */
-            min-width: 0;        /* Prevents flex overflow */
-            padding: 12px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: white;
-            transition: all 0.3s ease;
-            white-space: nowrap;  /* Keeps text on one line */
-        }
+    .mv-card {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(4px);
+      padding: 2rem 1.8rem;
+      border-radius: 2rem;
+      text-align: center;
+      border-top: 6px solid #0a5c8c;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
 
-        #pay-bills-button {
-            background: linear-gradient(to bottom, #007aff, #0051a8);
-        }
+    .mv-card h3 {
+      color: #0a2e5c;
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+    }
 
-        #pay-bills-button:hover {
-            background: linear-gradient(to bottom, #0051a8, #003d80);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 122, 255, 0.3);
-        }
+    .mv-card p {
+      font-size: 1.15rem;
+      color: #253746;
+    }
 
-        #new-inquiry-button {
-            background: linear-gradient(to bottom, #2a5298, #1e3c72);
-        }
+    /* ===== CONTACT SECTION ===== */
+    .contact-section {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 2rem;
+      padding: 2.2rem;
+      margin-top: 2.5rem;
+      border: 2px solid rgba(10,92,140,0.2);
+    }
 
-        #new-inquiry-button:hover {
-            background: linear-gradient(to bottom, #1e3c72, #0f2a4a);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(30, 60, 114, 0.3);
-        }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1.5rem;
+    }
 
-        /* Mobile responsiveness */
-        @media (max-width: 480px) {
-            .modal-buttons {
-                flex-direction: column;
-            }
-            
-            .modal-button {
-                width: 100%;
-            }
-            
-            #pay-bills-button, 
-            #new-inquiry-button {
-                white-space: normal;  /* Allows text wrap on mobile */
-            }
-        }
+    .contact-card {
+      background: white;
+      padding: 1.5rem 1.2rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.05);
+      transition: 0.2s;
+    }
 
+    .contact-card:hover {
+      transform: translateY(-5px);
+      border-color: #0a5c8c;
+    }
 
-        /* ====================================================================== */
-        /* 9. SERVICES BUTTON STYLING */
-        /* ====================================================================== */
-        #services-button {
-            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
-            color: #1e3c72;
-            padding: 12px 30px;
-            border: 2px solid #2a5298;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s ease;
-            margin-top: 25px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+    .contact-card h4 {
+      color: #0a2e5c;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        #services-button:hover {
-            background: linear-gradient(to bottom, #2a5298, #1e3c72);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
+    .contact-card a {
+      color: #0a5c8c;
+      text-decoration: none;
+      font-weight: 500;
+    }
 
-        .new-button-container {
-            position: relative;
-            z-index: 1;
-            margin-top: 25px;
-        }
+    /* ===== FOOTER ===== */
+    footer {
+      background: rgba(10, 30, 50, 0.85);
+      backdrop-filter: blur(5px);
+      color: white;
+      padding: 1.5rem 2rem;
+      margin-top: 2rem;
+      border-top: 2px solid rgba(255,255,255,0.2);
+    }
 
-        /* ====================================================================== */
-        /* 10. RESPONSIVE DESIGN: MEDIA QUERIES */
-        /* ====================================================================== */
+    .footer-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+    }
 
-        @media (max-width: 768px) { 
-            body::before {
-                top: 5px;
-                left: 5px;
-                right: 5px;
-                bottom: 5px;
-            }
+    .contact-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
 
-            .container {
-                padding: 25px 20px;
-                width: 95%;
-            }
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 800px) {
+      header { padding: 0.5rem 1rem; height: 100px; }
+      .gm-picture { width: 70px; height: 70px; }
+      .header-text h1 { font-size: 1.4rem; }
+      nav { top: 100px; padding: 0.3rem 1rem; flex-wrap: wrap; }
+      nav a { padding: 0.4rem 1rem; font-size: 0.9rem; }
+      main { margin: 140px auto 2rem; padding: 1.5rem; }
+      .page-header h2 { font-size: 2rem; }
+      .mv-container { grid-template-columns: 1fr; }
+    }
 
-            h1 {
-                font-size: 1.8rem;
-                margin-bottom: 20px;
-            }
-
-            #input-group {
-                flex-direction: column;
-                align-items: center; 
-                width: 100%;
-                padding: 15px;
-            }
-            
-            #site-logo {
-                margin: 0 auto 15px auto; 
-            }
-
-            #input-group label {
-                display: block;
-                text-align: center;
-                margin-right: 0; 
-                margin-bottom: 10px;
-            }
-
-            #accountNumber {
-                width: 100%;
-                box-sizing: border-box; 
-                margin-bottom: 15px; 
-            }
-
-            button {
-                width: 100%;
-                margin-right: 0;
-            }
-
-            .disclaimer {
-                padding: 15px;
-                font-size: 0.8rem;
-            }
-
-            #modal-content {
-                padding: 20px;
-                max-width: 90%;
-            }
-
-            #services-button {
-                width: 100%;
-                padding: 12px 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px 15px;
-            }
-
-            h1 {
-                font-size: 1.6rem;
-            }
-
-            #accountNumber {
-                font-size: 14px;
-                padding: 10px 15px;
-            }
-
-            button {
-                padding: 10px 15px;
-                font-size: 14px;
-            }
-        }
-    
-    </style>
+    @media (max-width: 600px) {
+      .section { padding: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Water Bill Inquiry</h1>
-    
-    <div id="input-group">
-        <img src="siwadilogo.png" alt="Company Logo" id="site-logo">
-        
-        <label for="accountNumber">Enter Account Number:</label>
-        <input type="text" 
-               id="accountNumber" 
-               placeholder="e.g., 011-101-001 or 011101001"
-               autofocus> 
-    </div>
-    
-    <button onclick="fetchAccountData()">Search</button>
+<!-- ===== HEADER ===== -->
+<header>
+  
+  <div class="header-text">
+    <h1>Commercial Division · Siniloan Water District</h1>
+    <p>P. Burgos St., Siniloan, Laguna · 049-501-6656</p>
+  </div>
+</header>
 
-    <div id="loading-message">
-        <div class="spinner"></div> Please wait...
-    </div>
-    
-    <!-- DISCLAIMER SECTION -->
-    <div class="disclaimer">
-        <h4>🔒 Important Disclaimer:</h4>
-        <ul>
-            <li>This system is for informational purposes only</li>
-            <li>Customer names are partially masked for privacy protection</li>
-            <li>For official statements, please visit our office</li>
-            <li>GCash payment is not real-time; it takes 3 working days for us to update all the payments that are done with GCash.</li>
-        </ul>
-    </div>
-</div>
+<!-- ===== NAVIGATION ===== -->
+<nav>
+  <a href="services.html">🏠 Home</a>
+  <a href="services2.html">🛠️ Services</a>
+  <a href="about.html" class="active">🏢 About SIWADI</a>
+  <a href="calculator.html">🧮 Bill Calculator</a>
+  <a href="index.html">📄 Bill Inquiry</a>
+</nav>
 
-<div id="modal-container">
-    <div id="modal-content">
-        <div id="modal-result">
-            </div>
-        
-        <div class="modal-buttons">
-            <button id="pay-bills-button" class="modal-button" onclick="openGCash()">📱 Open GCash</button>
-            <button id="new-inquiry-button" class="modal-button" onclick="closeModal()">🔄 New Inquiry</button>
-        </div>
-    </div>
-</div>
+<!-- ===== MAIN ABOUT CONTENT ===== -->
+<main>
+  <div class="page-header">
+    <h2>About Siniloan Water District</h2>
+    <p>History · Mission · Vision · Commitment to community</p>
+  </div>
 
-<div class="new-button-container">
-    <a href="services.html">
-        <button id="services-button">View Reading Schedule. March 2026</button>
-    </a>
-</div>
-    
+  <div class="about-content">
+    <!-- === HISTORY (condensed but preserving all key facts) === -->
+    <section class="section">
+      <h2>📜 History of SIWADI</h2>
+      <p>Siniloan Water District (SIWADI) was born out of necessity. Before its creation, the municipal water system – originally built by the Bureau of Public Works and later managed by the municipal government – suffered from poor water quality, low pressure, and unreliable supply. In 1988, Ms. Sonia Costelo of LWUA proposed forming a water district under PD 198. A public hearing on April 29, 1988 at the Leonides de Leon Hall showed strong public support.</p>
+
+      <p>On <strong>January 18, 1989</strong>, the Sangguniang Bayan of Siniloan under Mayor Cenon C. Realeza passed <strong>Resolution No. 19</strong> formally creating the Siniloan Water District. Five directors were appointed: Mr. Juan O. Javier, Mr. Jose M. Reyes, Engr. Isidoro V. Realeza, Mrs. Evelia V. Religioso, and Atty. Esther R. Realeza. After Engr. Realeza resigned from the board to become the first General Manager, Engr. Alden R. Mayor filled his seat.</p>
+
+      <div class="highlight">
+        <p><strong>Conditional Certificate of Conformance No. 395</strong> was issued on <strong>April 24, 1989</strong>. SIWADI took over a dilapidated system: only 227 flat‑rate connections (no meters), no funds, no office, and just one employee – the General Manager. The municipal government provided a P500/month subsidy for one year.</p>
+      </div>
+
+      <h3>Rehabilitation & Growth</h3>
+      <p>A P2.6 million loan from LWUA (approved Sept. 1990) enabled construction of pumping stations, disinfection, leak repair, and equipment purchase. Full operation began <strong>August 23, 1991</strong>. Subsequent loans and corporate funds expanded service to fourteen barangays and later to the Municipality of Famy. By 2012, connections exceeded 4,500, and SIWADI was classified as a <strong>Category C</strong> water district (up from Small to Big in 2010).</p>
+
+      <p>Key supporters: Gov. Joey D. Lina (P1M calamity aid, 1996), Congressman Magdaleno Palacol (P900,000 CDF, 1997), LWUA, and loyal consumers.</p>
+    </section>
+
+    <!-- === MISSION & VISION CARDS === -->
+    <div class="mv-container">
+      <div class="mv-card">
+        <h3>🎯 Mission</h3>
+        <p>To provide dependable supply of safe, clean and potable water to our clientele in an efficient, responsive and affordable manner.</p>
+      </div>
+      <div class="mv-card">
+        <h3>🌟 Vision</h3>
+        <p>Siniloan Water District will be a dynamic partner dedicated to providing essential services that improve the quality of life, health, and sanitation of our community.</p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="contact-row">
+      <span>📍 P. Burgos St., Siniloan, Laguna</span>
+      <span>📞 049-501-6656</span>
+
+    </div>
+    <div style="opacity:0.9;">© 2026 Siniloan Water District</div>
+  </div>
+</footer>
+
+<!-- ===== ACTIVE NAV SCRIPT ===== -->
 <script>
-
-// ======================================================================
-// JAVASCRIPT LOGIC
-// ======================================================================
-
-// ---------------------------
-// TWO Web App URLs (UPDATED)
-// ---------------------------
-// DATA_WEB_APP_URL: your existing inquiry script (same as original WEB_APP_URL)
-const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwe0PWj59RsVzeLtdI64AvV8bXi8D9ZMIPOrBgaDzWlYiSU0xARCxp0SK86kkTxAG0T/exec';
-
-// LOG_WEB_APP_URL: replace this placeholder with your activity-log script's web app URL
-const LOG_WEB_APP_URL  = 'https://script.google.com/macros/s/AKfycbxQKyzoU1AczxwzSiM24DA7TNRsUmiXocgH-TBY7JoM5Xux9wVNZUWBB6ycD4sr-pBE/exec';
-
-// 🎯 DISPLAY MAPPING: (Use your exact sheet headers on the left)
-const DISPLAY_MAP = {
-    'Account No.': 'Account Number', 
-    'Name': 'Name',
-    'Address': 'Billing Address', 
-    'No.': 'Meter Number',
-    'Status for App': 'Account Status',
-    'BALANCE': 'Water Bill',
-    'AROBALANCE': 'S.C. / Materials', 
-    'Total': 'Total Amount Due',  
-    'Reading Date': 'Reading Date',
-    'Due Date': 'Payment Due Date',
-    'Discon Date': 'Disconnection Date'
-};
-
-// Get references to DOM elements
-const loadingMessage = document.getElementById('loading-message');
-const inputElement = document.getElementById('accountNumber');
-const modalContainer = document.getElementById('modal-container');
-const modalResult = document.getElementById('modal-result');
-const searchButton = document.querySelector('button'); // Reference for disabling
-
-// --- Helper function to close the pop-up ---
-function closeModal() {
-    modalContainer.style.display = 'none';
-    modalResult.innerHTML = ''; 
-    inputElement.value = ''; 
-    inputElement.focus();
-}
-
-// --- Helper function for Name Masking ---
-function maskName(fullName) {
-    if (!fullName || typeof fullName !== 'string') return '';
-    
-    const nameParts = fullName.toUpperCase().trim().split(/\s+/);
-    
-    let maskedParts = nameParts.map((part, index) => {
-        if (part.length === 0) return '';
-        
-        if (index === 0) {
-            // First Name: JUAN -> JU**
-            const visiblePart = part.substring(0, 2);
-            const maskedPart = part.substring(2).replace(/[A-Z]/g, '*');
-            return visiblePart + maskedPart;
-        } else {
-            // Last Names: DELA -> D***
-            const visiblePart = part.substring(0, 1);
-            const maskedPart = part.substring(1).replace(/[A-Z]/g, '*');
-            return visiblePart + maskedPart;
-        }
+  (function() {
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === 'about.html') {
+        link.classList.add('active');
+      }
     });
-
-    return maskedParts.join(' ');
-}
-
-// --- Helper function to convert Excel serial date to readable date ---
-function formatExcelDate(serial) {
-    // Excel serial date: 1 = 1900-01-01
-    if (!serial || serial === '') return '';
-    
-    // Check if it's a number (Excel serial)
-    const num = Number(serial);
-    if (!isNaN(num) && num > 0 && num < 100000) {
-        // Excel dates start from 1900-01-01
-        const excelEpoch = new Date(1900, 0, 1); // Jan 1, 1900
-        const days = num - 1; // Excel incorrectly treats 1900 as leap year, but this approximation works
-        const resultDate = new Date(excelEpoch.getTime() + days * 24 * 60 * 60 * 1000);
-        
-        if (!isNaN(resultDate.getTime())) {
-            const month = String(resultDate.getMonth() + 1).padStart(2, '0');
-            const day = String(resultDate.getDate()).padStart(2, '0');
-            const year = String(resultDate.getFullYear()).slice(-2);
-            return `${month}-${day}-${year}`;
-        }
-    }
-    
-    // Try parsing as regular date string
-    const dateObj = new Date(serial);
-    if (!isNaN(dateObj.getTime())) {
-        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-        const day = String(dateObj.getDate()).padStart(2, '0');
-        const year = String(dateObj.getFullYear()).slice(-2);
-        return `${month}-${day}-${year}`;
-    }
-    
-    return serial; // Return as-is if not a date
-}
-
-// --- Formatter Function (The final, robust version) ---
-function formatResult(data) {
-    let output = '<ul style="list-style-type: none;">'; 
-    
-    for (const sheetHeader in DISPLAY_MAP) {
-        if (data.hasOwnProperty(sheetHeader)) {
-            let value = String(data[sheetHeader]).replace(/"/g, ''); 
-            const displayLabel = DISPLAY_MAP[sheetHeader];
-
-            // 1. Check if the field is the Name field to apply masking
-            if (displayLabel.toUpperCase() === 'NAME' || 
-                displayLabel.toUpperCase() === 'CUSTOMER NAME') {
-                
-                value = maskName(value);
-            }
-            
-            // 2. Apply Date Formatting - FIXED for Excel serial dates
-            if (displayLabel.includes('Date') && value && value !== '') { 
-                value = formatExcelDate(value);
-            }
-            
-            // 3. Apply Currency Formatting
-            if (displayLabel.includes('Bill') || displayLabel.includes('Amount') || 
-                displayLabel.includes('Due') || displayLabel.includes('Balance') ||
-                displayLabel.includes('Water') || displayLabel.includes('S.C.') ||
-                displayLabel.includes('Total')) {
-                
-                // Remove any existing ₱ or commas, then parse
-                const numericValue = parseFloat(value.replace(/[₱,]/g, ''));
-                if (!isNaN(numericValue)) {
-                    value = `₱ ${numericValue.toFixed(2)}`;
-                }
-            }
-
-            // 4. Append the list item
-            output += `
-                <li>
-                    <strong style="color: #1e3c72;">${displayLabel}:</strong> ${value}
-                </li>
-            `;
-        }
-    }
-    output += '</ul>';
-    return output;
-}
-
-
-// --- Main Fetch Function ---
-async function fetchAccountData() {
-    
-    let rawAccountNumber = inputElement.value.trim();
-    const searchKey = rawAccountNumber.replace(/[\s\-\–]/g, ''); 
-    
-    if (!searchKey) {
-        alert("Please enter an account number.");
-        return;
-    }
-    
-    // Hide old result and disable button to prevent double clicks
-    modalContainer.style.display = 'none'; 
-    loadingMessage.style.display = 'block';
-    searchButton.disabled = true; 
-
-    // <-- use DATA_WEB_APP_URL for fetching data
-    const apiUrl = `${DATA_WEB_APP_URL}?account=${searchKey}`;
-
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        let resultTitle = `Results for Account: ${rawAccountNumber}`;
-        let resultHtml = '';
-
-        if (data.error) {
-            resultTitle = `Search Failed for ${rawAccountNumber}`;
-            resultHtml = `<p style="color: red; font-weight: bold;">Error: ${data.error}</p>`;
-        } else {
-            resultHtml = formatResult(data); 
-
-            // -----------------------------
-            // CALL ACTIVITY LOG (non-blocking)
-            // -----------------------------
-            // only if account and name exist in response
-            try {
-                if (data['Account No.'] && data['Name']) {
-                    logInquiry(data['Account No.'], data['Name']);
-                }
-            } catch (xx) {
-                // keep UI robust — don't break on logging errors
-                console.error('logInquiry error', xx);
-            }
-        }
-
-        // Inject content and show modal
-        modalResult.innerHTML = `
-            <h3 style="color: #1e3c72;">${resultTitle}</h3>
-            <div style="border: 1px solid #e0e0e0; padding: 15px; background-color: #f9f9f9; border-radius: 8px;">
-                ${resultHtml}
-            </div>
-        `;
-        modalContainer.style.display = 'flex'; 
-
-    } catch (error) {
-        if (modalContainer) {
-             modalResult.innerHTML = `<h3>Network Error</h3><p>Could not connect to the API. Check console for details.</p>`;
-             modalContainer.style.display = 'flex';
-        }
-        console.error('Fetch error:', error);
-    } finally {
-        loadingMessage.style.display = 'none';
-        searchButton.disabled = false; // Re-enable button
-    }
-}
-
-// ------------------------------------------------------------------
-// logInquiry: sends account, name and timestamp to your LOG_WEB_APP_URL
-// ------------------------------------------------------------------
-async function logInquiry(accountNo, name) {
-    if (!LOG_WEB_APP_URL || LOG_WEB_APP_URL.indexOf('PASTE_YOUR_LOG_SCRIPT_URL_HERE') !== -1) {
-        // placeholder not replaced — skip logging to avoid accidental requests
-        console.warn('LOG_WEB_APP_URL not configured. Replace the placeholder with your log script URL.');
-        return;
-    }
-    try {
-        const params = new URLSearchParams({
-            account: accountNo,
-            name: name,
-            timestamp: new Date().toISOString()
-        });
-        // fire-and-forget log call
-        await fetch(`${LOG_WEB_APP_URL}?${params.toString()}`, { method: 'GET', mode: 'no-cors' });
-        console.log('Inquiry logged:', accountNo, name);
-    } catch (err) {
-        // don't disturb the user flow for logging errors
-        console.error('Failed to log inquiry:', err);
-    }
-}
-
-// Function to open GCash app (simplified version)
-function openGCash() {
-    const accountNumber = document.getElementById('accountNumber').value.trim();
-    
-    if (!accountNumber) {
-        alert('Please enter an account number first');
-        return;
-    }
-    
-    // Show which account they're paying for
-    alert(`Opening GCash app for account: ${accountNumber}\n\nPlease manually enter this account number in GCash.`);
-    
-    // Detect mobile device
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const isAndroid = /android/i.test(userAgent);
-    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-    
-    if (isAndroid) {
-        // Android: Use intent with GCash package name
-        const gcashIntent = 'intent://#Intent;package=com.globe.gcash.android;scheme=gcash;end;';
-        window.location.href = gcashIntent;
-        
-        // Fallback to Play Store if app not installed
-        setTimeout(function() {
-            if (confirm("GCash app not found. Install from Play Store?")) {
-                window.location.href = "market://details?id=com.globe.gcash.android";
-            }
-        }, 800);
-    } 
-    else if (isIOS) {
-        // iOS: Try gcash:// scheme
-        window.location.href = 'gcash://';
-        
-        // Fallback to App Store if app not installed
-        setTimeout(function() {
-            if (confirm("GCash app not found. Open App Store?")) {
-                window.location.href = "https://apps.apple.com/ph/app/gcash/id1146801530";
-            }
-        }, 800);
-    }
-    else {
-        // Desktop: Show instructions
-        alert("Please open GCash on your mobile device to pay.\n\nAccount: " + accountNumber);
-    }
-}
-
-
+  })();
 </script>
 
+<!-- fallback background -->
+<style>
+  body::before {
+    background-image: url('images/building.jpg'), url('https://images.unsplash.com/photo-1559028012-481c04fa702d?w=1600&q=80');
+  }
+</style>
 </body>
 </html>
