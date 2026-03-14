@@ -2,170 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
   <meta name="description" content="About Siniloan Water District – history, mission, vision, and contact.">
   <title>SIWADI · About</title>
   <style>
-    /* ===== GLOBAL – same as portal (professional, glass, full bg) ===== */
+    /* ===== RESET & VARIABLES ===== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    :root {
+      --primary: #0a2e5c;
+      --primary-light: #1e4a7a;
+      --accent: #0a5c8c;
+      --accent-light: #e6f0f9;
+      --gray-bg: #f5f7fa;
+      --white: #ffffff;
+      --text-dark: #1e293b;
+      --text-light: #4b5565;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 8px rgba(0,0,0,0.08);
+    }
+
     body {
-      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-      background: #0f172a;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--gray-bg);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      color: #1e293b;
+      color: var(--text-dark);
       line-height: 1.6;
-      position: relative;
     }
 
-    /* full‑screen background (building.jpg) */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: url('images/building.jpg') no-repeat center center fixed;
-      background-size: cover;
-      filter: brightness(0.4) blur(2px);
-      transform: scale(1.02);
-      z-index: -2;
-    }
-
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 20, 40, 0.65);
-      z-index: -1;
-    }
-
-    /* ===== FIXED HEADER (glass) ===== */
+    /* ===== HEADER - normal flow ===== */
     header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-      padding: 0.75rem 2.5rem;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      height: 110px;
-      z-index: 1050;
-      border-bottom: 3px solid #0a5c8c;
-    }
-
-    .gm-picture {
-      width: 88px;
-      height: 88px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 3px solid white;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      background: white;
+      background: var(--primary);
+      color: white;
+      padding: 1rem 1.5rem;
+      box-shadow: var(--shadow-md);
+      border-bottom: 3px solid var(--accent);
+      width: 100%;
     }
 
     .header-text h1 {
-      font-size: 1.9rem;
+      font-size: 1.3rem;
       font-weight: 600;
-      color: #0a2e5c;
-      letter-spacing: -0.02em;
       margin-bottom: 0.2rem;
+      line-height: 1.2;
     }
 
     .header-text p {
-      font-size: 1rem;
-      color: #334155;
-      font-weight: 500;
+      font-size: 0.8rem;
+      opacity: 0.9;
     }
 
-    /* ===== NAVIGATION (glass tabs) ===== */
+    /* ===== NAVIGATION - sticky ===== */
     nav {
-      position: fixed;
-      top: 110px;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      padding: 0.5rem 2rem;
+      background: var(--primary-light);
+      padding: 0.5rem;
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-      z-index: 1040;
-      border-bottom: 1px solid rgba(255,255,255,0.3);
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     nav a {
-      color: #0a2e5c;
+      color: white;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 0.6rem 1.5rem;
-      border-radius: 40px;
-      background: transparent;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid transparent;
+      font-weight: 500;
+      font-size: 0.85rem;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      transition: background-color 0.2s;
+      white-space: nowrap;
+      flex: 1 1 auto;
+      text-align: center;
     }
 
     nav a:hover {
-      background: rgba(10, 92, 140, 0.15);
-      border-color: rgba(10, 92, 140, 0.4);
+      background: var(--accent);
     }
 
     nav a.active {
-      background: #0a5c8c;
-      color: white;
-      box-shadow: 0 6px 14px rgba(10, 92, 140, 0.4);
+      background: var(--accent);
+      font-weight: 600;
     }
 
-    /* ===== MAIN PANEL (glass card) ===== */
+    /* ===== MAIN CONTENT ===== */
     main {
       flex: 1;
       max-width: 1100px;
-      width: 90%;
-      margin: 160px auto 3rem;   /* space for fixed header+nav */
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 2rem;
-      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
-      padding: 2.2rem 2.5rem;
-      border: 1px solid rgba(255,255,255,0.5);
+      width: 92%;
+      margin: 1.5rem auto;
+      background: var(--white);
+      border-radius: 1.2rem;
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
     }
 
-    /* ===== PAGE HEADER ===== */
     .page-header {
       text-align: center;
-      margin-bottom: 2.2rem;
-      padding-bottom: 1rem;
-      border-bottom: 3px solid #0a5c8c;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 3px solid var(--accent);
     }
 
     .page-header h2 {
-      color: #0a2e5c;
-      font-size: 2.6rem;
+      color: var(--primary);
+      font-size: 1.8rem;
       font-weight: 700;
-      letter-spacing: -0.01em;
     }
 
     .page-header p {
-      color: #2c3e50;
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin: 0.5rem auto 0;
+      color: var(--text-light);
+      font-size: 1rem;
+      margin-top: 0.3rem;
     }
 
     /* ===== ABOUT CONTENT SECTIONS ===== */
@@ -175,182 +132,316 @@
     }
 
     .section {
-      background: rgba(255,255,255,0.6);
-      backdrop-filter: blur(4px);
-      border-radius: 1.8rem;
-      padding: 2rem 2.2rem;
-      margin-bottom: 2.5rem;
-      border: 1px solid rgba(255,255,255,0.8);
-      box-shadow: 0 10px 26px rgba(0,0,0,0.05);
-      transition: 0.2s;
-    }
-
-    .section:hover {
-      background: rgba(255,255,255,0.75);
+      background: #f8fafc;
+      border-radius: 1.2rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #e2e8f0;
+      box-shadow: var(--shadow-sm);
     }
 
     .section h2 {
-      color: #0a2e5c;
-      font-size: 1.9rem;
+      color: var(--primary);
+      font-size: 1.5rem;
       font-weight: 600;
-      margin-bottom: 1.5rem;
-      border-left: 6px solid #0a5c8c;
-      padding-left: 1.2rem;
+      margin-bottom: 1.2rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
     }
 
     .section h3 {
-      color: #0a3b5c;
-      font-size: 1.4rem;
-      margin: 1.5rem 0 1rem;
+      color: var(--primary-light);
+      font-size: 1.2rem;
+      margin: 1.2rem 0 0.8rem;
       font-weight: 600;
     }
 
     .section p {
-      margin-bottom: 1.2rem;
-      color: #1e293b;
-      text-align: justify;
+      margin-bottom: 1rem;
+      color: var(--text-dark);
+      font-size: 0.95rem;
     }
 
     .section ul {
-      margin: 1rem 0 1rem 1.8rem;
-      color: #2d3c4c;
+      margin: 0.8rem 0 0.8rem 1.5rem;
+      color: var(--text-light);
     }
 
     .section li {
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
+      font-size: 0.95rem;
     }
 
     .highlight {
-      background: rgba(10, 92, 140, 0.08);
-      padding: 1.2rem 1.8rem;
-      border-radius: 1.5rem;
-      border-left: 5px solid #0a5c8c;
-      margin: 1.5rem 0;
+      background: var(--accent-light);
+      padding: 1rem 1.5rem;
+      border-radius: 1rem;
+      border-left: 4px solid var(--accent);
+      margin: 1.2rem 0;
     }
 
     /* ===== MISSION / VISION CARDS ===== */
     .mv-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin: 2rem 0 2.5rem;
+      gap: 1.2rem;
+      margin: 1.5rem 0;
     }
 
     .mv-card {
-      background: rgba(255,255,255,0.8);
-      backdrop-filter: blur(4px);
-      padding: 2rem 1.8rem;
-      border-radius: 2rem;
+      background: #f8fafc;
+      padding: 1.5rem;
+      border-radius: 1.2rem;
       text-align: center;
-      border-top: 6px solid #0a5c8c;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      border-top: 4px solid var(--accent);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid #e2e8f0;
     }
 
     .mv-card h3 {
-      color: #0a2e5c;
-      font-size: 1.8rem;
-      margin-bottom: 1.2rem;
+      color: var(--primary);
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
     }
 
     .mv-card p {
-      font-size: 1.15rem;
-      color: #253746;
+      font-size: 0.95rem;
+      color: var(--text-light);
     }
 
     /* ===== CONTACT SECTION ===== */
     .contact-section {
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(4px);
-      border-radius: 2rem;
-      padding: 2.2rem;
-      margin-top: 2.5rem;
-      border: 2px solid rgba(10,92,140,0.2);
+      background: #f8fafc;
+      border-radius: 1.2rem;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      border: 1px solid #e2e8f0;
+    }
+
+    .contact-section h2 {
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
     }
 
     .contact-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.8rem;
-      margin-top: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
     }
 
     .contact-card {
       background: white;
-      padding: 1.5rem 1.2rem;
-      border-radius: 1.5rem;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-      border: 1px solid rgba(0,0,0,0.05);
-      transition: 0.2s;
+      padding: 1.2rem;
+      border-radius: 1rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s;
     }
 
     .contact-card:hover {
-      transform: translateY(-5px);
-      border-color: #0a5c8c;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
     }
 
     .contact-card h4 {
-      color: #0a2e5c;
-      margin-bottom: 1rem;
-      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+    }
+
+    .contact-card p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 0.3rem;
     }
 
     .contact-card a {
-      color: #0a5c8c;
+      color: var(--accent);
       text-decoration: none;
       font-weight: 500;
+      font-size: 0.9rem;
     }
 
     /* ===== FOOTER ===== */
     footer {
-      background: rgba(10, 30, 50, 0.85);
-      backdrop-filter: blur(5px);
+      background: var(--primary);
       color: white;
-      padding: 1.5rem 2rem;
-      margin-top: 2rem;
-      border-top: 2px solid rgba(255,255,255,0.2);
+      padding: 1.2rem;
+      margin-top: 1rem;
+      text-align: center;
     }
 
     .footer-inner {
-      max-width: 1300px;
+      max-width: 1200px;
       margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1.5rem;
     }
 
     .contact-row {
       display: flex;
-      gap: 2rem;
       flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
     }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 800px) {
-      header { padding: 0.5rem 1rem; height: 100px; }
-      .gm-picture { width: 70px; height: 70px; }
-      .header-text h1 { font-size: 1.4rem; }
-      nav { top: 100px; padding: 0.3rem 1rem; flex-wrap: wrap; }
-      nav a { padding: 0.4rem 1rem; font-size: 0.9rem; }
-      main { margin: 140px auto 2rem; padding: 1.5rem; }
-      .page-header h2 { font-size: 2rem; }
-      .mv-container { grid-template-columns: 1fr; }
-    }
+/* ===== SIDE WIDGETS - OPTIMIZED FOR PERFORMANCE ===== */
+.side-widgets {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  display: none; /* Hidden by default - NO LAG on mobile */
+}
 
+/* Show only on LARGE screens - NEVER on mobile */
+@media (min-width: 1400px) {
+  .side-widgets {
+    display: block;
+  }
+}
+
+/* Left side - SMALLER and HIGHER */
+.widget-left {
+  position: fixed;
+  left: 15px;
+  top: 200px; /* Higher position (was 50%) */
+  width: 180px; /* Smaller width (was 180px) */
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Smaller gap */
+}
+
+/* Right side - SMALLER and HIGHER */
+.widget-right {
+  position: fixed;
+  right: 15px;
+  top: 200px; /* Higher position (was 50%) */
+  width: 180px; /* Smaller width (was 180px) */
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Smaller gap */
+}
+
+/* Image container - LIGHTER shadows, NO complex effects */
+.widget-image-container {
+  width: 100%;
+  border-radius: 15px; /* Smaller radius */
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+  border: 1px solid white;
+  background: white;
+  transition: transform 0.2s ease; /* Simple transition only */
+}
+
+/* Simple hover effect - NO scale transform on mobile */
+@media (min-width: 1400px) {
+  .widget-image-container:hover {
+    transform: translateY(-3px); /* Just move up slightly */
+    box-shadow: 0 4px 10px rgba(10, 92, 140, 0.2);
+  }
+}
+
+/* Actual image - OPTIMIZED */
+.widget-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  aspect-ratio: 3/4;
+  /* Images are static - NO animation, NO blur, NO filters */
+}
+
+/* Mobile - COMPLETELY HIDDEN - NO LAG */
+@media (max-width: 1399px) {
+  .side-widgets {
+    display: none !important; /* Force hidden on mobile */
+  }
+}
+
+
+    /* ===== MOBILE OPTIMIZATION ===== */
     @media (max-width: 600px) {
-      .section { padding: 1.5rem; }
+      header { padding: 0.8rem; }
+      .header-text h1 { font-size: 1.1rem; }
+      .header-text p { font-size: 0.7rem; }
+      
+      nav { padding: 0.3rem; }
+      nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; }
+      
+      main { padding: 1rem; width: 95%; margin: 1rem auto; }
+      
+      .page-header h2 { font-size: 1.5rem; }
+      .page-header p { font-size: 0.9rem; }
+      
+      .section { padding: 1.2rem; }
+      .section h2 { font-size: 1.3rem; }
+      .section h3 { font-size: 1.1rem; }
+      .section p { font-size: 0.9rem; }
+      
+      .mv-container { grid-template-columns: 1fr; gap: 1rem; }
+      .mv-card { padding: 1.2rem; }
+      .mv-card h3 { font-size: 1.2rem; }
+      
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-card { padding: 1rem; }
+      
+      .footer-row { flex-direction: column; gap: 0.5rem; }
+      .contact-row { flex-direction: column; gap: 0.5rem; }
+    }
+
+    @media (max-width: 360px) {
+      nav a { font-size: 0.7rem; padding: 0.3rem 0.4rem; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ===== INCLUDE SIDE WIDGETS ===== -->
+  <div id="side-widgets-container"></div>
+
+  <script>
+    // Load widgets from external file
+    fetch('widgets.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('side-widgets-container').innerHTML = data;
+      })
+      .catch(error => {
+        console.log('Widgets failed to load:', error);
+        // Optional: Show fallback widgets
+        document.getElementById('side-widgets-container').innerHTML = `
+          <div class="side-widgets">
+            <div class="widget-left">
+              <div class="widget-image-container">
+                <img src="images/gcashlogo.png" alt="GCash" class="widget-image">
+              </div>
+            </div>
+            <div class="widget-right">
+              <div class="widget-image-container">
+                <img src="images/readingschedule.jpg" alt="Reading Schedule" class="widget-image">
+              </div>
+            </div>
+          </div>
+        `;
+      });
+  </script>
+
 <!-- ===== HEADER ===== -->
 <header>
-  
   <div class="header-text">
     <h1>Commercial Division · Siniloan Water District</h1>
     <p>P. Burgos St., Siniloan, Laguna · 049-501-6656</p>
@@ -361,9 +452,9 @@
 <nav>
   <a href="services.html">🏠 Home</a>
   <a href="services2.html">🛠️ Services</a>
-  <a href="about.html" class="active">🏢 About SIWADI</a>
-  <a href="calculator.html">🧮 Bill Calculator</a>
-  <a href="index.html">📄 Bill Inquiry</a>
+  <a href="about.html" class="active">🏢 About</a>
+  <a href="calculator.html">🧮 Calculator</a>
+  <a href="index.html">📄 Inquiry</a>
 </nav>
 
 <!-- ===== MAIN ABOUT CONTENT ===== -->
@@ -374,7 +465,7 @@
   </div>
 
   <div class="about-content">
-    <!-- === HISTORY (condensed but preserving all key facts) === -->
+    <!-- HISTORY SECTION -->
     <section class="section">
       <h2>📜 History of SIWADI</h2>
       <p>Siniloan Water District (SIWADI) was born out of necessity. Before its creation, the municipal water system – originally built by the Bureau of Public Works and later managed by the municipal government – suffered from poor water quality, low pressure, and unreliable supply. In 1988, Ms. Sonia Costelo of LWUA proposed forming a water district under PD 198. A public hearing on April 29, 1988 at the Leonides de Leon Hall showed strong public support.</p>
@@ -391,7 +482,7 @@
       <p>Key supporters: Gov. Joey D. Lina (P1M calamity aid, 1996), Congressman Magdaleno Palacol (P900,000 CDF, 1997), LWUA, and loyal consumers.</p>
     </section>
 
-    <!-- === MISSION & VISION CARDS === -->
+    <!-- MISSION & VISION CARDS -->
     <div class="mv-container">
       <div class="mv-card">
         <h3>🎯 Mission</h3>
@@ -403,6 +494,21 @@
       </div>
     </div>
 
+    <!-- CONTACT SECTION (added back since it was missing) -->
+    <section class="contact-section">
+      <h2>📞 Contact Information</h2>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h4>📞 Commercial Division</h4>
+          <p><a href="tel:0495016656">(049) 501-6656</a></p>
+        </div>
+  
+        <div class="contact-card">
+          <h4>📍 Address</h4>
+          <p>SIWADI Bldg., P. Burgos St., Siniloan, Laguna</p>
+        </div>
+      </div>
+    </section>
   </div>
 </main>
 
@@ -412,9 +518,8 @@
     <div class="contact-row">
       <span>📍 P. Burgos St., Siniloan, Laguna</span>
       <span>📞 049-501-6656</span>
-
     </div>
-    <div style="opacity:0.9;">© 2026 Siniloan Water District</div>
+    <div>© 2026 Siniloan Water District</div>
   </div>
 </footer>
 
@@ -430,12 +535,5 @@
     });
   })();
 </script>
-
-<!-- fallback background -->
-<style>
-  body::before {
-    background-image: url('images/building.jpg'), url('https://images.unsplash.com/photo-1559028012-481c04fa702d?w=1600&q=80');
-  }
-</style>
 </body>
 </html>
