@@ -2,328 +2,266 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
   <meta name="description" content="SIWADI Services – GCash payment guide, new connection, water rates.">
   <title>SIWADI · Services</title>
   <style>
-    /* ===== GLOBAL – same as portal (professional, glass, full bg) ===== */
+    /* ===== RESET & VARIABLES ===== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    :root {
+      --primary: #0a2e5c;
+      --primary-light: #1e4a7a;
+      --accent: #0a5c8c;
+      --accent-light: #e6f0f9;
+      --gray-bg: #f5f7fa;
+      --white: #ffffff;
+      --text-dark: #1e293b;
+      --text-light: #4b5565;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 8px rgba(0,0,0,0.08);
+    }
+
     body {
-      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-      background: #0f172a;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--gray-bg);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      color: #1e293b;
+      color: var(--text-dark);
       line-height: 1.5;
-      position: relative;
     }
 
-    /* full‑screen background (building.jpg) */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: url('images/building.jpg') no-repeat center center fixed;
-      background-size: cover;
-      filter: brightness(0.4) blur(2px);
-      transform: scale(1.02);
-      z-index: -2;
-    }
-
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 20, 40, 0.65);
-      z-index: -1;
-    }
-
-    /* ===== FIXED HEADER (glass) ===== */
+    /* ===== HEADER - normal flow, no fixed positioning ===== */
     header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-      padding: 0.75rem 2.5rem;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      height: 110px;
-      z-index: 1050;
-      border-bottom: 3px solid #0a5c8c;
-    }
-
-    .gm-picture {
-      width: 88px;
-      height: 88px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 3px solid white;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      background: white;
+      background: var(--primary);
+      color: white;
+      padding: 1rem 1.5rem;
+      box-shadow: var(--shadow-md);
+      border-bottom: 3px solid var(--accent);
+      width: 100%;
     }
 
     .header-text h1 {
-      font-size: 1.9rem;
+      font-size: 1.3rem;
       font-weight: 600;
-      color: #0a2e5c;
-      letter-spacing: -0.02em;
       margin-bottom: 0.2rem;
+      line-height: 1.2;
     }
 
     .header-text p {
-      font-size: 1rem;
-      color: #334155;
-      font-weight: 500;
+      font-size: 0.8rem;
+      opacity: 0.9;
     }
 
-    /* ===== NAVIGATION (glass tabs) ===== */
+    /* ===== NAVIGATION - sticky, not fixed ===== */
     nav {
-      position: fixed;
-      top: 110px;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      padding: 0.5rem 2rem;
+      background: var(--primary-light);
+      padding: 0.5rem;
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-      z-index: 1040;
-      border-bottom: 1px solid rgba(255,255,255,0.3);
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     nav a {
-      color: #0a2e5c;
+      color: white;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 0.6rem 1.5rem;
-      border-radius: 40px;
-      background: transparent;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid transparent;
+      font-weight: 500;
+      font-size: 0.85rem;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      transition: background-color 0.2s;
+      white-space: nowrap;
+      flex: 1 1 auto;
+      text-align: center;
     }
 
     nav a:hover {
-      background: rgba(10, 92, 140, 0.15);
-      border-color: rgba(10, 92, 140, 0.4);
+      background: var(--accent);
     }
 
     nav a.active {
-      background: #0a5c8c;
-      color: white;
-      box-shadow: 0 6px 14px rgba(10, 92, 140, 0.4);
+      background: var(--accent);
+      font-weight: 600;
     }
 
-    /* ===== MAIN PANEL (glass card) ===== */
+    /* ===== MAIN CONTENT - no margin-top needed ===== */
     main {
       flex: 1;
       max-width: 1200px;
-      width: 90%;
-      margin: 160px auto 3rem;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 2rem;
-      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
-      padding: 2.2rem 2.5rem;
-      border: 1px solid rgba(255,255,255,0.5);
+      width: 92%;
+      margin: 1.5rem auto;
+      background: var(--white);
+      border-radius: 1.2rem;
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
     }
 
     .page-header {
       text-align: center;
-      margin-bottom: 2.2rem;
-      padding-bottom: 1rem;
-      border-bottom: 3px solid #0a5c8c;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 3px solid var(--accent);
     }
 
     .page-header h2 {
-      color: #0a2e5c;
-      font-size: 2.6rem;
+      color: var(--primary);
+      font-size: 1.8rem;
       font-weight: 700;
     }
 
     .page-header p {
-      color: #2c3e50;
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin: 0.5rem auto 0;
+      color: var(--text-light);
+      font-size: 1rem;
+      margin-top: 0.3rem;
     }
 
-    /* ===== SERVICE CARDS (3 columns) ===== */
+    /* ===== SERVICE CARDS ===== */
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin: 2.5rem 0;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
     }
 
     .service-card {
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(4px);
-      border-radius: 2rem;
+      background: #f8fafc;
+      border-radius: 1.2rem;
       overflow: hidden;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-      transition: all 0.25s ease;
-      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+      border: 1px solid #e2e8f0;
       cursor: pointer;
     }
 
     .service-card:hover {
-      transform: translateY(-10px);
-      background: rgba(255,255,255,0.9);
-      box-shadow: 0 25px 45px rgba(0, 45, 80, 0.25);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
     }
 
     .card-header {
-      background: #0a2e5c;
+      background: var(--primary);
       color: white;
-      padding: 1.5rem 1rem;
+      padding: 1.2rem 1rem;
       text-align: center;
     }
 
     .card-header h3 {
-      font-size: 1.8rem;
+      font-size: 1.4rem;
       font-weight: 600;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.2rem;
     }
 
     .card-header p {
       opacity: 0.9;
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     .image-area {
-      padding: 1.8rem 1.5rem 1.2rem;
+      padding: 1.2rem;
       text-align: center;
-      position: relative;
     }
 
     .service-img {
       max-width: 100%;
-      max-height: 250px;
-      border-radius: 1.2rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      transition: transform 0.3s ease;
+      max-height: 200px;
+      border-radius: 0.8rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       object-fit: cover;
       width: 100%;
       height: auto;
       background: #f0f4f8;
     }
 
-    /* on hover inside card, slight scale + hint */
-    .service-card:hover .service-img {
-      transform: scale(1.02);
-    }
-
-    /* subtle hint */
     .image-note {
-      margin-top: 0.7rem;
-      color: #0a4a6e;
-      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      color: var(--text-light);
+      font-size: 0.8rem;
       font-style: italic;
-      opacity: 0.8;
     }
 
-    /* ===== CONTACT BOX ===== */
-    .contact-box {
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(4px);
-      border-radius: 2rem;
-      padding: 2rem;
-      margin-top: 2rem;
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--primary);
+      color: white;
+      padding: 1.2rem;
+      margin-top: 1rem;
       text-align: center;
-      border: 2px solid rgba(10,92,140,0.3);
     }
 
-    .contact-box h3 {
-      color: #0a2e5c;
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    .contact-row {
+    .footer-row {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 2.5rem;
+      gap: 1.2rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
     }
 
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 1.1rem;
-      color: #1e293b;
-    }
-
-    /* ===== MODAL (full‑size image) ===== */
+    /* ===== MODAL (simplified) ===== */
     .modal {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.96);
-      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.95);
       z-index: 2000;
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      padding: 1rem;
     }
 
     .modal-content {
-      max-width: 1100px;
-      width: 90%;
+      max-width: 90%;
       text-align: center;
     }
 
     .modal-img {
       max-width: 100%;
-      max-height: 75vh;
-      border-radius: 1.5rem;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.7);
-      border: 4px solid white;
+      max-height: 70vh;
+      border-radius: 1rem;
+      border: 3px solid white;
     }
 
     .modal-caption {
       color: white;
-      margin-top: 1.5rem;
+      margin-top: 1rem;
     }
 
     .modal-caption h3 {
-      font-size: 2rem;
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
     }
 
     .modal-close {
       position: absolute;
-      top: 30px;
-      right: 40px;
-      font-size: 3.5rem;
+      top: 20px;
+      right: 20px;
+      font-size: 2.5rem;
       color: white;
       background: none;
       border: none;
       cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .modal-close:hover {
-      color: #0a5c8c;
-      transform: scale(1.2);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .modal-nav {
@@ -333,7 +271,7 @@
       width: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 0 2rem;
+      padding: 0 10px;
       pointer-events: none;
     }
 
@@ -341,64 +279,163 @@
       background: rgba(255,255,255,0.2);
       color: white;
       border: none;
-      width: 50px;
-      height: 50px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      font-size: 2rem;
+      font-size: 1.8rem;
       cursor: pointer;
       pointer-events: auto;
-      transition: 0.2s;
-      backdrop-filter: blur(5px);
-    }
-
-    .modal-nav-btn:hover {
-      background: #0a5c8c;
-    }
-
-    /* ===== FOOTER ===== */
-    footer {
-      background: rgba(10, 30, 50, 0.85);
-      backdrop-filter: blur(5px);
-      color: white;
-      padding: 1.5rem 2rem;
-      margin-top: 2rem;
-      border-top: 2px solid rgba(255,255,255,0.2);
-    }
-
-    .footer-inner {
-      max-width: 1300px;
-      margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
       align-items: center;
-      gap: 1.5rem;
+      justify-content: center;
     }
 
-    .footer-row {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
+  /* ===== SIDE WIDGETS - OPTIMIZED FOR PERFORMANCE ===== */
+.side-widgets {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  display: none; /* Hidden by default - NO LAG on mobile */
+}
+
+/* Show only on LARGE screens - NEVER on mobile */
+@media (min-width: 1400px) {
+  .side-widgets {
+    display: block;
+  }
+}
+
+/* Left side - SMALLER and HIGHER */
+.widget-left {
+  position: fixed;
+  left: 15px;
+  top: 200px; /* Higher position (was 50%) */
+  width: 180px; /* Smaller width (was 180px) */
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Smaller gap */
+}
+
+/* Right side - SMALLER and HIGHER */
+.widget-right {
+  position: fixed;
+  right: 15px;
+  top: 200px; /* Higher position (was 50%) */
+  width: 180px; /* Smaller width (was 180px) */
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Smaller gap */
+}
+
+/* Image container - LIGHTER shadows, NO complex effects */
+.widget-image-container {
+  width: 100%;
+  border-radius: 15px; /* Smaller radius */
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+  border: 1px solid white;
+  background: white;
+  transition: transform 0.2s ease; /* Simple transition only */
+}
+
+/* Simple hover effect - NO scale transform on mobile */
+@media (min-width: 1400px) {
+  .widget-image-container:hover {
+    transform: translateY(-3px); /* Just move up slightly */
+    box-shadow: 0 4px 10px rgba(10, 92, 140, 0.2);
+  }
+}
+
+/* Actual image - OPTIMIZED */
+.widget-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  aspect-ratio: 3/4;
+  /* Images are static - NO animation, NO blur, NO filters */
+}
+
+/* Mobile - COMPLETELY HIDDEN - NO LAG */
+@media (max-width: 1399px) {
+  .side-widgets {
+    display: none !important; /* Force hidden on mobile */
+  }
+}
+
+    /* ===== MOBILE OPTIMIZATION ===== */
+    @media (max-width: 600px) {
+      header { padding: 0.8rem; }
+      .header-text h1 { font-size: 1.1rem; }
+      .header-text p { font-size: 0.7rem; }
+      
+      nav { padding: 0.3rem; }
+      nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; }
+      
+      main { padding: 1rem; width: 95%; margin: 1rem auto; }
+      
+      .page-header h2 { font-size: 1.5rem; }
+      .page-header p { font-size: 0.9rem; }
+      
+      .services-grid { grid-template-columns: 1fr; gap: 1rem; }
+      
+      .card-header h3 { font-size: 1.2rem; }
+      .card-header p { font-size: 0.8rem; }
+      
+      .service-img { max-height: 180px; }
+      
+      .footer-row { flex-direction: column; gap: 0.5rem; }
+      
+      .modal-nav-btn { width: 40px; height: 40px; font-size: 1.5rem; }
+      .modal-close { font-size: 2rem; }
     }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 800px) {
-      header { padding: 0.5rem 1rem; height: 100px; }
-      .gm-picture { width: 70px; height: 70px; }
-      .header-text h1 { font-size: 1.4rem; }
-      nav { top: 100px; padding: 0.3rem 1rem; flex-wrap: wrap; }
-      nav a { padding: 0.4rem 1rem; font-size: 0.9rem; }
-      main { margin: 140px auto 2rem; padding: 1.5rem; }
-      .page-header h2 { font-size: 2rem; }
-      .services-grid { gap: 1.5rem; }
+    @media (max-width: 360px) {
+      nav a { font-size: 0.7rem; padding: 0.3rem 0.4rem; }
     }
   </style>
 </head>
 <body>
 
+<!-- ===== INCLUDE SIDE WIDGETS ===== -->
+  <div id="side-widgets-container"></div>
+
+  <script>
+    // Load widgets from external file
+    fetch('widgets.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('side-widgets-container').innerHTML = data;
+      })
+      .catch(error => {
+        console.log('Widgets failed to load:', error);
+        // Optional: Show fallback widgets
+        document.getElementById('side-widgets-container').innerHTML = `
+          <div class="side-widgets">
+            <div class="widget-left">
+              <div class="widget-image-container">
+                <img src="images/gcashlogo.png" alt="GCash" class="widget-image">
+              </div>
+            </div>
+            <div class="widget-right">
+              <div class="widget-image-container">
+                <img src="images/readingschedule.jpg" alt="Reading Schedule" class="widget-image">
+              </div>
+            </div>
+          </div>
+        `;
+      });
+  </script>
+
 <!-- ===== HEADER ===== -->
 <header>
-  
+  <div class="header-text">
     <h1>Commercial Division · Siniloan Water District</h1>
     <p>P. Burgos St., Siniloan, Laguna · 049-501-6656</p>
   </div>
@@ -408,60 +445,59 @@
 <nav>
   <a href="services.html">🏠 Home</a>
   <a href="services2.html" class="active">🛠️ Services</a>
-  <a href="about.html">🏢 About SIWADI</a>
-  <a href="calculator.html">🧮 Bill Calculator</a>
-  <a href="index.html">📄 Bill Inquiry</a>
+  <a href="about.html">🏢 About</a>
+  <a href="calculator.html">🧮 Calculator</a>
+  <a href="index.html">📄 Inquiry</a>
 </nav>
 
 <!-- ===== MAIN CONTENT ===== -->
 <main>
   <div class="page-header">
     <h2>Our Services</h2>
-    <p>Hover or tap a card to preview · Click image to enlarge</p>
+    <p>Tap any card to view details and enlarge images</p>
   </div>
 
   <!-- service cards (3) -->
   <div class="services-grid" id="serviceGrid">
     <!-- GCash card -->
-    <div class="service-card" data-index="0" data-title="GCash Payment" data-desc="Step‑by‑step guide for paying through GCash">
+    <div class="service-card" data-index="0">
       <div class="card-header">
         <h3>💳 GCash Payment</h3>
         <p>Pay via GCash</p>
       </div>
       <div class="image-area">
         <img src="images/gcash.jpg" alt="GCash tutorial" class="service-img"
-             onerror="this.src='https://via.placeholder.com/600x400/0a5c8c/ffffff?text=GCash+Guide'">
-        <div class="image-note">click to enlarge</div>
+             onerror="this.src='https://via.placeholder.com/400x250/0a5c8c/ffffff?text=GCash+Guide'">
+        <div class="image-note">tap to enlarge</div>
       </div>
     </div>
 
     <!-- New Connection card -->
-    <div class="service-card" data-index="1" data-title="New Connection" data-desc="Requirements and application process">
+    <div class="service-card" data-index="1">
       <div class="card-header">
         <h3>🔧 New Connection</h3>
         <p>Apply online</p>
       </div>
       <div class="image-area">
         <img src="images/newconnection.png" alt="new connection" class="service-img"
-             onerror="this.src='https://via.placeholder.com/600x400/014272/ffffff?text=New+Connection'">
-        <div class="image-note">click to enlarge</div>
+             onerror="this.src='https://via.placeholder.com/400x250/014272/ffffff?text=New+Connection'">
+        <div class="image-note">tap to enlarge</div>
       </div>
     </div>
 
     <!-- Water Rates card -->
-    <div class="service-card" data-index="2" data-title="Water Rates" data-desc="Current water rates and billing information">
+    <div class="service-card" data-index="2">
       <div class="card-header">
         <h3>📊 Water Rates</h3>
         <p>Latest schedule</p>
       </div>
       <div class="image-area">
         <img src="images/rates.jpg" alt="water rates" class="service-img"
-             onerror="this.src='https://via.placeholder.com/600x400/0169b4/ffffff?text=Water+Rates'">
-        <div class="image-note">click to enlarge</div>
+             onerror="this.src='https://via.placeholder.com/400x250/0169b4/ffffff?text=Water+Rates'">
+        <div class="image-note">tap to enlarge</div>
       </div>
     </div>
   </div>
-
 </main>
 
 <!-- ===== FOOTER ===== -->
@@ -470,15 +506,14 @@
     <div class="footer-row">
       <span>📍 P. Burgos St., Siniloan, Laguna</span>
       <span>📞 049-501-6656</span>
-      
     </div>
-    <div style="opacity:0.9;">© 2026 Siniloan Water District</div>
+    <div>© 2026 Siniloan Water District</div>
   </div>
 </footer>
 
 <!-- ===== MODAL (full‑size image viewer) ===== -->
 <div id="serviceModal" class="modal">
-  <button class="modal-close" onclick="closeModal()">&times;</button>
+  <button class="modal-close" onclick="closeModal()">×</button>
   <div class="modal-content">
     <img id="modalImg" class="modal-img" src="" alt="">
     <div class="modal-caption">
@@ -494,18 +529,28 @@
 
 <script>
   (function() {
+    // Service data
+    const serviceData = [
+      { 
+        title: 'GCash Payment', 
+        desc: 'Step-by-step guide for paying through GCash. Pay your water bills anytime, anywhere using the GCash app.' 
+      },
+      { 
+        title: 'New Connection', 
+        desc: 'Requirements and application process for new water service connections. Visit our office or apply online.' 
+      },
+      { 
+        title: 'Water Rates', 
+        desc: 'Current water rates and billing information. Updated as of January 2026.' 
+      }
+    ];
+
     const cards = Array.from(document.querySelectorAll('.service-card'));
     const modal = document.getElementById('serviceModal');
     const modalImg = document.getElementById('modalImg');
     const modalTitle = document.getElementById('modalTitle');
     const modalDesc = document.getElementById('modalDesc');
     let currentIdx = 0;
-
-    const serviceData = [
-      { title: 'GCash Payment', desc: 'Step‑by‑step guide for paying through GCash' },
-      { title: 'New Connection', desc: 'Requirements and application process' },
-      { title: 'Water Rates', desc: 'Current water rates and billing information' }
-    ];
 
     function openModal(index) {
       const card = cards[index];
@@ -520,6 +565,7 @@
     }
 
     window.openModal = openModal;
+    
     window.closeModal = function() {
       modal.style.display = 'none';
       document.body.style.overflow = 'auto';
@@ -541,17 +587,17 @@
       modalDesc.innerText = serviceData[currentIdx].desc;
     };
 
-    // attach click to each card
+    // Attach click to each card
     cards.forEach((card, i) => {
       card.addEventListener('click', () => openModal(i));
     });
 
-    // close on backdrop click
+    // Close on backdrop click
     modal.addEventListener('click', (e) => {
       if (e.target === modal) closeModal();
     });
 
-    // keyboard navigation
+    // Keyboard navigation
     document.addEventListener('keydown', (e) => {
       if (modal.style.display !== 'flex') return;
       if (e.key === 'Escape') closeModal();
@@ -559,7 +605,7 @@
       if (e.key === 'ArrowLeft') prevImage();
     });
 
-    // set active nav (services2.html)
+    // Set active nav (services2.html)
     const navLinks = document.querySelectorAll('nav a');
     navLinks.forEach(link => {
       link.classList.remove('active');
@@ -568,11 +614,5 @@
   })();
 </script>
 
-<!-- fallback background -->
-<style>
-  body::before {
-    background-image: url('images/building.jpg'), url('https://images.unsplash.com/photo-1559028012-481c04fa702d?w=1600&q=80');
-  }
-</style>
 </body>
 </html>
