@@ -96,7 +96,23 @@
         }
 
         /* ====================================================================== */
-        /* 3. INPUT AND BUTTON STYLING */
+        /* 3. READING DATE IMAGE - NEW */
+        /* ====================================================================== */
+        .reading-date-container {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .reading-date-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 2px solid #2a5298;
+        }
+
+        /* ====================================================================== */
+        /* 4. INPUT AND BUTTON STYLING */
         /* ====================================================================== */
         input, button { 
             padding: 12px 20px;
@@ -142,7 +158,7 @@
         }
 
         /* ====================================================================== */
-        /* 4. LOADING ANIMATION */
+        /* 5. LOADING ANIMATION */
         /* ====================================================================== */
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -166,7 +182,7 @@
         }
 
         /* ====================================================================== */
-        /* 5. LOGO AND INPUT GROUP */
+        /* 6. LOGO AND INPUT GROUP */
         /* ====================================================================== */
         #input-group {
             display: flex;
@@ -194,56 +210,7 @@
         }
 
         /* ====================================================================== */
-        /* 6. DISCLAIMER STYLING */
-        /* ====================================================================== */
-        .disclaimer {
-            margin-top: 25px;
-            padding: 20px;
-            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
-            border-left: 5px solid #2a5298;
-            border-radius: 8px;
-            text-align: left;
-            font-size: 0.85rem;
-            color: #495057;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            border-top: 1px solid #dee2e6;
-            border-right: 1px solid #dee2e6;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .disclaimer h4 {
-            margin-top: 0;
-            color: #1e3c72;
-            font-size: 1rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .disclaimer ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-
-        .disclaimer li {
-            margin-bottom: 8px;
-            line-height: 1.5;
-            position: relative;
-        }
-
-        .disclaimer li::before {
-            content: "•";
-            color: #2a5298;
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
-        }
-
-        /* ====================================================================== */
-        /* 7. MODAL BOX STYLING */
+        /* 7. MODAL BOX STYLING - COMPRESSED */
         /* ====================================================================== */
         #modal-container {
             position: fixed; 
@@ -251,7 +218,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(30, 60, 114, 0.9); /* Blue overlay */
+            background-color: rgba(30, 60, 114, 0.9);
             display: none; 
             justify-content: center;
             align-items: center;
@@ -260,41 +227,60 @@
 
         #modal-content {
             background-color: white;
-            padding: 25px; 
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-            max-width: 450px; 
+            max-width: 450px;
             width: 90%;
             text-align: left;
             font-family: 'Montserrat', sans-serif;
             word-break: break-word;
             overflow-wrap: break-word;
             border: 2px solid #e0e0e0;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        /* Custom scrollbar */
+        #modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #modal-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        #modal-content::-webkit-scrollbar-thumb {
+            background: #2a5298;
+            border-radius: 10px;
         }
         
         /* ====================================================================== */
-        /* 8. VERTICAL GAP FIXES (For clean list display) */
+        /* 8. COMPRESSED RESULTS STYLING */
         /* ====================================================================== */
-        #modal-content ul {
+        #modal-result ul {
             margin: 0 !important; 
             padding-left: 0 !important;  
         }
 
-        #modal-content ul li {
-            margin: 8px 0 !important; 
-            padding: 8px 0 !important; 
+        #modal-result ul li {
+            margin: 6px 0 !important; 
+            padding: 6px 0 !important; 
             line-height: 1.4;
             border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
         }
 
-        #modal-content ul li:last-child {
+        #modal-result ul li:last-child {
             border-bottom: none;
         }
 
-        #modal-content ul li strong {
+        #modal-result ul li strong {
             color: #1e3c72;
-            min-width: 160px;
+            min-width: 140px;
             display: inline-block;
+            font-size: 0.85rem;
         }
         
         #modal-result h3 {
@@ -302,67 +288,100 @@
             color: #1e3c72;
             padding-bottom: 10px;
             border-bottom: 2px solid #f0f0f0;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
         }
 
-/* Modal button container */
-.modal-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
+        /* Disclaimer inside modal - COMPACT */
+        .modal-disclaimer {
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            border-left: 4px solid #2a5298;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: #495057;
+        }
 
-/* Equal-sized buttons */
-.modal-button {
-    flex: 1 1 0;        /* This makes them equal width */
-    min-width: 0;        /* Prevents flex overflow */
-    padding: 12px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: white;
-    transition: all 0.3s ease;
-    white-space: nowrap;  /* Keeps text on one line */
-}
+        .modal-disclaimer h4 {
+            margin: 0 0 6px 0;
+            color: #1e3c72;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-#pay-bills-button {
-    background: linear-gradient(to bottom, #007aff, #0051a8);
-}
+        .modal-disclaimer ul {
+            margin: 0;
+            padding-left: 18px;
+        }
 
-#pay-bills-button:hover {
-    background: linear-gradient(to bottom, #0051a8, #003d80);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 122, 255, 0.3);
-}
+        .modal-disclaimer li {
+            margin: 4px 0;
+            line-height: 1.3;
+            font-size: 0.7rem;
+        }
 
-#new-inquiry-button {
-    background: linear-gradient(to bottom, #2a5298, #1e3c72);
-}
+        /* Modal button container */
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
 
-#new-inquiry-button:hover {
-    background: linear-gradient(to bottom, #1e3c72, #0f2a4a);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(30, 60, 114, 0.3);
-}
+        /* Equal-sized buttons */
+        .modal-button {
+            flex: 1 1 0;
+            min-width: 0;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: white;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
 
-/* Mobile responsiveness */
-@media (max-width: 480px) {
-    .modal-buttons {
-        flex-direction: column;
-    }
-    
-    .modal-button {
-        width: 100%;
-    }
-    
-    #pay-bills-button, 
-    #new-inquiry-button {
-        white-space: normal;  /* Allows text wrap on mobile */
-    }
-}
+        #pay-bills-button {
+            background: linear-gradient(to bottom, #00a45b, #007540);
+        }
 
+        #pay-bills-button:hover {
+            background: linear-gradient(to bottom, #007540, #005a30);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 164, 91, 0.3);
+        }
+
+        #new-inquiry-button {
+            background: linear-gradient(to bottom, #2a5298, #1e3c72);
+        }
+
+        #new-inquiry-button:hover {
+            background: linear-gradient(to bottom, #1e3c72, #0f2a4a);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(30, 60, 114, 0.3);
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 480px) {
+            .modal-buttons {
+                flex-direction: column;
+            }
+            
+            .modal-button {
+                width: 100%;
+                white-space: normal;
+            }
+            
+            #modal-result ul li strong {
+                min-width: 110px;
+                display: inline-block;
+            }
+        }
 
         /* ====================================================================== */
         /* 9. SERVICES BUTTON STYLING */
@@ -445,11 +464,6 @@
                 margin-right: 0;
             }
 
-            .disclaimer {
-                padding: 15px;
-                font-size: 0.8rem;
-            }
-
             #modal-content {
                 padding: 20px;
                 max-width: 90%;
@@ -479,7 +493,113 @@
                 padding: 10px 15px;
                 font-size: 14px;
             }
+
+            #modal-result ul li strong {
+                min-width: 100px;
+                display: block;
+                margin-bottom: 3px;
+            }
         }
+
+/* ====================================================================== */
+/* 11. READING DATE IMAGE MODAL */
+/* ====================================================================== */
+.reading-date-container {
+    margin-top: 25px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.reading-date-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 2px solid #2a5298;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.reading-date-img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Reading Image Modal - Fullscreen */
+#readingImageModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    cursor: pointer;
+}
+
+#readingImageModal.active {
+    display: flex;
+}
+
+.modal-image-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#fullscreenImage {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.reading-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    border-radius: 50%;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10001;
+}
+
+.reading-modal-close:hover {
+    background: white;
+    color: black;
+    transform: scale(1.1);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .reading-modal-close {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+        top: 15px;
+        right: 15px;
+    }
+}
+
     
     </style>
 </head>
@@ -504,16 +624,9 @@
         <div class="spinner"></div> Please wait...
     </div>
     
-    <!-- DISCLAIMER SECTION -->
-    <div class="disclaimer">
-        <h4>🔒 Important Disclaimer:</h4>
-        <ul>
-            <li>This system is for informational purposes only</li>
-            <li>Customer names are partially masked for privacy protection</li>
-            <li>For official statements, please visit our office</li>
-            <li>GCash payment is not real-time; it takes 3 working days for  </li>
-            <li>us to update all the payments that are done with GCash.</li>
-        </ul>
+    <!-- READING DATE IMAGE - ADDED HERE -->
+    <div class="reading-date-container">
+        <img src="images/readingdate.jpg" alt="Reading Schedule" class="reading-date-img" onclick="openReadingImageModal()" onerror="this.src='https://via.placeholder.com/600x200/2a5298/ffffff?text=Reading+Schedule'">
     </div>
 </div>
 
@@ -521,6 +634,17 @@
     <div id="modal-content">
         <div id="modal-result">
             </div>
+        
+        <!-- DISCLAIMER MOVED INSIDE MODAL -->
+        <div class="modal-disclaimer">
+            <h4>🔒 Important Disclaimer:</h4>
+            <ul>
+                <li>This system is for informational purposes only</li>
+                <li>Customer names are partially masked for privacy protection</li>
+                <li>For official statements, please visit our office</li>
+                <li>GCash payment is not real-time; it takes 3 working days for us to update all the payments that are done with GCash.</li>
+            </ul>
+        </div>
         
         <div class="modal-buttons">
             <button id="pay-bills-button" class="modal-button" onclick="openGCash()">📱 Open GCash</button>
@@ -538,16 +662,13 @@
 <script>
 
 // ======================================================================
-// JAVASCRIPT LOGIC
+// JAVASCRIPT LOGIC - EXACTLY AS ORIGINAL
 // ======================================================================
 
 // ---------------------------
 // TWO Web App URLs (UPDATED)
 // ---------------------------
-// DATA_WEB_APP_URL: your existing inquiry script (same as original WEB_APP_URL)
 const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwe0PWj59RsVzeLtdI64AvV8bXi8D9ZMIPOrBgaDzWlYiSU0xARCxp0SK86kkTxAG0T/exec';
-
-// LOG_WEB_APP_URL: replace this placeholder with your activity-log script's web app URL
 const LOG_WEB_APP_URL  = 'https://script.google.com/macros/s/AKfycbxQKyzoU1AczxwzSiM24DA7TNRsUmiXocgH-TBY7JoM5Xux9wVNZUWBB6ycD4sr-pBE/exec';
 
 // 🎯 DISPLAY MAPPING: (Use your exact sheet headers on the left)
@@ -560,10 +681,9 @@ const DISPLAY_MAP = {
     'BALANCE': 'Water Bill',
     'AROBALANCE': 'S.C. / Materials', 
     'Total': 'Total Amount Due',  
-    'Reading Date': 'Reading Date',       // NEW: Column L        
+    'Reading Date': 'Reading Date',
     'Due Date': 'Payment Due Date',       
-    'Reading Date': 'Reading Date',       // NEW: Column L
-    'Discon Date': 'Disconnection Date'   // NEW: Column M
+    'Discon Date': 'Disconnection Date'
 };
 
 // Get references to DOM elements
@@ -571,7 +691,7 @@ const loadingMessage = document.getElementById('loading-message');
 const inputElement = document.getElementById('accountNumber');
 const modalContainer = document.getElementById('modal-container');
 const modalResult = document.getElementById('modal-result');
-const searchButton = document.querySelector('button'); // Reference for disabling
+const searchButton = document.querySelector('button');
 
 // --- Helper function to close the pop-up ---
 function closeModal() {
@@ -591,12 +711,10 @@ function maskName(fullName) {
         if (part.length === 0) return '';
         
         if (index === 0) {
-            // First Name: JUAN -> JU**
             const visiblePart = part.substring(0, 2);
             const maskedPart = part.substring(2).replace(/[A-Z]/g, '*');
             return visiblePart + maskedPart;
         } else {
-            // Last Names: DELA -> D***
             const visiblePart = part.substring(0, 1);
             const maskedPart = part.substring(1).replace(/[A-Z]/g, '*');
             return visiblePart + maskedPart;
@@ -606,9 +724,7 @@ function maskName(fullName) {
     return maskedParts.join(' ');
 }
 
-
-
-// --- Formatter Function (The final, robust version) ---
+// --- Formatter Function (Original) ---
 function formatResult(data) {
     let output = '<ul style="list-style-type: none;">'; 
     
@@ -617,14 +733,11 @@ function formatResult(data) {
             let value = String(data[sheetHeader]).replace(/"/g, ''); 
             const displayLabel = DISPLAY_MAP[sheetHeader];
 
-            // 1. Check if the field is the Name field to apply masking
             if (displayLabel.toUpperCase() === 'NAME' || 
                 displayLabel.toUpperCase() === 'CUSTOMER NAME') {
-                
                 value = maskName(value);
             }
             
-            // 2. Apply Date Formatting
             if (displayLabel.includes('Date') && value) { 
                 const dateObj = new Date(value); 
                 if (!isNaN(dateObj.getTime())) { 
@@ -635,12 +748,12 @@ function formatResult(data) {
                 }
             }
             
-            // 3. Apply Currency Formatting
             if (displayLabel.includes('Charge') || displayLabel.includes('Amount')) {
-                 value = `₱ ${parseFloat(value).toFixed(2)}`;
+                if (!isNaN(parseFloat(value))) {
+                    value = `₱ ${parseFloat(value).toFixed(2)}`;
+                }
             }
 
-            // 4. Append the list item
             output += `
                 <li>
                     <strong style="color: #1e3c72;">${displayLabel}:</strong> ${value}
@@ -652,6 +765,32 @@ function formatResult(data) {
     return output;
 }
 
+// Function to open reading date image fullscreen
+function openReadingImageModal() {
+    const modal = document.getElementById('readingImageModal');
+    const fullscreenImg = document.getElementById('fullscreenImage');
+    const readingImg = document.querySelector('.reading-date-img');
+    
+    // Get the source from the clicked image
+    fullscreenImg.src = readingImg.src;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+}
+
+// Function to close reading date image modal
+function closeReadingImageModal() {
+    const modal = document.getElementById('readingImageModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto'; // Restore scrolling
+}
+
+// Close with Escape key
+document.addEventListener('keydown', function(e) {
+    const modal = document.getElementById('readingImageModal');
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeReadingImageModal();
+    }
+});
 
 // --- Main Fetch Function ---
 async function fetchAccountData() {
@@ -664,12 +803,10 @@ async function fetchAccountData() {
         return;
     }
     
-    // Hide old result and disable button to prevent double clicks
     modalContainer.style.display = 'none'; 
     loadingMessage.style.display = 'block';
     searchButton.disabled = true; 
 
-    // <-- use DATA_WEB_APP_URL for fetching data
     const apiUrl = `${DATA_WEB_APP_URL}?account=${searchKey}`;
 
     try {
@@ -685,24 +822,18 @@ async function fetchAccountData() {
         } else {
             resultHtml = formatResult(data); 
 
-            // -----------------------------
-            // CALL ACTIVITY LOG (non-blocking)
-            // -----------------------------
-            // only if account and name exist in response
             try {
                 if (data['Account No.'] && data['Name']) {
                     logInquiry(data['Account No.'], data['Name']);
                 }
             } catch (xx) {
-                // keep UI robust — don't break on logging errors
                 console.error('logInquiry error', xx);
             }
         }
 
-        // Inject content and show modal
         modalResult.innerHTML = `
             <h3 style="color: #1e3c72;">${resultTitle}</h3>
-            <div style="border: 1px solid #e0e0e0; padding: 15px; background-color: #f9f9f9; border-radius: 8px;">
+            <div style="border: 1px solid #e0e0e0; padding: 12px; background-color: #f9f9f9; border-radius: 8px;">
                 ${resultHtml}
             </div>
         `;
@@ -716,17 +847,13 @@ async function fetchAccountData() {
         console.error('Fetch error:', error);
     } finally {
         loadingMessage.style.display = 'none';
-        searchButton.disabled = false; // Re-enable button
+        searchButton.disabled = false;
     }
 }
 
-// ------------------------------------------------------------------
-// logInquiry: sends account, name and timestamp to your LOG_WEB_APP_URL
-// ------------------------------------------------------------------
 async function logInquiry(accountNo, name) {
     if (!LOG_WEB_APP_URL || LOG_WEB_APP_URL.indexOf('PASTE_YOUR_LOG_SCRIPT_URL_HERE') !== -1) {
-        // placeholder not replaced — skip logging to avoid accidental requests
-        console.warn('LOG_WEB_APP_URL not configured. Replace the placeholder with your log script URL.');
+        console.warn('LOG_WEB_APP_URL not configured.');
         return;
     }
     try {
@@ -735,16 +862,13 @@ async function logInquiry(accountNo, name) {
             name: name,
             timestamp: new Date().toISOString()
         });
-        // fire-and-forget log call
         await fetch(`${LOG_WEB_APP_URL}?${params.toString()}`, { method: 'GET', mode: 'no-cors' });
         console.log('Inquiry logged:', accountNo, name);
     } catch (err) {
-        // don't disturb the user flow for logging errors
         console.error('Failed to log inquiry:', err);
     }
 }
 
-// Function to open GCash app (simplified version)
 function openGCash() {
     const accountNumber = document.getElementById('accountNumber').value.trim();
     
@@ -753,20 +877,16 @@ function openGCash() {
         return;
     }
     
-    // Show which account they're paying for
     alert(`Opening GCash app for account: ${accountNumber}\n\nPlease manually enter this account number in GCash.`);
     
-    // Detect mobile device
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     const isAndroid = /android/i.test(userAgent);
     const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
     
     if (isAndroid) {
-        // Android: Use intent with GCash package name
         const gcashIntent = 'intent://#Intent;package=com.globe.gcash.android;scheme=gcash;end;';
         window.location.href = gcashIntent;
         
-        // Fallback to Play Store if app not installed
         setTimeout(function() {
             if (confirm("GCash app not found. Install from Play Store?")) {
                 window.location.href = "market://details?id=com.globe.gcash.android";
@@ -774,10 +894,8 @@ function openGCash() {
         }, 800);
     } 
     else if (isIOS) {
-        // iOS: Try gcash:// scheme
         window.location.href = 'gcash://';
         
-        // Fallback to App Store if app not installed
         setTimeout(function() {
             if (confirm("GCash app not found. Open App Store?")) {
                 window.location.href = "https://apps.apple.com/ph/app/gcash/id1146801530";
@@ -785,13 +903,19 @@ function openGCash() {
         }, 800);
     }
     else {
-        // Desktop: Show instructions
         alert("Please open GCash on your mobile device to pay.\n\nAccount: " + accountNumber);
     }
 }
 
-
 </script>
+
+<!-- Reading Date Image Fullscreen Modal -->
+<div id="readingImageModal" onclick="closeReadingImageModal()">
+    <div class="modal-image-content" onclick="event.stopPropagation()">
+        <button class="reading-modal-close" onclick="closeReadingImageModal()">×</button>
+        <img id="fullscreenImage" src="" alt="Reading Schedule Fullscreen">
+    </div>
+</div>
 
 </body>
 </html>
