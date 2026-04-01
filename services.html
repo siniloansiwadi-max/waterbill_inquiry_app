@@ -657,79 +657,71 @@
 
 <main>
 
-  <div class="feature-tabs">
-    <button class="tab-btn active" id="tab1-btn"><i>📊</i> Overview</button>
-    <button class="tab-btn" id="tab2-btn"><i>🖼️</i> Gallery</button>
+<div class="feature-tabs">
+    <button class="tab-btn active" id="tab1-btn"><i>🖼️</i> Gallery</button>
+    <button class="tab-btn" id="tab2-btn"><i>📊</i> Reading & Disconnection Schedule</button>
     <button class="tab-btn" id="tab3-btn"><i>🔗</i> Quick Links</button>
-  </div>
+</div>
 
-<!-- TAB 1: OVERVIEW -->
+<!-- TAB 1: GALLERY (DEFAULT) -->
 <div class="tab-panel active-panel" id="panel1">
-  <!-- ===== WELCOME CARDS - NOW AT THE TOP ===== -->
-  <div class="two-col">
-    <div class="info-card">
-      <h3><i>💧</i> Welcome</h3>
-      <p style="margin-bottom: 0.8rem;">Serbisyong Tapat, Serbisyong Sapat.</p>
-      <p>Transparent water service management, online bill inquiry, and new connection applications.</p>
+    <h2 style="color:var(--primary); margin-bottom: 1rem;">📸 SIWADI Moments</h2>
+    <div class="gallery-grid" id="galleryGrid">
+        <div class="gallery-item" data-index="0"><img src="images/bigas2.jpg" alt="Bigas" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Bigas'"></div>
+        <div class="gallery-item" data-index="1"><img src="images/employee.jpg" alt="Employee" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Employee'"></div>
+        <div class="gallery-item" data-index="3"><img src="images/senior.jpg" alt="Senior" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Senior'"></div>
+        <div class="gallery-item" data-index="4"><img src="images/gmador.jpg" alt="GM Ador" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=GM+Ador'"></div>
+        <div class="gallery-item" data-index="5"><img src="images/plumber.jpg" alt="Plumber" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Plumber'"></div>
+        <div class="gallery-item" data-index="6"><img src="images/plumber2.jpg" alt="Plumber 2" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Plumber+2'"></div>
+        <div class="gallery-item" data-index="7"><img src="images/direknic.jpg" alt="Description 1" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=New+Image+1'"></div>
+        <div class="gallery-item" data-index="8"><img src="images/womensmonth.jpg" alt="Description 2" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=New+Image+2'"></div>
     </div>
-    <div class="info-card">
-      <h3><i>🏢</i> Commercial Division</h3>
-      <p><strong>Hours:</strong> Mon–Fri 8:00–17:00</p>
-      <p><strong>Hotline:</strong> 049-501-6656</p>
-      <button class="btn" style="margin-top: 0.8rem;" onclick="alert('Contact: 049-501-6656')">Contact support</button>
-    </div>
-  </div>
-
-  <!-- ===== DATE BANNERS - NOW BELOW THE CARDS ===== -->
-  <!-- READING DATE BANNER -->
-  <div class="date-image-container">
-    <img src="images/readingdate.jpg" alt="March 2026 Reading Schedule" class="date-full-image" onerror="this.src='https://via.placeholder.com/1200x400/0a5c8c/ffffff?text=March+2026+Reading+Schedule'">
-    <div class="date-text">
-      <p><strong>📅 March 2026 Reading Schedule</strong></p>
-    </div>
-  </div>
-
-  <!-- DISCONNECTION DATE BANNER -->
-  <div class="date-image-container">
-    <img src="images/discondate.jpg" alt="March 2026 Disconnection Schedule" class="date-full-image" onerror="this.src='https://via.placeholder.com/1200x400/dc2626/ffffff?text=March+2026+Disconnection+Schedule'">
-    <div class="date-text">
-      <p><strong>⚠️ March 2026 Disconnection Schedule</strong></p>
-    </div>
-  </div>
 </div>
 
-<!-- TAB 2: GALLERY -->
+<!-- TAB 2: OVERVIEW -->
 <div class="tab-panel" id="panel2">
-  <h2 style="color:var(--primary); margin-bottom: 1rem;">📸 SIWADI Moments</h2>
-  <div class="gallery-grid" id="galleryGrid">
-    <!-- Existing 7 images -->
-    <div class="gallery-item" data-index="0"><img src="images/bigas2.jpg" alt="Bigas" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Bigas'"></div>
-    <div class="gallery-item" data-index="1"><img src="images/employee.jpg" alt="Employee" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Employee'"></div>
-    <div class="gallery-item" data-index="3"><img src="images/senior.jpg" alt="Senior" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Senior'"></div>
-    <div class="gallery-item" data-index="4"><img src="images/gmador.jpg" alt="GM Ador" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=GM+Ador'"></div>
-    <div class="gallery-item" data-index="5"><img src="images/plumber.jpg" alt="Plumber" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Plumber'"></div>
-    <div class="gallery-item" data-index="6"><img src="images/plumber2.jpg" alt="Plumber 2" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Plumber+2'"></div>
-    
-    <!-- ADD NEW IMAGES HERE - just copy and paste this block for each new image -->
-    <div class="gallery-item" data-index="7"><img src="images/direknic.jpg" alt="Description 1" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=New+Image+1'"></div>
-    <div class="gallery-item" data-index="8"><img src="images/womensmonth.jpg" alt="Description 2" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=New+Image+2'"></div>
- 
-    <!-- Continue adding as many as you want -->
-  </div>
+    <div class="two-col">
+        <div class="info-card">
+            <h3><i>💧</i> Welcome</h3>
+            <p style="margin-bottom: 0.8rem;">Serbisyong Tapat, Serbisyong Sapat.</p>
+            <p>Transparent water service management, online bill inquiry, and new connection applications.</p>
+        </div>
+        <div class="info-card">
+            <h3><i>🏢</i> Commercial Division</h3>
+            <p><strong>Hours:</strong> Mon–Fri 8:00–17:00</p>
+            <p><strong>Hotline:</strong> 049-501-6656</p>
+            <button class="btn" style="margin-top: 0.8rem;" onclick="alert('Contact: 049-501-6656')">Contact support</button>
+        </div>
+    </div>
 
+    <div class="date-image-container">
+        <img src="images/readingdate.jpg" alt="March 2026 Reading Schedule" class="date-full-image" onerror="this.src='https://via.placeholder.com/1200x400/0a5c8c/ffffff?text=March+2026+Reading+Schedule'">
+        <div class="date-text">
+            <p><strong>📅 April 2026 Reading Schedule</strong></p>
+        </div>
+    </div>
+
+    <div class="date-image-container">
+        <img src="images/discondate.jpg" alt="March 2026 Disconnection Schedule" class="date-full-image" onerror="this.src='https://via.placeholder.com/1200x400/dc2626/ffffff?text=March+2026+Disconnection+Schedule'">
+        <div class="date-text">
+            <p><strong>⚠️ April 2026 Disconnection Schedule</strong></p>
+        </div>
+    </div>
 </div>
-  <!-- TAB 3: QUICK LINKS -->
-  <div class="tab-panel" id="panel3">
+
+<!-- TAB 3: QUICK LINKS -->
+<div class="tab-panel" id="panel3">
     <h3 style="color:var(--primary); text-align: center; margin-bottom: 1.2rem;">🔧 Services</h3>
     <div class="link-grid">
-      <div class="link-tile"><div class="icon">📄</div><h4>Bill inquiry</h4><div class="coming-soon-badge">soon</div></div>
-      <div class="link-tile"><div class="icon">🧮</div><h4>Calculator</h4><div class="coming-soon-badge">soon</div></div>
-      <div class="link-tile"><div class="icon">💳</div><h4>Pay online</h4><div class="coming-soon-badge">soon</div></div>
-      <div class="link-tile"><div class="icon">🚰</div><h4>New connection</h4><div class="coming-soon-badge">soon</div></div>
-      <div class="link-tile"><div class="icon">📞</div><h4>Report leak</h4><div class="coming-soon-badge">soon</div></div>
-      <div class="link-tile"><div class="icon">📅</div><h4>Schedule</h4><div class="coming-soon-badge">soon</div></div>
+        <div class="link-tile"><div class="icon">📄</div><h4>Bill inquiry</h4><div class="coming-soon-badge">soon</div></div>
+        <div class="link-tile"><div class="icon">🧮</div><h4>Calculator</h4><div class="coming-soon-badge">soon</div></div>
+        <div class="link-tile"><div class="icon">💳</div><h4>Pay online</h4><div class="coming-soon-badge">soon</div></div>
+        <div class="link-tile"><div class="icon">🚰</div><h4>New connection</h4><div class="coming-soon-badge">soon</div></div>
+        <div class="link-tile"><div class="icon">📞</div><h4>Report leak</h4><div class="coming-soon-badge">soon</div></div>
+        <div class="link-tile"><div class="icon">📅</div><h4>Schedule</h4><div class="coming-soon-badge">soon</div></div>
     </div>
-  </div>
+</div>
+
 </main>
 
 <!-- ===== FULL-SIZE GALLERY MODAL ===== -->
@@ -768,7 +760,7 @@
     panel3: document.getElementById('panel3')
   };
 
-  function activateTab(index) {
+function activateTab(index) {
     // Remove active class from all buttons
     tabBtns.forEach(btn => btn.classList.remove('active'));
     
@@ -776,17 +768,17 @@
     Object.values(panels).forEach(p => p.classList.remove('active-panel'));
     
     // Show selected panel
-    if (index === 0) {
-      tabBtns[0].classList.add('active');
-      panels.panel1.classList.add('active-panel');
-    } else if (index === 1) {
-      tabBtns[1].classList.add('active');
-      panels.panel2.classList.add('active-panel');
-    } else if (index === 2) {
-      tabBtns[2].classList.add('active');
-      panels.panel3.classList.add('active-panel');
+    if (index === 0) { // GALLERY
+        tabBtns[0].classList.add('active');
+        panels.panel1.classList.add('active-panel');
+    } else if (index === 1) { // OVERVIEW
+        tabBtns[1].classList.add('active');
+        panels.panel2.classList.add('active-panel');
+    } else if (index === 2) { // QUICK LINKS
+        tabBtns[2].classList.add('active');
+        panels.panel3.classList.add('active-panel');
     }
-  }
+}
 
   tabBtns[0].addEventListener('click', () => activateTab(0));
   tabBtns[1].addEventListener('click', () => activateTab(1));
