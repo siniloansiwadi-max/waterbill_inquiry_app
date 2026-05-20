@@ -8,6 +8,9 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     
+    <!-- ADD THIS: QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    
     <style>
 
         /* ====================================================================== */
@@ -346,11 +349,12 @@
             white-space: nowrap;
         }
 
-        #pay-bills-button {
+        /* ADD THIS: QR Code Button Style */
+        #qr-code-button {
             background: linear-gradient(to bottom, #00a45b, #007540);
         }
 
-        #pay-bills-button:hover {
+        #qr-code-button:hover {
             background: linear-gradient(to bottom, #007540, #005a30);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 164, 91, 0.3);
@@ -364,6 +368,29 @@
             background: linear-gradient(to bottom, #1e3c72, #0f2a4a);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(30, 60, 114, 0.3);
+        }
+
+        /* ADD THIS: QR Code Container in Modal */
+        .qr-modal-container {
+            text-align: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .qr-modal-container h4 {
+            margin: 0 0 10px 0;
+            color: #1e3c72;
+            font-size: 0.9rem;
+        }
+
+        #qrcode {
+            display: inline-block;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
         }
 
         /* Mobile responsiveness */
@@ -600,7 +627,6 @@
     }
 }
 
-    
     </style>
 </head>
 <body>
@@ -635,6 +661,13 @@
         <div id="modal-result">
             </div>
         
+        <!-- ADD THIS: QR Code Container -->
+        <div id="qr-modal-container" class="qr-modal-container">
+            <h4>📱 Scan QR Code to View Full Bill</h4>
+            <div id="qrcode"></div>
+            <p style="font-size: 11px; margin-top: 8px;">Use GCash or any QR scanner</p>
+        </div>
+        
         <!-- DISCLAIMER MOVED INSIDE MODAL -->
         <div class="modal-disclaimer">
             <h4>🔒 Important Disclaimer:</h4>
@@ -647,7 +680,7 @@
         </div>
         
         <div class="modal-buttons">
-            <button id="pay-bills-button" class="modal-button" onclick="openGCash()">📱 Open GCash</button>
+            <button id="qr-code-button" class="modal-button" onclick="showQRCode()">📱 Generate QR Code</button>
             <button id="new-inquiry-button" class="modal-button" onclick="closeModal()">🔄 New Inquiry</button>
         </div>
     </div>
@@ -662,7 +695,7 @@
 <script>
 
 // ======================================================================
-// JAVASCRIPT LOGIC - EXACTLY AS ORIGINAL
+// JAVASCRIPT LOGIC - ORIGINAL + QR CODE GENERATOR
 // ======================================================================
 
 // ---------------------------
@@ -693,12 +726,18 @@ const modalContainer = document.getElementById('modal-container');
 const modalResult = document.getElementById('modal-result');
 const searchButton = document.querySelector('button');
 
+// ADD THIS: Global variable to store current bill data
+let currentBillData = null;
+
 // --- Helper function to close the pop-up ---
 function closeModal() {
     modalContainer.style.display = 'none';
     modalResult.innerHTML = ''; 
     inputElement.value = ''; 
     inputElement.focus();
+    // Hide QR container when closing
+    document.getElementById('qr-modal-container').style.display = 'none';
+    currentBillData = null;
 }
 
 // --- Helper function for Name Masking ---
@@ -765,6 +804,51 @@ function formatResult(data) {
     return output;
 }
 
+function generateQRCodeLink(billData) {
+    const params = new URLSearchParams({
+        account: billData['Account No.'] || '',
+        name: billData['Name'] || '',
+        address: billData['Address'] || '',
+        meter: billData['No.'] || '',
+        waterBill: billData['BALANCE'] || '0',
+        scMaterials: billData['AROBALANCE'] || '0',
+        total: billData['Total'] || '0',
+        dueDate: billData['Due Date'] || '',
+        readingDate: billData['Reading Date'] || ''
+    });
+    
+    // Auto-detect ang base URL (gagana sa local at live)
+    const baseUrl = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
+    const billPageUrl = `${baseUrl}bill_viewer.html?${params.toString()}`;
+    
+    const qrContainer = document.getElementById('qrcode');
+    qrContainer.innerHTML = '';
+    
+    new QRCode(qrContainer, {
+        text: billPageUrl,
+        width: 180,
+        height: 180,
+        colorDark: "#1e3c72",
+        colorLight: "#ffffff"
+    });
+}
+
+// ADD THIS: Function to show QR code button
+function showQRCode() {
+    if (!currentBillData) {
+        alert('Please search for an account first.');
+        return;
+    }
+    
+    const qrContainer = document.getElementById('qr-modal-container');
+    if (qrContainer.style.display === 'none' || qrContainer.style.display === '') {
+        generateQRCodeLink(currentBillData);
+        qrContainer.style.display = 'block';
+    } else {
+        qrContainer.style.display = 'none';
+    }
+}
+
 // Function to open reading date image fullscreen
 function openReadingImageModal() {
     const modal = document.getElementById('readingImageModal');
@@ -792,7 +876,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// --- Main Fetch Function ---
+// --- Main Fetch Function (MODIFIED to store data) ---
 async function fetchAccountData() {
     
     let rawAccountNumber = inputElement.value.trim();
@@ -819,8 +903,13 @@ async function fetchAccountData() {
         if (data.error) {
             resultTitle = `Search Failed for ${rawAccountNumber}`;
             resultHtml = `<p style="color: red; font-weight: bold;">Error: ${data.error}</p>`;
+            currentBillData = null;
         } else {
             resultHtml = formatResult(data); 
+            currentBillData = data; // STORE DATA FOR QR CODE
+            
+            // Hide QR container until button is clicked
+            document.getElementById('qr-modal-container').style.display = 'none';
 
             try {
                 if (data['Account No.'] && data['Name']) {
@@ -869,43 +958,10 @@ async function logInquiry(accountNo, name) {
     }
 }
 
-function openGCash() {
-    const accountNumber = document.getElementById('accountNumber').value.trim();
-    
-    if (!accountNumber) {
-        alert('Please enter an account number first');
-        return;
-    }
-    
-    alert(`Opening GCash app for account: ${accountNumber}\n\nPlease manually enter this account number in GCash.`);
-    
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const isAndroid = /android/i.test(userAgent);
-    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-    
-    if (isAndroid) {
-        const gcashIntent = 'intent://#Intent;package=com.globe.gcash.android;scheme=gcash;end;';
-        window.location.href = gcashIntent;
-        
-        setTimeout(function() {
-            if (confirm("GCash app not found. Install from Play Store?")) {
-                window.location.href = "market://details?id=com.globe.gcash.android";
-            }
-        }, 800);
-    } 
-    else if (isIOS) {
-        window.location.href = 'gcash://';
-        
-        setTimeout(function() {
-            if (confirm("GCash app not found. Open App Store?")) {
-                window.location.href = "https://apps.apple.com/ph/app/gcash/id1146801530";
-            }
-        }, 800);
-    }
-    else {
-        alert("Please open GCash on your mobile device to pay.\n\nAccount: " + accountNumber);
-    }
-}
+// Enter key support
+inputElement.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') fetchAccountData();
+});
 
 </script>
 
