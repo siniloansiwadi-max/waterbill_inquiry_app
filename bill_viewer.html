@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Bill - Official Receipt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .bill-container {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .bill-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .bill-header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .bill-header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .bill-header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .bill-content {
+            padding: 25px;
+        }
+        
+        .bill-section {
+            margin-bottom: 25px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+        
+        .bill-section h3 {
+            color: #1e3c72;
+            font-size: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .bill-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        
+        .bill-row:last-child {
+            border-bottom: none;
+        }
+        
+        .bill-row .label {
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .bill-row .value {
+            color: #333;
+            font-weight: 500;
+            text-align: right;
+        }
+        
+        .total-row {
+            background: #f8f9fa;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .total-row .label {
+            color: #1e3c72;
+        }
+        
+        .total-row .value {
+            color: #2a5298;
+            font-size: 20px;
+        }
+        
+        .payment-instructions {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .payment-instructions p {
+            font-size: 13px;
+            color: #2e7d32;
+            margin-bottom: 8px;
+        }
+        
+        .payment-instructions strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            font-size: 11px;
+            color: #999;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .bill-card {
+                box-shadow: none;
+            }
+            .payment-instructions {
+                background: #f0f0f0;
+            }
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #2a5298;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        button:hover {
+            background: #1e3c72;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bill-container">
+    <div class="bill-card">
+        <div class="bill-header">
+            <h1>💧 OFFICIAL WATER BILL</h1>
+            <p>Please present this bill when paying</p>
+        </div>
+        
+        <div class="bill-content">
+            <div class="bill-section">
+                <h3>📋 CUSTOMER INFORMATION</h3>
+                <div class="bill-row">
+                    <span class="label">Account Number:</span>
+                    <span class="value" id="accountNo">-</span>
+                </div>
+                <div class="bill-row">
+                    <span class="label">Customer Name:</span>
+                    <span class="value" id="customerName">-</span>
+                </div>
+                <div class="bill-row">
+                    <span class="label">Service Address:</span>
+                    <span class="value" id="address">-</span>
+                </div>
+                <div class="bill-row">
+                    <span class="label">Meter Number:</span>
+                    <span class="value" id="meterNo">-</span>
+                </div>
+            </div>
+            
+            <div class="bill-section">
+                <h3>💰 BILLING DETAILS</h3>
+                <div class="bill-row">
+                    <span class="label">Water Bill Charges:</span>
+                    <span class="value" id="waterBill">-</span>
+                </div>
+                <div class="bill-row">
+                    <span class="label">S.C. / Materials:</span>
+                    <span class="value" id="scMaterials">-</span>
+                </div>
+                <div class="bill-row">
+                    <span class="label">Reading Date:</span>
+                    <span class="value" id="readingDate">-</span>
+                </div>
+                <div class="bill-row">
+                    <span class="label">Due Date:</span>
+                    <span class="value" id="dueDate">-</span>
+                </div>
+            </div>
+            
+            <div class="total-row">
+                <span class="label">TOTAL AMOUNT DUE:</span>
+                <span class="value" id="totalAmount">-</span>
+            </div>
+            
+            <div class="payment-instructions">
+                <strong>📌 How to Pay:</strong>
+                <p>✅ Present this bill at any payment center</p>
+                <p>✅ Scan GCash/PayMaya using the QR code from the inquiry page</p>
+                <p>✅ Pay at our office: Monday-Friday, 8AM-5PM</p>
+                <p>⚠️ Late payment will incur penalties after due date</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            This is a system-generated bill. For disputes, please visit our office within 15 days.
+        </div>
+    </div>
+    
+    <button onclick="window.print()">🖨️ Print or Save as PDF</button>
+</div>
+
+<script>
+// Get data from URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+
+// Populate the bill with data from QR code
+document.getElementById('accountNo').textContent = urlParams.get('account') || 'N/A';
+document.getElementById('customerName').textContent = urlParams.get('name') || 'N/A';
+document.getElementById('address').textContent = urlParams.get('address') || 'N/A';
+document.getElementById('meterNo').textContent = urlParams.get('meter') || 'N/A';
+
+// Format currency
+const waterBill = parseFloat(urlParams.get('waterBill') || 0);
+const scMaterials = parseFloat(urlParams.get('scMaterials') || 0);
+const total = parseFloat(urlParams.get('total') || 0);
+
+document.getElementById('waterBill').textContent = `₱ ${waterBill.toFixed(2)}`;
+document.getElementById('scMaterials').textContent = `₱ ${scMaterials.toFixed(2)}`;
+document.getElementById('totalAmount').textContent = `₱ ${total.toFixed(2)}`;
+
+// Format dates
+const dueDate = urlParams.get('dueDate');
+const readingDate = urlParams.get('readingDate');
+
+if (dueDate) {
+    const date = new Date(dueDate);
+    document.getElementById('dueDate').textContent = date.toLocaleDateString('en-PH');
+}
+
+if (readingDate) {
+    const date = new Date(readingDate);
+    document.getElementById('readingDate').textContent = date.toLocaleDateString('en-PH');
+}
+
+// If no data in URL (direct access), show error
+if (!urlParams.get('account')) {
+    document.querySelector('.bill-content').innerHTML = `
+        <div style="text-align: center; padding: 40px;">
+            <h3>⚠️ No Bill Data Found</h3>
+            <p>Please scan a valid QR code from your water bill inquiry.</p>
+            <button onclick="window.location.href='index.html'" style="margin-top: 20px;">Go to Inquiry Page</button>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
