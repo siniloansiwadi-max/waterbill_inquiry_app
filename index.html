@@ -627,6 +627,135 @@
     }
 }
 
+/* ====================================================================== */
+/* 12. NAME SEARCH STYLING - NEW */
+/* ====================================================================== */
+.search-type-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.toggle-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #495057;
+    transition: color 0.3s ease;
+}
+
+.toggle-option input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #2a5298;
+}
+
+.toggle-option.active {
+    color: #2a5298;
+}
+
+#searchPlaceholder {
+    transition: all 0.3s ease;
+}
+
+#nameSearchInput {
+    width: 250px;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: none;
+}
+
+#nameSearchInput:focus {
+    outline: none;
+    border-color: #2a5298;
+    box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+}
+
+/* Multiple Results Table Styling */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 0.85rem;
+}
+
+.results-table th {
+    background: linear-gradient(to bottom, #1e3c72, #2a5298);
+    color: white;
+    padding: 10px;
+    text-align: left;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.results-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.results-table tr:hover {
+    background-color: #f0f4ff;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.results-table tr.selected {
+    background-color: #d4e4ff;
+    font-weight: 600;
+}
+
+.result-count {
+    background: #2a5298;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: #dc3545;
+    font-weight: 600;
+}
+
+/* Mobile Responsive Table */
+@media (max-width: 768px) {
+    .results-table {
+        font-size: 0.75rem;
+    }
+    
+    .results-table th,
+    .results-table td {
+        padding: 6px;
+    }
+    
+    #nameSearchInput {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .search-type-toggle {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+}
+    
     </style>
 </head>
 <body>
@@ -634,17 +763,37 @@
 <div class="container">
     <h1>Water Bill Inquiry</h1>
     
-    <div id="input-group">
-        <img src="siwadilogo.png" alt="Company Logo" id="site-logo">
-        
-        <label for="accountNumber">Enter Account Number:</label>
-        <input type="text" 
-               id="accountNumber" 
-               placeholder="e.g., 011-101-001 or 011101001"
-               autofocus> 
-    </div>
+<div id="input-group">
+    <img src="siwadilogo.png" alt="Company Logo" id="site-logo">
     
-    <button onclick="fetchAccountData()">Search</button>
+    <!-- Search Type Toggle -->
+    <div style="width: 100%;">
+        <div class="search-type-toggle">
+            <label class="toggle-option active">
+                <input type="radio" name="searchType" value="account" checked onchange="toggleSearchType('account')">
+                🔢 Account Number
+            </label>
+            <label class="toggle-option">
+                <input type="radio" name="searchType" value="name" onchange="toggleSearchType('name')">
+                👤 Name Search
+            </label>
+        </div>
+        
+        <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;">
+            <label for="accountNumber" id="searchLabel">Account Number:</label>
+            <input type="text" 
+                   id="accountNumber" 
+                   placeholder="e.g., 011-101-001 or 011101001"
+                   autofocus>
+            <input type="text" 
+                   id="nameSearchInput" 
+                   placeholder="Enter last name or full name..."
+                   style="display: none;">
+        </div>
+    </div>
+</div>
+    
+    <button onclick="handleSearch()">Search</button>
 
     <div id="loading-message">
         <div class="spinner"></div> Please wait...
@@ -701,7 +850,7 @@
 // ---------------------------
 // TWO Web App URLs (UPDATED)
 // ---------------------------
-const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwe0PWj59RsVzeLtdI64AvV8bXi8D9ZMIPOrBgaDzWlYiSU0xARCxp0SK86kkTxAG0T/exec';
+const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwC6-socVVW3dxUbcNzwnSKg-fEDdEWtbLn77xcBz28coPQ4ED-C8OWB_6MHWDnQ3pH/exec';
 const LOG_WEB_APP_URL  = 'https://script.google.com/macros/s/AKfycbxQKyzoU1AczxwzSiM24DA7TNRsUmiXocgH-TBY7JoM5Xux9wVNZUWBB6ycD4sr-pBE/exec';
 
 // 🎯 DISPLAY MAPPING: (Use your exact sheet headers on the left)
@@ -721,7 +870,8 @@ const DISPLAY_MAP = {
 
 // Get references to DOM elements
 const loadingMessage = document.getElementById('loading-message');
-const inputElement = document.getElementById('accountNumber');
+const accountInput = document.getElementById('accountNumber');
+const nameInput = document.getElementById('nameSearchInput');
 const modalContainer = document.getElementById('modal-container');
 const modalResult = document.getElementById('modal-result');
 const searchButton = document.querySelector('button');
@@ -729,12 +879,12 @@ const searchButton = document.querySelector('button');
 // ADD THIS: Global variable to store current bill data
 let currentBillData = null;
 
-// --- Helper function to close the pop-up ---
 function closeModal() {
     modalContainer.style.display = 'none';
     modalResult.innerHTML = ''; 
-    inputElement.value = ''; 
-    inputElement.focus();
+    accountInput.value = ''; 
+    nameInput.value = '';
+    accountInput.focus();
     // Hide QR container when closing
     document.getElementById('qr-modal-container').style.display = 'none';
     currentBillData = null;
@@ -876,10 +1026,258 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+
+// ======================================================================
+// NAME SEARCH FUNCTIONALITY - NEW
+// ======================================================================
+
+// Toggle between Account Number and Name search
+function toggleSearchType(type) {
+    const accountInput = document.getElementById('accountNumber');
+    const nameInput = document.getElementById('nameSearchInput');
+    const searchLabel = document.getElementById('searchLabel');
+    const toggleOptions = document.querySelectorAll('.toggle-option');
+    
+    // Update toggle active state
+    toggleOptions.forEach(option => option.classList.remove('active'));
+    event.target.closest('.toggle-option').classList.add('active');
+    
+    if (type === 'account') {
+        accountInput.style.display = 'block';
+        nameInput.style.display = 'none';
+        searchLabel.textContent = 'Account Number:';
+        accountInput.placeholder = 'e.g., 011-101-001 or 011101001';
+        accountInput.focus();
+        nameInput.value = '';
+    } else {
+        accountInput.style.display = 'none';
+        nameInput.style.display = 'block';
+        searchLabel.textContent = 'Concessionaires Name:';
+        nameInput.placeholder = 'Enter last name or full name...';
+        nameInput.focus();
+        accountInput.value = '';
+    }
+}
+
+// Main search handler - decides which search to perform
+function handleSearch() {
+    const searchType = document.querySelector('input[name="searchType"]:checked').value;
+    
+    if (searchType === 'account') {
+        fetchAccountData();
+    } else {
+        fetchByName();
+    }
+}
+
+// Fetch accounts by name
+async function fetchByName() {
+    const searchName = document.getElementById('nameSearchInput').value.trim();
+    
+    if (!searchName) {
+        alert("Please enter a name to search.");
+        return;
+    }
+    
+    if (searchName.length < 2) {
+        alert("Please enter at least 2 characters for name search.");
+        return;
+    }
+    
+    modalContainer.style.display = 'none';
+    loadingMessage.style.display = 'block';
+    searchButton.disabled = true;
+    
+    const apiUrl = `${DATA_WEB_APP_URL}?name=${encodeURIComponent(searchName)}`;
+    
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        
+        let resultTitle = '';
+        let resultHtml = '';
+        
+        if (data.error) {
+            resultTitle = `Search Failed for "${searchName}"`;
+            resultHtml = `<p style="color: red; font-weight: bold;">Error: ${data.error}</p>`;
+        } else if (data.results && data.results.length > 0) {
+            resultTitle = `Search Results for "${searchName}"`;
+            resultHtml = formatNameSearchResults(data.results);
+        } else {
+            resultTitle = `No Results for "${searchName}"`;
+            resultHtml = `
+                <div class="no-results">
+                    <p>😕 No accounts found matching "${searchName}"</p>
+                    <p style="font-size: 0.8rem; color: #666;">Try searching with last name only or check the spelling.</p>
+                </div>
+            `;
+        }
+        
+        modalResult.innerHTML = `
+            <h3 style="color: #1e3c72;">${resultTitle}</h3>
+            <div style="border: 1px solid #e0e0e0; padding: 12px; background-color: #f9f9f9; border-radius: 8px;">
+                ${resultHtml}
+            </div>
+        `;
+        modalContainer.style.display = 'flex';
+        
+        // Add click handlers to table rows
+        addRowClickHandlers();
+        
+    } catch (error) {
+        modalResult.innerHTML = `<h3>Network Error</h3><p>Could not connect to the server. Please try again.</p>`;
+        modalContainer.style.display = 'flex';
+        console.error('Name search error:', error);
+    } finally {
+        loadingMessage.style.display = 'none';
+        searchButton.disabled = false;
+    }
+}
+
+// Format name search results as a table
+function formatNameSearchResults(results) {
+    let html = `<div class="result-count">📊 ${results.length} account(s) found</div>`;
+    html += `
+        <div style="overflow-x: auto;">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Account No.</th>
+                        <th>Customer Name</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+    
+    results.forEach((result, index) => {
+        const accountNo = result['Account No.'] || 'N/A';
+        const name = maskName(result['Name'] || 'N/A');
+        const address = result['Address'] || 'N/A';
+        const status = result['Status for App'] || 'N/A';
+        
+        html += `
+            <tr class="result-row" data-account="${accountNo}" data-index="${index}">
+                <td><strong>${accountNo}</strong></td>
+                <td>${name}</td>
+                <td>${address}</td>
+                <td>${status}</td>
+            </tr>
+        `;
+    });
+    
+    html += `
+                </tbody>
+            </table>
+        </div>
+        <p style="font-size: 0.75rem; color: #666; margin-top: 10px; text-align: center;">
+            💡 Click on a row to view complete bill details
+        </p>
+    `;
+    
+    return html;
+}
+
+// Add click handlers to table rows for detailed view
+function addRowClickHandlers() {
+    const rows = document.querySelectorAll('.result-row');
+    rows.forEach(row => {
+        row.addEventListener('click', async function() {
+            const accountNo = this.getAttribute('data-account');
+            
+            // Highlight selected row
+            rows.forEach(r => r.classList.remove('selected'));
+            this.classList.add('selected');
+            
+            // Fetch complete details for selected account
+            await fetchAccountDetails(accountNo);
+        });
+        
+        // Add hover effect
+        row.style.cursor = 'pointer';
+    });
+}
+
+// Fetch complete details for a specific account number
+async function fetchAccountDetails(accountNo) {
+    loadingMessage.style.display = 'block';
+    
+    const apiUrl = `${DATA_WEB_APP_URL}?account=${accountNo}`;
+    
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        
+        if (!data.error) {
+            currentBillData = data;
+            document.getElementById('qr-modal-container').style.display = 'none';
+            
+            const detailHtml = formatResult(data);
+            
+            // Update modal with detailed view
+            modalResult.innerHTML = `
+                <h3 style="color: #1e3c72;">Account Details: ${accountNo}</h3>
+                <div style="border: 1px solid #e0e0e0; padding: 12px; background-color: #f9f9f9; border-radius: 8px;">
+                    ${detailHtml}
+                </div>
+                <button onclick="goBackToSearchResults()" style="margin-top: 10px; background: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">
+                    ← Back to Search Results
+                </button>
+            `;
+            
+            // Log the inquiry
+            try {
+                if (data['Account No.'] && data['Name']) {
+                    logInquiry(data['Account No.'], data['Name']);
+                }
+            } catch (xx) {
+                console.error('logInquiry error', xx);
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching details:', error);
+    } finally {
+        loadingMessage.style.display = 'none';
+    }
+}
+
+// Store last name search results for back navigation
+let lastNameSearchResults = null;
+let lastNameSearchQuery = '';
+
+// Modified fetchByName to store results
+const originalFetchByName = fetchByName;
+fetchByName = async function() {
+    const searchName = document.getElementById('nameSearchInput').value.trim();
+    lastNameSearchQuery = searchName;
+    await originalFetchByName();
+    
+    // Store results for back navigation
+    const resultRows = document.querySelectorAll('.result-row');
+    if (resultRows.length > 0) {
+        lastNameSearchResults = [];
+        resultRows.forEach(row => {
+            lastNameSearchResults.push({
+                accountNo: row.getAttribute('data-account'),
+                // We'll need to store the data differently
+            });
+        });
+    }
+};
+
+// Go back to search results after viewing details
+async function goBackToSearchResults() {
+    if (lastNameSearchQuery) {
+        document.getElementById('nameSearchInput').value = lastNameSearchQuery;
+        await originalFetchByName();
+    }
+}
+
 // --- Main Fetch Function (MODIFIED to store data) ---
 async function fetchAccountData() {
     
-    let rawAccountNumber = inputElement.value.trim();
+    let rawAccountNumber = accountInput.value.trim();
     const searchKey = rawAccountNumber.replace(/[\s\-\–]/g, ''); 
     
     if (!searchKey) {
@@ -958,9 +1356,13 @@ async function logInquiry(accountNo, name) {
     }
 }
 
-// Enter key support
-inputElement.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') fetchAccountData();
+// Enter key support for both inputs
+document.getElementById('accountNumber').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') handleSearch();
+});
+
+document.getElementById('nameSearchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') handleSearch();
 });
 
 </script>
