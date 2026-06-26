@@ -35,9 +35,10 @@ const FAQ_NI_SIWADI = [
 
     // ========== BILLING AT PAYMENT ==========
     {
-        keywords: ["bayad", "payment", "magbayad", "bill", "gcash", "linkbiz", "landbank", "saan magbayad", "paano magbayad"],
-        answer: "Puwede po kayong magbayad sa opisina (7AM-6PM), GCash, at Landbank LinkBiz. ⚠️ Mahalagang paalala: kapag online payment (GCash o LinkBiz), i-send agad ang confirmation sa amin dahil hindi ito real-time—dalawa hanggang tatlong araw bago namin matanggap at ma-update sa system. May iba pa po ba kayong katanungan? 💳"
+        keywords: ["bayad", "payment", "magbayad", "bill", "landbank", "saan magbayad", "paano magbayad", "gcash", "linkbiz"],
+        answer: "Puwede po kayong magbayad sa:<br><br>🏢 <strong>Opisina</strong> — 7AM-6PM, Lunes hanggang Huebes(opisina)<br>📱 <strong>GCash</strong> — <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/services2.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>I-click po ito para sa GCash Payment Guide</a><br>🏦 <strong>Landbank LinkBiz</strong> — online payment<br><br>⚠️ <strong>Mahalagang paalala:</strong> Kapag online payment (GCash o LinkBiz), i-send agad ang confirmation sa amin dahil hindi ito real-time—dalawa hanggang tatlong araw bago namin matanggap at ma-update sa system. May iba pa po ba kayong katanungan? 💳"
     },
+    
     {
         keywords: ["due date", "deadline", "kailan bayad", "payment due", "putol", "disconnection"],
         answer: "15 araw po mula sa reading date ang due date. Halimbawa: kung na-reading kayo ng July 1, ang due date ay July 16, at ang putol ay July 17 (nakadepende sa araw na may pasok ang opisina). Para makasigurado, i-check din po ang aming Facebook page. May iba pa po ba kayong katanungan? 📅"
