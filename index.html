@@ -926,6 +926,61 @@
     }
 }
 
+
+/* ====================================================================== */
+/* 14. TUBIBOT BUTTON SA ITAAS - MOBILE OPTIMIZED */
+/* ====================================================================== */
+#ask-tubibot-button-top {
+    background: linear-gradient(to bottom, #00a86b, #007a4d);
+    color: white;
+    padding: 12px 25px;
+    border: 2px solid #00a86b;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 168, 107, 0.4);
+    animation: pulse-tubibot 2s infinite;
+    white-space: nowrap;
+}
+
+#ask-tubibot-button-top:hover {
+    background: linear-gradient(to bottom, #007a4d, #005a30);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 168, 107, 0.6);
+}
+
+#ask-tubibot-button-top:active {
+    transform: scale(0.95);
+}
+
+/* Subtle pulse animation para mapansin */
+@keyframes pulse-tubibot {
+    0% { box-shadow: 0 4px 15px rgba(0, 168, 107, 0.4); }
+    50% { box-shadow: 0 4px 25px rgba(0, 168, 107, 0.7); }
+    100% { box-shadow: 0 4px 15px rgba(0, 168, 107, 0.4); }
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    #ask-tubibot-button-top {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 15px;
+        animation: none; /* Iwasang mag-glitch sa mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    #ask-tubibot-button-top {
+        padding: 15px 20px;
+        font-size: 16px;
+        border-radius: 30px;
+    }
+}
+
     </style>
 
 
@@ -965,7 +1020,10 @@
     </div>
 </div>
     
-    <button onclick="handleSearch()">Search</button>
+    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 15px;">
+        <button onclick="handleSearch()">🔍 Search</button>
+        <button id="ask-tubibot-button-top" onclick="window.open('tubibot.html', '_blank')">🤖 Ask Tubibot (Ang Tuberong Bibo!)</button>
+    </div>
 
     <div id="loading-message">
         <div class="spinner"></div> Please wait...
@@ -1005,9 +1063,8 @@
 
 <div class="new-button-container" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
     <a href="services.html">
-        <button id="services-button">Visit our Gallery!!</button>
+        <button id="services-button">🖼️ Visit our Gallery!!</button>
     </a>
-        <button id="ask-tubibot-button" onclick="window.open('tubibot.html', '_blank')">🤖 Ask Tubibot (Ang Tuberong Bibo!)</button>
 </div>
     
 <script>
@@ -1627,13 +1684,6 @@ function sendTubibotMessage() {
 
 </script>
 
-<!-- Reading Date Image Fullscreen Modal -->
-<div id="readingImageModal" onclick="closeReadingImageModal()">
-    <div class="modal-image-content" onclick="event.stopPropagation()">
-        <button class="reading-modal-close" onclick="closeReadingImageModal()">×</button>
-        <img id="fullscreenImage" src="" alt="Reading Schedule Fullscreen">
-    </div>
-</div>
 
 </body>
 </html>
