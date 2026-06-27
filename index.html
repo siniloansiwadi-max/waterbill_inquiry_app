@@ -1122,18 +1122,29 @@ function maskName(fullName) {
     
     const nameParts = fullName.toUpperCase().trim().split(/\s+/);
     
-    let maskedParts = nameParts.map((part, index) => {
+    let maskedParts = nameParts.map((part) => {
         if (part.length === 0) return '';
         
-        if (index === 0) {
-            const visiblePart = part.substring(0, 2);
-            const maskedPart = part.substring(2).replace(/[A-Z]/g, '*');
-            return visiblePart + maskedPart;
-        } else {
-            const visiblePart = part.substring(0, 1);
-            const maskedPart = part.substring(1).replace(/[A-Z]/g, '*');
-            return visiblePart + maskedPart;
+        // Para sa sobrang ikli (1-3 letra): Ipakita na lang ng buo
+        if (part.length <= 3) {
+            return part;
         }
+        
+        // Para sa mahahabang pangalan (8+ letra): First 2 + asterisks + Last 2
+        if (part.length >= 8) {
+            const firstTwo = part.substring(0, 2);
+            const lastTwo = part.substring(part.length - 2);
+            const middleLength = part.length - 4; // Bawas first 2 at last 2
+            const asterisks = '*'.repeat(middleLength);
+            return firstTwo + asterisks + lastTwo;
+        }
+        
+        // Para sa maiikling pangalan (4-7 letra): First 2 + asterisks + Last 1
+        const firstTwo = part.substring(0, 2);
+        const lastOne = part.substring(part.length - 1);
+        const middleLength = part.length - 3; // Bawas first 2 at last 1
+        const asterisks = '*'.repeat(middleLength);
+        return firstTwo + asterisks + lastOne;
     });
 
     return maskedParts.join(' ');
