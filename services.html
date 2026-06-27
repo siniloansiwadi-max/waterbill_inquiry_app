@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
   <meta name="description" content="Siniloan Water District Official Portal – fast, clean, mobile-friendly.">
   <title>SIWADI · Home</title>
   <style>
@@ -24,6 +24,7 @@
       --text-light: #4b5565;
       --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
       --shadow-md: 0 4px 8px rgba(0,0,0,0.08);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
 
     body {
@@ -34,6 +35,8 @@
       flex-direction: column;
       color: var(--text-dark);
       line-height: 1.5;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* ===== HEADER ===== */
@@ -44,6 +47,14 @@
       box-shadow: var(--shadow-md);
       border-bottom: 3px solid var(--accent);
       width: 100%;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .header-text h1 {
@@ -58,34 +69,75 @@
       opacity: 0.9;
     }
 
+    /* Tubibot Button sa Header */
+    .header-tubibot-btn {
+      background: linear-gradient(to bottom, #00a86b, #007a4d);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0, 168, 107, 0.4);
+      animation: pulse-tubibot 2s infinite;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .header-tubibot-btn:hover, .header-tubibot-btn:active {
+      background: linear-gradient(to bottom, #007a4d, #005a30);
+      transform: scale(1.03);
+    }
+
+    @keyframes pulse-tubibot {
+      0% { box-shadow: 0 4px 12px rgba(0, 168, 107, 0.4); }
+      50% { box-shadow: 0 4px 22px rgba(0, 168, 107, 0.7); }
+      100% { box-shadow: 0 4px 12px rgba(0, 168, 107, 0.4); }
+    }
+
     /* ===== NAVIGATION ===== */
     nav {
       background: var(--primary-light);
-      padding: 0.5rem;
+      padding: 0.4rem;
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.3rem;
+      gap: 0.2rem;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       position: sticky;
       top: 0;
       z-index: 100;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
+
+    nav::-webkit-scrollbar { display: none; }
 
     nav a {
       color: white;
       text-decoration: none;
       font-weight: 500;
-      font-size: 0.85rem;
-      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      padding: 0.5rem 0.9rem;
       border-radius: 30px;
       transition: background-color 0.2s;
       white-space: nowrap;
-      flex: 1 1 auto;
+      flex-shrink: 0;
       text-align: center;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    nav a:hover {
+    nav a:hover, nav a:active {
       background: var(--accent);
     }
 
@@ -104,6 +156,7 @@
       border-radius: 1.2rem;
       box-shadow: var(--shadow-md);
       padding: 1.5rem;
+      padding-bottom: calc(1.5rem + var(--safe-bottom));
     }
 
     /* ===== DATE BANNERS ===== */
@@ -127,7 +180,7 @@
     }
 
     .date-text p {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: #000000;
       font-weight: 700;
       line-height: 1.4;
@@ -136,18 +189,23 @@
     /* ===== TABBED INTERFACE ===== */
     .feature-tabs {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 0.3rem;
       margin-bottom: 1.5rem;
       border-bottom: 2px solid #e2e8f0;
       padding-bottom: 0.5rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
+
+    .feature-tabs::-webkit-scrollbar { display: none; }
 
     .tab-btn {
       background: transparent;
       border: none;
-      padding: 0.7rem 1.2rem;
-      font-size: 1rem;
+      padding: 0.7rem 1rem;
+      font-size: 0.9rem;
       font-weight: 600;
       color: var(--text-light);
       border-radius: 30px;
@@ -155,14 +213,17 @@
       transition: all 0.2s;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      flex: 1 1 auto;
-      justify-content: center;
+      gap: 5px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      min-height: 44px;
+      font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .tab-btn i { font-size: 1.2rem; }
+    .tab-btn i { font-size: 1.1rem; }
 
-    .tab-btn:hover {
+    .tab-btn:hover, .tab-btn:active {
       background: var(--accent-light);
       color: var(--accent);
     }
@@ -205,7 +266,7 @@
     .info-card h3 {
       color: var(--primary);
       margin-bottom: 0.8rem;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -214,7 +275,7 @@
     .info-card p {
       color: var(--text-light);
       margin-bottom: 0.5rem;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     .btn {
@@ -229,17 +290,20 @@
       transition: background-color 0.2s;
       display: inline-block;
       text-decoration: none;
+      min-height: 44px;
+      font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .btn:hover {
+    .btn:hover, .btn:active {
       background: var(--primary);
     }
 
     /* ===== GALLERY GRID ===== */
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
       margin: 1.5rem 0;
       width: 100%;
     }
@@ -255,7 +319,7 @@
       display: block;
     }
 
-    .gallery-item:hover {
+    .gallery-item:active {
       border-color: var(--accent);
     }
 
@@ -269,36 +333,41 @@
     /* ===== LINK GRID ===== */
     .link-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.8rem;
       margin: 1.5rem 0;
     }
 
     .link-tile {
       background: #f8fafc;
       border-radius: 1rem;
-      padding: 1.2rem 0.8rem;
+      padding: 1rem 0.6rem;
       text-align: center;
       text-decoration: none;
       color: var(--primary);
       border: 1px solid #e2e8f0;
       transition: all 0.2s;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
-    .link-tile:hover {
+    .link-tile:active {
       background: white;
       box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
+      transform: scale(0.97);
     }
 
     .link-tile .icon {
-      font-size: 2.2rem;
-      margin-bottom: 0.5rem;
+      font-size: 2rem;
+      margin-bottom: 0.4rem;
     }
 
     .link-tile h4 {
-      font-size: 1rem;
-      margin-bottom: 0.3rem;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
     }
 
     .coming-soon-badge {
@@ -311,7 +380,7 @@
       margin-top: 0.3rem;
     }
 
-    /* ===== FULL-SIZE GALLERY MODAL WITH NAVIGATION ===== */
+    /* ===== FULL-SIZE GALLERY MODAL ===== */
     .gallery-modal {
       display: none;
       position: fixed;
@@ -362,40 +431,37 @@
       right: 0;
       text-align: center;
       color: white;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
       text-shadow: 0 2px 4px rgba(0,0,0,0.5);
       background: rgba(0,0,0,0.6);
       padding: 0.8rem;
       margin: 0 2rem;
       border-radius: 3rem;
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255,255,255,0.2);
     }
 
     .modal-close {
       position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      width: 3rem;
-      height: 3rem;
+      top: 1rem;
+      right: 1rem;
+      width: 44px;
+      height: 44px;
       background: rgba(255,255,255,0.15);
       border: 2px solid white;
       border-radius: 50%;
       color: white;
-      font-size: 2rem;
+      font-size: 1.5rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 10;
-      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .modal-close:hover {
+    .modal-close:active {
       background: white;
       color: black;
-      transform: scale(1.1);
     }
 
     .modal-nav {
@@ -405,34 +471,29 @@
       width: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 0 1rem;
+      padding: 0 0.5rem;
       pointer-events: none;
     }
 
     .modal-nav-btn {
-      width: 3.5rem;
-      height: 3.5rem;
+      width: 44px;
+      height: 44px;
       background: rgba(255,255,255,0.15);
       border: 2px solid white;
       border-radius: 50%;
       color: white;
-      font-size: 2rem;
+      font-size: 1.5rem;
       cursor: pointer;
       pointer-events: auto;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s;
-    }
-
-    .modal-nav-btn:hover {
-      background: white;
-      color: black;
-      transform: scale(1.1);
+      -webkit-tap-highlight-color: transparent;
     }
 
     .modal-nav-btn:active {
-      transform: scale(0.95);
+      background: white;
+      color: black;
     }
 
     /* ===== FOOTER ===== */
@@ -440,6 +501,7 @@
       background: var(--primary);
       color: white;
       padding: 1.2rem;
+      padding-bottom: calc(1.2rem + var(--safe-bottom));
       margin-top: 1rem;
       text-align: center;
     }
@@ -453,164 +515,122 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1.2rem;
+      gap: 1rem;
       margin-bottom: 0.8rem;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
-/* ===== SIDE WIDGETS - OPTIMIZED FOR PERFORMANCE ===== */
-.side-widgets {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  display: none; /* Hidden by default - NO LAG on mobile */
-}
+    /* ===== SIDE WIDGETS (Desktop Only) ===== */
+    .side-widgets {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      display: none;
+    }
 
-/* Show only on LARGE screens - NEVER on mobile */
-@media (min-width: 1400px) {
-  .side-widgets {
-    display: block;
-  }
-}
+    @media (min-width: 1400px) {
+      .side-widgets { display: block; }
+    }
 
-/* Left side - SMALLER and HIGHER */
-.widget-left {
-  position: fixed;
-  left: 15px;
-  top: 200px; /* Higher position (was 50%) */
-  width: 180px; /* Smaller width (was 180px) */
-  pointer-events: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px; /* Smaller gap */
-}
+    .widget-left {
+      position: fixed;
+      left: 15px;
+      top: 200px;
+      width: 180px;
+      pointer-events: auto;
+    }
 
-/* Right side - SMALLER and HIGHER */
-.widget-right {
-  position: fixed;
-  right: 15px;
-  top: 200px; /* Higher position (was 50%) */
-  width: 180px; /* Smaller width (was 180px) */
-  pointer-events: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px; /* Smaller gap */
-}
+    .widget-right {
+      position: fixed;
+      right: 15px;
+      top: 200px;
+      width: 180px;
+      pointer-events: auto;
+    }
 
-/* Image container - LIGHTER shadows, NO complex effects */
-.widget-image-container {
-  width: 100%;
-  border-radius: 15px; /* Smaller radius */
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Lighter shadow */
-  border: 1px solid white;
-  background: white;
-  transition: transform 0.2s ease; /* Simple transition only */
-}
+    .widget-image-container {
+      width: 100%;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      border: 1px solid white;
+      background: white;
+      margin-bottom: 12px;
+    }
 
-/* Simple hover effect - NO scale transform on mobile */
-@media (min-width: 1400px) {
-  .widget-image-container:hover {
-    transform: translateY(-3px); /* Just move up slightly */
-    box-shadow: 0 4px 10px rgba(10, 92, 140, 0.2);
-  }
-}
-
-/* Actual image - OPTIMIZED */
-.widget-image {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-  aspect-ratio: 3/4;
-  /* Images are static - NO animation, NO blur, NO filters */
-}
-
-/* Mobile - COMPLETELY HIDDEN - NO LAG */
-@media (max-width: 1399px) {
-  .side-widgets {
-    display: none !important; /* Force hidden on mobile */
-  }
-}
+    .widget-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 3/4;
+    }
 
     /* ===== MOBILE OPTIMIZATION ===== */
-    @media (max-width: 600px) {
-      header { padding: 0.8rem; }
+    @media (max-width: 768px) {
+      header { padding: 0.8rem 1rem; }
       .header-text h1 { font-size: 1.1rem; }
       .header-text p { font-size: 0.7rem; }
+      .header-tubibot-btn { 
+        padding: 8px 16px; 
+        font-size: 0.8rem;
+        animation: none;
+      }
       
       nav { padding: 0.3rem; }
-      nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; }
+      nav a { font-size: 0.75rem; padding: 0.4rem 0.7rem; min-height: 40px; }
       
       main { padding: 1rem; width: 95%; }
       
       .feature-tabs { gap: 0.2rem; }
-      .tab-btn { padding: 0.5rem 0.8rem; font-size: 0.85rem; }
+      .tab-btn { padding: 0.5rem 0.7rem; font-size: 0.8rem; min-height: 40px; }
       
       .two-col { grid-template-columns: 1fr; gap: 1rem; }
       
-      .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
       
-      .date-text p { font-size: 0.95rem; }
+      .link-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+      
+      .date-text p { font-size: 0.9rem; }
       
       .modal-img-container { padding: 1rem; }
       .modal-caption { 
-        font-size: 1rem; 
+        font-size: 0.9rem; 
         bottom: 1rem; 
         padding: 0.6rem;
         margin: 0 1rem;
       }
-      .modal-nav-btn { 
-        width: 2.5rem; 
-        height: 2.5rem; 
-        font-size: 1.5rem; 
-      }
-      .modal-close { 
-        width: 2.5rem; 
-        height: 2.5rem; 
-        font-size: 1.5rem; 
-        top: 1rem;
-        right: 1rem;
-      }
+      .modal-nav-btn { width: 40px; height: 40px; font-size: 1.3rem; }
+      .modal-close { width: 40px; height: 40px; font-size: 1.3rem; }
     }
 
-  /* ===== MOBILE OPTIMIZATION ===== */
-  @media (max-width: 600px) {
-    /* ... other styles ... */
-    
-    /* Adjust for the new size on mobile */
-    .gallery-grid {
-      grid-template-columns: repeat(2, 1fr); /* Keep 2 columns on mobile */
-      gap: 0.8rem;
+    @media (max-width: 480px) {
+      .header-top { flex-direction: column; align-items: stretch; text-align: center; }
+      .header-tubibot-btn { justify-content: center; }
+      
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+      .link-grid { grid-template-columns: repeat(2, 1fr); }
+      .link-tile { min-height: 85px; }
+      .link-tile .icon { font-size: 1.6rem; }
+      .link-tile h4 { font-size: 0.8rem; }
     }
-  }
-
-  @media (max-width: 360px) {
-    .gallery-grid {
-      grid-template-columns: 1fr; /* 1 column on very small phones */
-    }
-  }
 
     @media (max-width: 360px) {
       .gallery-grid { grid-template-columns: 1fr; }
-      .link-grid { grid-template-columns: 1fr; }
+      .link-grid { grid-template-columns: 1fr 1fr; }
     }
-
-
-    
   </style>
 </head>
 
 <body>
-  <!-- ===== INCLUDE SIDE WIDGETS ===== -->
+  <!-- ===== SIDE WIDGETS (Desktop) ===== -->
   <div id="side-widgets-container"></div>
 
   <script>
-    // Load widgets from external file
     fetch('widgets.html')
       .then(response => response.text())
       .then(data => {
@@ -618,7 +638,6 @@
       })
       .catch(error => {
         console.log('Widgets failed to load:', error);
-        // Optional: Show fallback widgets
         document.getElementById('side-widgets-container').innerHTML = `
           <div class="side-widgets">
             <div class="widget-left">
@@ -638,9 +657,12 @@
 
 <!-- ===== HEADER ===== -->
 <header>
-  <div class="header-text">
-    <h1>Commercial Division · Siniloan Water District</h1>
-    <p>P. Burgos St., Siniloan, Laguna · 049-501-6656</p>
+  <div class="header-top">
+    <div class="header-text">
+      <h1>Commercial Division · Siniloan Water District</h1>
+      <p>P. Burgos St., Siniloan, Laguna · 049-501-6656</p>
+    </div>
+    <a href="tubibot.html" target="_blank" class="header-tubibot-btn">🤖 Ask Tubibot</a>
   </div>
 </header>
 
@@ -654,27 +676,26 @@
 </nav>
 
 <!-- ===== MAIN CONTENT ===== -->
-
 <main>
 
 <div class="feature-tabs">
     <button class="tab-btn" id="tab1-btn"><i>🖼️</i> Gallery</button>
-    <button class="tab-btn active" id="tab2-btn"><i>📊</i> Reading & Disconnection Schedule</button>
+    <button class="tab-btn active" id="tab2-btn"><i>📊</i> Reading & Disconnection</button>
     <button class="tab-btn" id="tab3-btn"><i>🔗</i> Quick Links</button>
 </div>
 
-  <!-- TAB 1: GALLERY -->
-  <div class="tab-panel" id="panel1">
+<!-- TAB 1: GALLERY -->
+<div class="tab-panel" id="panel1">
     <h2 style="color:var(--primary); margin-bottom: 1rem;">📸 SIWADI Moments</h2>
     <div class="gallery-grid" id="galleryGrid">
         <div class="gallery-item" data-index="0"><img src="images/bigas2.jpg" alt="Bigas" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Bigas'"></div>
         <div class="gallery-item" data-index="1"><img src="images/employee.jpg" alt="Employee" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Employee'"></div>
-        <div class="gallery-item" data-index="3"><img src="images/senior.jpg" alt="Senior" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Senior'"></div>
-        <div class="gallery-item" data-index="4"><img src="images/gmador.jpg" alt="GM Ador" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=GM+Ador'"></div>
-        <div class="gallery-item" data-index="5"><img src="images/plumber.jpg" alt="Plumber" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Plumber'"></div>
-        <div class="gallery-item" data-index="6"><img src="images/plumber2.jpg" alt="Plumber 2" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Plumber+2'"></div>
-        <div class="gallery-item" data-index="7"><img src="images/direknic.jpg" alt="Description 1" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=New+Image+1'"></div>
-        <div class="gallery-item" data-index="8"><img src="images/womensmonth.jpg" alt="Description 2" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=New+Image+2'"></div>
+        <div class="gallery-item" data-index="2"><img src="images/senior.jpg" alt="Senior" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Senior'"></div>
+        <div class="gallery-item" data-index="3"><img src="images/gmador.jpg" alt="GM Ador" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=GM+Ador'"></div>
+        <div class="gallery-item" data-index="4"><img src="images/plumber.jpg" alt="Plumber" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Plumber'"></div>
+        <div class="gallery-item" data-index="5"><img src="images/plumber2.jpg" alt="Plumber 2" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Plumber+2'"></div>
+        <div class="gallery-item" data-index="6"><img src="images/direknic.jpg" alt="Service Award" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Service+Award'"></div>
+        <div class="gallery-item" data-index="7"><img src="images/womensmonth.jpg" alt="Womens Month" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Womens+Month'"></div>
     </div>
 </div>
 
@@ -688,23 +709,23 @@
         </div>
         <div class="info-card">
             <h3><i>🏢</i> Commercial Division</h3>
-            <p><strong>Hours:</strong> Mon–Fri 8:00–17:00</p>
+            <p><strong>Hours:</strong> Lunes–Huwebes 7:00–18:00</p>
             <p><strong>Hotline:</strong> 049-501-6656</p>
             <button class="btn" style="margin-top: 0.8rem;" onclick="alert('Contact: 049-501-6656')">Contact support</button>
         </div>
     </div>
 
     <div class="date-image-container">
-        <img src="images/readingdate.jpg" alt="March 2026 Reading Schedule" class="date-full-image" onerror="this.src='https://via.placeholder.com/1200x400/0a5c8c/ffffff?text=March+2026+Reading+Schedule'">
+        <img src="images/readingdate.jpg" alt="Reading Schedule" class="date-full-image" onerror="this.src='https://via.placeholder.com/1200x400/0a5c8c/ffffff?text=Reading+Schedule'">
         <div class="date-text">
             <p><strong>📅 June 2026 Reading Schedule</strong></p>
         </div>
     </div>
 
     <div class="date-image-container">
-        <img src="images/discondate.jpg" alt="March 2026 Disconnection Schedule" class="date-full-image" onerror="this.src='https://via.placeholder.com/1200x400/dc2626/ffffff?text=March+2026+Disconnection+Schedule'">
+        <img src="images/discondate.jpg" alt="Disconnection Schedule" class="date-full-image" onerror="this.src='https://via.placeholder.com/1200x400/dc2626/ffffff?text=Disconnection+Schedule'">
         <div class="date-text">
-            <p><strong>⚠️ May 2026 Disconnection Schedule</strong></p>
+            <p><strong>⚠️ June 2026 Disconnection Schedule</strong></p>
         </div>
     </div>
 </div>
@@ -724,7 +745,7 @@
 
 </main>
 
-<!-- ===== FULL-SIZE GALLERY MODAL ===== -->
+<!-- ===== GALLERY MODAL ===== -->
 <div id="galleryModal" class="gallery-modal">
   <div class="modal-content">
     <button class="modal-close" onclick="closeGalleryModal()">×</button>
@@ -760,52 +781,43 @@
     panel3: document.getElementById('panel3')
   };
 
-function activateTab(index) {
-    // Remove active class from all buttons
+  function activateTab(index) {
     tabBtns.forEach(btn => btn.classList.remove('active'));
-    
-    // Hide all panels
     Object.values(panels).forEach(p => p.classList.remove('active-panel'));
     
-    // Show selected panel
-    if (index === 0) { // GALLERY
+    if (index === 0) {
         tabBtns[0].classList.add('active');
         panels.panel1.classList.add('active-panel');
-    } else if (index === 1) { // OVERVIEW
+    } else if (index === 1) {
         tabBtns[1].classList.add('active');
         panels.panel2.classList.add('active-panel');
-    } else if (index === 2) { // QUICK LINKS
+    } else if (index === 2) {
         tabBtns[2].classList.add('active');
         panels.panel3.classList.add('active-panel');
     }
-}
+  }
 
   tabBtns[0].addEventListener('click', () => activateTab(0));
   tabBtns[1].addEventListener('click', () => activateTab(1));
   tabBtns[2].addEventListener('click', () => activateTab(2));
 
-  // Gallery modal with full-size and navigation
+  // Gallery modal
   const galleryItems = document.querySelectorAll('#galleryGrid .gallery-item');
   const modal = document.getElementById('galleryModal');
   const modalImg = document.getElementById('modalImg');
   const modalCaption = document.getElementById('modalCaption');
   let currentIndex = 0;
 
-// Array of image sources and captions
-const images = [
-  { src: 'images/bigas2.jpg', caption: 'Bigas Promo Winner' },
-  { src: 'images/employee.jpg', caption: 'SIWADI Employees' },
-  { src: 'images/senior.jpg', caption: 'Senior Citizen Discount' },
-  { src: 'images/gmador.jpg', caption: 'GM Ador - Excellence Award' },
-  { src: 'images/plumber.jpg', caption: 'Maintenance Team at Work' },
-  { src: 'images/plumber2.jpg', caption: 'Field Work - Line Repair' },
-  
-  // ADD NEW CAPTIONS HERE - match the order of your new images
-  { src: 'images/direknic.jpg', caption: '15 Years Service Award' },
-  { src: 'images/womensmonth.jpg', caption: 'Happy Womens Month' }
- 
-  // Add more as needed
-];
+  const images = [
+    { src: 'images/bigas2.jpg', caption: 'Bigas Promo Winner' },
+    { src: 'images/employee.jpg', caption: 'SIWADI Employees' },
+    { src: 'images/senior.jpg', caption: 'Senior Citizen Discount' },
+    { src: 'images/gmador.jpg', caption: 'GM Ador - Excellence Award' },
+    { src: 'images/plumber.jpg', caption: 'Maintenance Team at Work' },
+    { src: 'images/plumber2.jpg', caption: 'Field Work - Line Repair' },
+    { src: 'images/direknic.jpg', caption: '15 Years Service Award' },
+    { src: 'images/womensmonth.jpg', caption: 'Happy Womens Month' }
+  ];
 
   window.openGalleryModal = function(index) {
     currentIndex = index;
@@ -838,17 +850,14 @@ const images = [
     modalCaption.textContent = img.caption;
   }
 
-  // Attach click to each gallery item
   galleryItems.forEach((item, idx) => {
     item.addEventListener('click', () => openGalleryModal(idx));
   });
 
-  // Close on backdrop click
   modal.addEventListener('click', (e) => {
     if (e.target === modal) closeGalleryModal();
   });
 
-  // Keyboard navigation
   document.addEventListener('keydown', (e) => {
     if (!modal.classList.contains('active')) return;
     if (e.key === 'Escape') closeGalleryModal();
