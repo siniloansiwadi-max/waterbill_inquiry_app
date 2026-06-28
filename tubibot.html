@@ -51,15 +51,40 @@
         }
 
         .tubibot-avatar {
-            width: 60px;
-            height: 60px;
-            background: white;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 35px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 3px solid white;
+            background: white;
+            flex-shrink: 0;
+        }
+
+        .tubibot-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .tubibot-avatar .online-dot {
+            width: 14px;
+            height: 14px;
+            background: #00e676;
+            border-radius: 50%;
+            border: 2px solid white;
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            animation: pulse-dot 2s infinite;
+            z-index: 2;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
         }
 
         .tubibot-header-info h2 {
@@ -76,12 +101,15 @@
         /* Messages Area */
         .tubibot-full-messages {
             flex: 1;
-            padding: 25px;
+            padding: 20px;
             overflow-y: auto;
-            background: #f5faf7;
+            background: #e8f5e9;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(0,168,107,0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(30,60,114,0.03) 0%, transparent 50%);
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 8px;
         }
 
         .tubibot-full-messages::-webkit-scrollbar {
@@ -89,7 +117,7 @@
         }
 
         .tubibot-full-messages::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: transparent;
             border-radius: 10px;
         }
 
@@ -98,35 +126,76 @@
             border-radius: 10px;
         }
 
-        /* Individual Messages */
+        /* Message Wrapper */
+        .message-wrapper {
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .message-wrapper.user {
+            align-self: flex-end;
+            align-items: flex-end;
+        }
+
+        .message-wrapper.bot {
+            align-self: flex-start;
+            align-items: flex-start;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Chat Bubbles with Tail */
         .tubibot-msg {
-            padding: 12px 18px;
-            border-radius: 20px;
-            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 18px;
             word-wrap: break-word;
             font-size: 14px;
             line-height: 1.6;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            position: relative;
         }
 
         .tubibot-user {
             background: #00a86b;
             color: white;
-            align-self: flex-end;
             border-bottom-right-radius: 5px;
+        }
+
+        /* Tail for user bubble */
+        .tubibot-user::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: -8px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid #00a86b;
+            border-bottom: 10px solid transparent;
+            border-top: 0px solid transparent;
         }
 
         .tubibot-bot {
             background: white;
             color: #222;
-            align-self: flex-start;
-            border: 1px solid #d4ede0;
             border-bottom-left-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        /* Tail for bot bubble */
+        .tubibot-bot::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -8px;
+            width: 0;
+            height: 0;
+            border-right: 10px solid white;
+            border-bottom: 10px solid transparent;
+            border-top: 0px solid transparent;
         }
 
         .tubibot-bot a {
@@ -139,10 +208,80 @@
             color: #00a86b;
         }
 
+        /* Timestamp */
+        .message-time {
+            font-size: 10px;
+            color: #999;
+            margin-top: 4px;
+            padding: 0 5px;
+        }
+
+        .message-wrapper.user .message-time {
+            text-align: right;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 12px 18px;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #00a86b;
+            border-radius: 50%;
+            animation: bounce 1.2s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        /* Quick Replies */
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .quick-replies::-webkit-scrollbar { display: none; }
+
+        .quick-reply-btn {
+            background: #e8f5e9;
+            color: #00a86b;
+            border: 1.5px solid #00a86b;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .quick-reply-btn:hover, .quick-reply-btn:active {
+            background: #00a86b;
+            color: white;
+        }
+
         /* Input Area */
         .tubibot-full-input-area {
             display: flex;
-            padding: 15px 20px;
+            padding: 12px 20px;
             border-top: 2px solid #e0e0e0;
             background: white;
             gap: 10px;
@@ -182,12 +321,13 @@
             background: #007a4d;
         }
 
-        /* Back Button */
+        /* Back Link */
         .back-to-site {
             text-align: center;
-            padding: 10px;
+            padding: 8px;
             background: #f0f0f0;
             font-size: 13px;
+            border-bottom: 1px solid #ddd;
         }
 
         .back-to-site a {
@@ -198,66 +338,6 @@
 
         .back-to-site a:hover {
             text-decoration: underline;
-        }
-
-        /* Typing indicator */
-        .typing-indicator {
-            display: flex;
-            gap: 5px;
-            padding: 12px 18px;
-        }
-
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background: #00a86b;
-            border-radius: 50%;
-            animation: bounce 1.2s infinite;
-        }
-
-        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes bounce {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-10px); }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .tubibot-full-container {
-                height: 95vh;
-                border-radius: 10px;
-            }
-
-            .tubibot-full-header {
-                padding: 15px;
-            }
-
-            .tubibot-avatar {
-                width: 45px;
-                height: 45px;
-                font-size: 25px;
-            }
-
-            .tubibot-header-info h2 {
-                font-size: 18px;
-            }
-
-            .tubibot-msg {
-                max-width: 85%;
-                font-size: 13px;
-            }
-
-            .tubibot-full-input-area input {
-                padding: 12px 15px;
-                font-size: 13px;
-            }
-
-            .tubibot-full-input-area button {
-                padding: 12px 18px;
-                font-size: 13px;
-            }
         }
 
         /* Header Buttons */
@@ -305,6 +385,55 @@
             transform: scale(1.05);
         }
 
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tubibot-full-container {
+                height: 95vh;
+                border-radius: 10px;
+            }
+
+            .tubibot-full-header {
+                padding: 15px;
+            }
+
+            .tubibot-avatar {
+                width: 45px;
+                height: 45px;
+                font-size: 25px;
+            }
+
+            .tubibot-avatar .online-dot {
+                width: 10px;
+                height: 10px;
+            }
+
+            .tubibot-header-info h2 {
+                font-size: 18px;
+            }
+
+            .message-wrapper {
+                max-width: 85%;
+            }
+
+            .tubibot-msg {
+                font-size: 13px;
+            }
+
+            .tubibot-full-input-area input {
+                padding: 12px 15px;
+                font-size: 13px;
+            }
+
+            .tubibot-full-input-area button {
+                padding: 12px 18px;
+                font-size: 13px;
+            }
+
+            .quick-reply-btn {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -313,38 +442,47 @@
         
         <!-- Header -->
         <div class="tubibot-full-header">
-            <div class="tubibot-avatar">💧</div>
+                <div class="tubibot-avatar">
+                    <img src="tubibot.png" alt="Tubibot" onerror="this.style.display='none'; this.parentElement.innerHTML='💧'">
+                    <div class="online-dot"></div>
+                </div>
             <div class="tubibot-header-info">
                 <h2>Tubibot (Ang Tuberong Bibo!)</h2>
-                <p>AI Customer Service | SIWADI</p>
+                <p>🟢 Online | AI Customer Service</p>
             </div>
             <div class="tubibot-header-buttons">
-                <button class="header-btn back-btn" onclick="goBackToIndex()" title="Bumalik sa Water Bill Inquiry">🏠</button>
+                <button class="header-btn back-btn" onclick="goBackToIndex()" title="Bumalik">🏠</button>
                 <button class="header-btn close-btn" onclick="closeWindow()" title="Isara">✕</button>
             </div>
         </div>
         
         <!-- Back Link -->
         <div class="back-to-site">
-            <a href="index.html">⬅ Bumalik sa Water Bill Inquiry</a>
+            <a href="services.html">⬅ Bumalik sa SIWADI Home</a>
         </div>
 
         <!-- Messages -->
         <div class="tubibot-full-messages" id="tubibot-messages">
-            <div class="tubibot-msg tubibot-bot">
-                Magandang araw po! Ako po si <strong>Tubibot (Ang Tuberong Bibo!)</strong>, ang inyong AI assistant dito sa SIWADI. 😊💧
-                <br><br>
-                Itanong niyo lang po ang tungkol sa:
-                <br>• Billing at payment
-                <br>• Application requirements
-                <br>• Reconnection
-                <br>• Leak reporting
-                <br>• Reading schedule
-                <br>• Water interruption
-                <br>• At iba pa!
-                <br><br>
-                Paano ko po kayo matutulungan ngayon?
+            <div class="message-wrapper bot">
+                <div class="tubibot-msg tubibot-bot">
+                    Magandang araw po! Ako po si <strong>Tubibot (Ang Tuberong Bibo!)</strong>, ang inyong AI assistant dito sa SIWADI. 😊💧
+                    <br><br>
+                    Itanong niyo lang po ang tungkol sa billing, application, reconnection, leak reporting, reading schedule, water interruption, at iba pa!
+                    <br><br>
+                    Paano ko po kayo matutulungan ngayon?
+                </div>
+                <div class="message-time" id="welcome-time"></div>
             </div>
+        </div>
+
+        <!-- Quick Replies -->
+        <div class="quick-replies" id="quick-replies">
+            <button class="quick-reply-btn" onclick="askQuickReply('Paano magbayad ng bill?')">💳 Paano magbayad?</button>
+            <button class="quick-reply-btn" onclick="askQuickReply('Bakit walang tubig?')">🚰 Bakit walang tubig?</button>
+            <button class="quick-reply-btn" onclick="askQuickReply('Magkano ang reconnection fee?')">🔌 Reconnection fee?</button>
+            <button class="quick-reply-btn" onclick="askQuickReply('Kailan ang reading?')">📅 Reading schedule</button>
+            <button class="quick-reply-btn" onclick="askQuickReply('Paano mag-apply ng connection?')">📋 New connection</button>
+            <button class="quick-reply-btn" onclick="askQuickReply('Paano mag-report ng leak?')">🔧 Report leak</button>
         </div>
 
         <!-- Input Area -->
@@ -356,7 +494,14 @@
     </div>
 
     <script>
-        // Back to index.html
+        // Set welcome message time
+        (function() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-PH', { hour: '2-digit', minute: '2-digit', hour12: true });
+            document.getElementById('welcome-time').textContent = timeStr;
+        })();
+
+        // Back to services.html
         function goBackToIndex() {
             window.location.href = 'services.html';
         }
@@ -364,14 +509,24 @@
         // Close window/tab
         function closeWindow() {
             window.close();
-            // Fallback kung hindi gumana ang window.close()
             setTimeout(function() {
                 window.location.href = 'index.html';
             }, 300);
         }
 
-        // Kunin ang FAQ data mula sa faq.js (dapat naka-load na)
-        
+        // Quick Reply
+        function askQuickReply(question) {
+            document.getElementById('tubibot-input').value = question;
+            sendMessage();
+        }
+
+        // Get current time string
+        function getTimeString() {
+            const now = new Date();
+            return now.toLocaleTimeString('en-PH', { hour: '2-digit', minute: '2-digit', hour12: true });
+        }
+
+        // Find best answer
         function findBestAnswer(question) {
             const q = question.toLowerCase();
             let bestMatch = null;
@@ -401,31 +556,74 @@
             return typeof DEFAULT_ANSWER !== 'undefined' ? DEFAULT_ANSWER : "Pasensya na po. Para sa inyong katanungan, maaari po kayong tumawag sa (049) 501-6656 o bumisita sa opisina ng SIWADI, Lunes hanggang Biyernes, 8:00 AM hanggang 5:00 PM.";
         }
 
+        // Add message to chat
+        function addMessage(type, text) {
+            const msgsDiv = document.getElementById('tubibot-messages');
+            const wrapper = document.createElement('div');
+            wrapper.className = 'message-wrapper ' + type;
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'tubibot-msg tubibot-' + type;
+            bubble.innerHTML = text.replace(/\n/g, '<br>');
+            
+            const time = document.createElement('div');
+            time.className = 'message-time';
+            time.textContent = getTimeString();
+            
+            wrapper.appendChild(bubble);
+            wrapper.appendChild(time);
+            msgsDiv.appendChild(wrapper);
+            
+            msgsDiv.scrollTop = msgsDiv.scrollHeight;
+            return bubble;
+        }
+
+        // Typing animation effect
+        function typeText(element, text, speed, callback) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    document.getElementById('tubibot-messages').scrollTop = document.getElementById('tubibot-messages').scrollHeight;
+                    setTimeout(type, speed);
+                } else {
+                    if (callback) callback();
+                }
+            }
+            
+            type();
+        }
+
         function sendMessage() {
             const input = document.getElementById('tubibot-input');
             const msg = input.value.trim();
             if (!msg) return;
 
-            const msgsDiv = document.getElementById('tubibot-messages');
-
-            // Ipakita ang user message
-            msgsDiv.innerHTML += '<div class="tubibot-msg tubibot-user">' + msg.replace(/</g, '&lt;') + '</div>';
+            // Add user message
+            addMessage('user', msg.replace(/</g, '&lt;'));
             input.value = '';
+
+            // Show typing indicator
+            const msgsDiv = document.getElementById('tubibot-messages');
+            const typingWrapper = document.createElement('div');
+            typingWrapper.className = 'message-wrapper bot';
+            typingWrapper.id = 'typing-wrapper';
+            typingWrapper.innerHTML = '<div class="tubibot-msg tubibot-bot typing-indicator"><span></span><span></span><span></span></div>';
+            msgsDiv.appendChild(typingWrapper);
             msgsDiv.scrollTop = msgsDiv.scrollHeight;
 
-            // Ipakita ang typing indicator
-            const typingId = 'typing-' + Date.now();
-            msgsDiv.innerHTML += '<div class="tubibot-msg tubibot-bot typing-indicator" id="' + typingId + '"><span></span><span></span><span></span></div>';
-            msgsDiv.scrollTop = msgsDiv.scrollHeight;
-
-            // Sagot pagkatapos ng delay
+            // Get reply after delay — DIREKTA NANG IPAKITA, WALANG TYPING ANIMATION
             setTimeout(function() {
-                const typingEl = document.getElementById(typingId);
-                if (typingEl) typingEl.remove();
+                // Remove typing indicator
+                const tw = document.getElementById('typing-wrapper');
+                if (tw) tw.remove();
 
                 const reply = findBestAnswer(msg);
-                msgsDiv.innerHTML += '<div class="tubibot-msg tubibot-bot">' + reply.replace(/\n/g, '<br>') + '</div>';
-                msgsDiv.scrollTop = msgsDiv.scrollHeight;
+                // Direktang ipakita ang buong sagot
+                addMessage('bot', reply);
             }, 800);
         }
 
