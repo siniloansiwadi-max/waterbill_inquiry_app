@@ -17,7 +17,7 @@ const FAQ_NI_SIWADI = [
     },
 
     {
-        keywords: ["sino ka", "ano ka", "what are you", "kilala", "pangalan mo", "name"],
+        keywords: ["sino ka", "ano ka", "what are you", "kilala"],
         answer: "Ako po si Tubibot (Ang Tuberong Bibo!), ang opisyal na AI customer service assistant ng SIWADI (Siniloan Water District). Nandito po ako para sumagot sa inyong mga katanungan tungkol sa water billing, application, reconnection, leak reports, at iba pa. Tubig at serbisyo—'yan po ang aking misyon! 💧🤖"
     },
 
@@ -42,10 +42,31 @@ const FAQ_NI_SIWADI = [
         answer: "Para po mag-apply ng bagong water connection, pumunta po sa opisina at magdala ng: (1) Dalawang photocopy ng valid government-issued ID na may original signature. (2) Proof of ownership ng lupa—alinman sa mga sumusunod: Land Title, Tax Declaration of Real Property, OHA, o Notarized Deed of Sale. Kung nakikigamit ng lupa: magdala ng Notarized Authorization na may kalakip na proof of ownership ng may-ari, at photocopy ng government-issued ID ng may-ari. May paunang bayad na anim na libong piso(6000), at ang magiging balanse at maaaring bayaran ng hanggang anim na buwan 😊"
     },
 
+    {
+        keywords: ["change", "change of name", "name", "palit ng pangalan", "transfer"],
+        answer: "Para po mag-apply ng <strong>Change of Name</strong>, kailangan lamang po ang mga sumusunod:<br><br>📋 <strong>1. Nabiling ari-arian mula sa dating may-ari:</strong><br>• Katibayan ng bilihan<br>• Notaryadong Authorization mula sa dating may-ari<br><br>💀 <strong>2. Namayapang asawa:</strong><br>• Death Certificate<br><br>🕊️ <strong>3. Namayapang kamag-anak o magulang:</strong><br>• Notaryadong Authorization mula sa mga naiwan<br><br>📄 <strong>Kalakip ng lahat ng ito:</strong><br>• Dalawang photocopy ng valid government-issued ID na may original signature (mula sa aplikante at dating may-ari)<br><br>May iba pa po ba kayong katanungan? 😊"
+    },
+
+    {
+        keywords: ["transfer", "transfer of location", "lipat", "maglipat", "ilipat", "lipat ng metro", "relocation"],
+        answer: "Para po sa <strong>Transfer of Location</strong>, narito ang mga kailangan:<br><br>📋 <strong>1. Dokumento ng pagmamay-ari ng paglilipatan:</strong><br>• Patunay na pag-aari nila ang lupang paglilipatan<br>• Kung HINDI nila pag-aari: Notaryadong Authorization mula sa may-ari ng lupa<br><br>🔍 <strong>2. Inspeksyon:</strong><br>• Pagkatapos maitala ang mga dokumento, iinspeksyunin ng aming inspector ang lugar upang malaman kung saan magandang ilagay ang metro<br><br>💰 <strong>3. Mga Bayarin:</strong><br>• Paunang bayad para sa materyales: <strong>₱2,000</strong><br>• Transfer fee: <strong>₱125</strong><br><br>Pumunta lamang po sa opisina para ma-process ang inyong transfer of location. May iba pa po ba kayong katanungan? 🏠💧"
+    },
+
+    {
+        keywords: ["downpayment", "down payment", "6000", "anim na libo", "deposito", "deposit", "paunang bayad", "advance", "bakit 6000", "para saan 6000"],
+        answer: "Ang <strong>₱6,000 downpayment</strong> ay paunang bayad para sa kabuuang halaga ng new connection—gaya ng metro at iba pang kagamitan.<br><br>💰 <strong>Halimbawa 1 — Mas mataas ang total:</strong><br>Kung ang kabuuang halaga pagkatapos makabitan ay umabot ng <strong>₱10,000</strong>, ibabawas ang ₱6,000 deposito kaya ang matitirang bayarin ay <strong>₱4,000</strong> na maaaring bayaran sa loob ng <strong>anim na buwan</strong>.<br><br>💵 <strong>Halimbawa 2 — Mas mababa ang total:</strong><br>Kung ang kabuuang halaga ay <strong>₱5,000</strong> lamang, mayroon kayong <strong>₱1,000 sukli</strong> na magsisilbing advance payment sa inyong water bill.<br><br>⚠️ <strong>Mahalagang Paalala:</strong><br>Kung HINDI nabayaran ang balanse sa itinakdang due date, maaari pa rin kayong <strong>maputulan</strong> kahit na bayad ang inyong water bill.<br><br>Sana po ay inyong naunawaan. May iba pa po ba kayong katanungan? 😊💧"
+    },
+
+    {
+        keywords: ["customer deposit", "customers deposit", "320", "400", "reconnection deposit", "bagong deposit"],
+        answer: "Ang <strong>Customer's Deposit</strong> ay ang halagang napagkasunduan na inyong babayaran kasama sa new connection. Ito ay katumbas ng <strong>dalawang buwang minimum na singil</strong> na nagkakahalaga ng <strong>₱400</strong>.<br><br>🆕 <strong>Para sa bagong koneksyon:</strong><br>• Kasama ito sa babayaran bilang bahagi ng new connection<br><br>🔄 <strong>Para sa lumang konto na sinisingilan ng customer's deposit:</strong><br>• Ito ang halagang kailangan upang ma-update ang inyong customer's deposit<br><br>📊 <strong>Halimbawa:</strong><br>Kung ang inyong natitirang customer's deposit ay <strong>₱320</strong>, kailangan ng karagdagang <strong>₱80</strong> bukod pa sa <strong>₱200 reconnection fee</strong>. Kaya: ₱320 + ₱80 = <strong>₱400</strong>.<br><br>💡 <strong>Sa madaling salita:</strong> Kailangang updated ang customer's deposit. Sa susunod na kayo ay maputulan at updated naman ang inyong customer's deposit, <strong>hindi na kayo kailangang singilin ng karagdagang halaga</strong>.<br><br>Sana po ay naunawaan ninyo. May iba pa po ba kayong katanungan? 😊💧"
+    },
+
+
     // ========== BILLING AT PAYMENT ==========
     {
         keywords: ["bayad", "payment", "magbayad", "bill", "landbank", "saan magbayad", "paano magbayad", "gcash", "linkbiz"],
-        answer: "Puwede po kayong magbayad sa:<br><br>🏢 <strong>Opisina</strong> — 7AM-6PM, Lunes hanggang Huebes(opisina)<br>📱 <strong>GCash</strong> — <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/services2.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>I-click po ito para sa GCash Payment Guide</a><br>🏦 <strong>Landbank LinkBiz</strong> — online payment<br><br>⚠️ <strong>Mahalagang paalala:</strong> Kapag online payment (GCash o LinkBiz), i-send agad ang confirmation sa amin dahil hindi ito real-time—dalawa hanggang tatlong araw bago namin matanggap at ma-update sa system. May iba pa po ba kayong katanungan? 💳"
+        answer: "Puwede po kayong magbayad sa:<br><br>🏢 <strong>Opisina</strong> — 7AM-6PM, Lunes hanggang Huwebes<br>📱 <strong>GCash</strong> — <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/services2.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>I-click po ito para sa GCash Payment Guide</a><br>🏦 <strong>Landbank LinkBiz</strong> — online payment<br><br>⚠️ <strong>Mahalagang paalala:</strong> Kapag online payment (GCash o LinkBiz), i-send agad ang confirmation sa amin dahil hindi ito real-time—dalawa hanggang tatlong araw bago namin matanggap at ma-update sa system. May iba pa po ba kayong katanungan? 💳"
     },
 
     {
