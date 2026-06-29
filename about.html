@@ -6,12 +6,7 @@
   <meta name="description" content="About Siniloan Water District – history, mission, vision, and contact.">
   <title>SIWADI · About</title>
   <style>
-    /* ===== RESET & VARIABLES ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --primary: #0a2e5c;
@@ -39,7 +34,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== HEADER ===== */
     header {
       background: var(--primary);
       color: white;
@@ -57,19 +51,9 @@
       gap: 10px;
     }
 
-    .header-text h1 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 0.2rem;
-      line-height: 1.2;
-    }
+    .header-text h1 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.2rem; line-height: 1.2; }
+    .header-text p { font-size: 0.8rem; opacity: 0.9; }
 
-    .header-text p {
-      font-size: 0.8rem;
-      opacity: 0.9;
-    }
-
-    /* Tubibot Button sa Header */
     .header-tubibot-btn {
       background: linear-gradient(to bottom, #00a86b, #007a4d);
       color: white;
@@ -102,7 +86,6 @@
       100% { box-shadow: 0 4px 12px rgba(0, 168, 107, 0.4); }
     }
 
-    /* ===== NAVIGATION ===== */
     nav {
       background: var(--primary-light);
       padding: 0.4rem;
@@ -137,16 +120,9 @@
       justify-content: center;
     }
 
-    nav a:hover, nav a:active {
-      background: var(--accent);
-    }
+    nav a:hover, nav a:active { background: var(--accent); }
+    nav a.active { background: var(--accent); font-weight: 600; }
 
-    nav a.active {
-      background: var(--accent);
-      font-weight: 600;
-    }
-
-    /* ===== MAIN CONTENT ===== */
     main {
       flex: 1;
       max-width: 1100px;
@@ -166,23 +142,10 @@
       border-bottom: 3px solid var(--accent);
     }
 
-    .page-header h2 {
-      color: var(--primary);
-      font-size: 1.8rem;
-      font-weight: 700;
-    }
+    .page-header h2 { color: var(--primary); font-size: 1.8rem; font-weight: 700; }
+    .page-header p { color: var(--text-light); font-size: 1rem; margin-top: 0.3rem; }
 
-    .page-header p {
-      color: var(--text-light);
-      font-size: 1rem;
-      margin-top: 0.3rem;
-    }
-
-    /* ===== ABOUT CONTENT SECTIONS ===== */
-    .about-content {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
+    .about-content { max-width: 1000px; margin: 0 auto; }
 
     .section {
       background: #f8fafc;
@@ -202,28 +165,8 @@
       padding-left: 1rem;
     }
 
-    .section h3 {
-      color: var(--primary-light);
-      font-size: 1.2rem;
-      margin: 1.2rem 0 0.8rem;
-      font-weight: 600;
-    }
-
-    .section p {
-      margin-bottom: 1rem;
-      color: var(--text-dark);
-      font-size: 0.95rem;
-    }
-
-    .section ul {
-      margin: 0.8rem 0 0.8rem 1.5rem;
-      color: var(--text-light);
-    }
-
-    .section li {
-      margin-bottom: 0.3rem;
-      font-size: 0.95rem;
-    }
+    .section h3 { color: var(--primary-light); font-size: 1.2rem; margin: 1.2rem 0 0.8rem; font-weight: 600; }
+    .section p { margin-bottom: 1rem; color: var(--text-dark); font-size: 0.95rem; }
 
     .highlight {
       background: var(--accent-light);
@@ -233,7 +176,6 @@
       margin: 1.2rem 0;
     }
 
-    /* ===== MISSION / VISION CARDS ===== */
     .mv-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -251,18 +193,9 @@
       border: 1px solid #e2e8f0;
     }
 
-    .mv-card h3 {
-      color: var(--primary);
-      font-size: 1.3rem;
-      margin-bottom: 0.8rem;
-    }
+    .mv-card h3 { color: var(--primary); font-size: 1.3rem; margin-bottom: 0.8rem; }
+    .mv-card p { font-size: 0.95rem; color: var(--text-light); }
 
-    .mv-card p {
-      font-size: 0.95rem;
-      color: var(--text-light);
-    }
-
-    /* ===== CONTACT SECTION ===== */
     .contact-section {
       background: #f8fafc;
       border-radius: 1.2rem;
@@ -292,38 +225,13 @@
       border-radius: 1rem;
       box-shadow: var(--shadow-sm);
       border: 1px solid #e2e8f0;
-      transition: all 0.2s;
       -webkit-tap-highlight-color: transparent;
     }
 
-    .contact-card:active {
-      transform: scale(0.98);
-      border-color: var(--accent);
-    }
+    .contact-card h4 { color: var(--primary); margin-bottom: 0.8rem; font-size: 1.1rem; display: flex; align-items: center; gap: 6px; }
+    .contact-card p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.3rem; }
+    .contact-card a { color: var(--accent); text-decoration: none; font-weight: 500; font-size: 0.9rem; }
 
-    .contact-card h4 {
-      color: var(--primary);
-      margin-bottom: 0.8rem;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .contact-card p {
-      font-size: 0.9rem;
-      color: var(--text-light);
-      margin-bottom: 0.3rem;
-    }
-
-    .contact-card a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-
-    /* ===== FOOTER ===== */
     footer {
       background: var(--primary);
       color: white;
@@ -333,10 +241,7 @@
       text-align: center;
     }
 
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
 
     .contact-row {
       display: flex;
@@ -347,135 +252,39 @@
       font-size: 0.9rem;
     }
 
-    /* ===== SIDE WIDGETS (Desktop Only) ===== */
-    .side-widgets {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-      display: none;
-    }
-
-    @media (min-width: 1400px) {
-      .side-widgets { display: block; }
-    }
-
-    .widget-left {
-      position: fixed;
-      left: 15px;
-      top: 200px;
-      width: 180px;
-      pointer-events: auto;
-    }
-
-    .widget-right {
-      position: fixed;
-      right: 15px;
-      top: 200px;
-      width: 180px;
-      pointer-events: auto;
-    }
-
-    .widget-image-container {
-      width: 100%;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      border: 1px solid white;
-      background: white;
-      margin-bottom: 12px;
-    }
-
-    .widget-image {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-      aspect-ratio: 3/4;
-    }
-
-    /* ===== MOBILE OPTIMIZATION ===== */
     @media (max-width: 768px) {
       header { padding: 0.8rem 1rem; }
       .header-text h1 { font-size: 1.1rem; }
       .header-text p { font-size: 0.7rem; }
-      .header-tubibot-btn { 
-        padding: 8px 16px; 
-        font-size: 0.8rem;
-        animation: none;
-      }
-      
+      .header-tubibot-btn { padding: 8px 16px; font-size: 0.8rem; animation: none; }
       nav { padding: 0.3rem; }
       nav a { font-size: 0.75rem; padding: 0.4rem 0.7rem; min-height: 40px; }
-      
       main { padding: 1rem; width: 95%; margin: 1rem auto; }
-      
       .page-header h2 { font-size: 1.4rem; }
       .page-header p { font-size: 0.85rem; }
-      
       .section { padding: 1.2rem; }
       .section h2 { font-size: 1.2rem; }
       .section h3 { font-size: 1rem; }
       .section p { font-size: 0.9rem; }
-      
       .mv-container { grid-template-columns: 1fr; gap: 1rem; }
       .mv-card { padding: 1.2rem; }
       .mv-card h3 { font-size: 1.1rem; }
-      
       .contact-grid { grid-template-columns: 1fr; }
       .contact-card { padding: 1rem; }
-      
       .contact-row { flex-direction: column; gap: 0.5rem; font-size: 0.8rem; }
     }
 
     @media (max-width: 480px) {
       .header-top { flex-direction: column; align-items: stretch; text-align: center; }
       .header-tubibot-btn { justify-content: center; }
-      
       .section { padding: 1rem; }
       .highlight { padding: 0.8rem 1rem; }
     }
-
-    @media (max-width: 360px) {
-      nav a { font-size: 0.7rem; padding: 0.3rem 0.5rem; min-height: 38px; }
-      .page-header h2 { font-size: 1.2rem; }
-    }
   </style>
 </head>
+
 <body>
 
-  <!-- ===== SIDE WIDGETS (Desktop) ===== -->
-  <div id="side-widgets-container"></div>
-
-  <script>
-    fetch('widgets.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('side-widgets-container').innerHTML = data;
-      })
-      .catch(error => {
-        console.log('Widgets failed to load:', error);
-        document.getElementById('side-widgets-container').innerHTML = `
-          <div class="side-widgets">
-            <div class="widget-left">
-              <div class="widget-image-container">
-                <img src="images/gcashlogo.png" alt="GCash" class="widget-image">
-              </div>
-            </div>
-            <div class="widget-right">
-              <div class="widget-image-container">
-                <img src="images/readingschedule.jpg" alt="Reading Schedule" class="widget-image">
-              </div>
-            </div>
-          </div>
-        `;
-      });
-  </script>
-
-<!-- ===== HEADER ===== -->
 <header>
   <div class="header-top">
     <div class="header-text">
@@ -486,7 +295,6 @@
   </div>
 </header>
 
-<!-- ===== NAVIGATION ===== -->
 <nav>
   <a href="services.html">🏠 Home</a>
   <a href="services2.html">🛠️ Services</a>
@@ -495,7 +303,6 @@
   <a href="index.html">📄 Inquiry</a>
 </nav>
 
-<!-- ===== MAIN ABOUT CONTENT ===== -->
 <main>
   <div class="page-header">
     <h2>About Siniloan Water District</h2>
@@ -503,7 +310,6 @@
   </div>
 
   <div class="about-content">
-    <!-- HISTORY SECTION -->
     <section class="section">
       <h2>📜 History of SIWADI</h2>
       <p>Siniloan Water District (SIWADI) was born out of necessity. Before its creation, the municipal water system – originally built by the Bureau of Public Works and later managed by the municipal government – suffered from poor water quality, low pressure, and unreliable supply. In 1988, Ms. Sonia Costelo of LWUA proposed forming a water district under PD 198. A public hearing on April 29, 1988 at the Leonides de Leon Hall showed strong public support.</p>
@@ -520,7 +326,6 @@
       <p>Key supporters: Gov. Joey D. Lina (P1M calamity aid, 1996), Congressman Magdaleno Palacol (P900,000 CDF, 1997), LWUA, and loyal consumers.</p>
     </section>
 
-    <!-- MISSION & VISION CARDS -->
     <div class="mv-container">
       <div class="mv-card">
         <h3>🎯 Mission</h3>
@@ -532,7 +337,6 @@
       </div>
     </div>
 
-    <!-- CONTACT SECTION -->
     <section class="contact-section">
       <h2>📞 Contact Information</h2>
       <div class="contact-grid">
@@ -540,7 +344,6 @@
           <h4>📞 Commercial Division</h4>
           <p><a href="tel:0495016656">(049) 501-6656</a></p>
         </div>
-  
         <div class="contact-card">
           <h4>📍 Address</h4>
           <p>SIWADI Bldg., P. Burgos St., Siniloan, Laguna</p>
@@ -550,7 +353,6 @@
   </div>
 </main>
 
-<!-- ===== FOOTER ===== -->
 <footer>
   <div class="footer-inner">
     <div class="contact-row">
@@ -561,17 +363,11 @@
   </div>
 </footer>
 
-<!-- ===== ACTIVE NAV SCRIPT ===== -->
 <script>
-  (function() {
-    const navLinks = document.querySelectorAll('nav a');
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === 'about.html') {
-        link.classList.add('active');
-      }
-    });
-  })();
+  document.querySelectorAll('nav a').forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === 'about.html') link.classList.add('active');
+  });
 </script>
 </body>
 </html>
