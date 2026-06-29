@@ -36,6 +36,11 @@ const FAQ_NI_SIWADI = [
         answer: "Sige po! Salamat sa pakikipag-usap. Kung may katanungan pa po kayo, huwag mag-atubiling bumalik. Ingat po palagi at magtipid ng tubig! 💧👋"
     },
 
+    {
+        keywords: ["bukas ba", "bukas po ba", "open ba", "bukas ngayon", "may pasok", "office hours", "oras ng opisina", "bukas pa ba", "sarado ba", "bukas ba opisina", "bukas po ba kayo"],
+        answer: "Ang aming opisina po ay bukas mula <strong>Lunes hanggang Huwebes, 7:00 AM hanggang 6:00 PM</strong>. 🏢⏰<br><br>Para naman po sa mga araw na walang pasok (Biyernes, Sabado, Linggo, at holidays), mayroon pong <strong>skeletal force</strong> na naka-duty para sa mga emergency repairs at maintenance. 💧🔧<br><br>May iba pa po ba kayong katanungan? 😊"
+    },
+
     // ========== APPLICATION AT REQUIREMENTS ==========
     {
         keywords: ["apply", "application", "new connection", "mag-apply", "bagong connection", "requirements", "requirement", "kailangan", "dalhin"],
@@ -60,6 +65,11 @@ const FAQ_NI_SIWADI = [
     {
         keywords: ["customer deposit", "customers deposit", "320", "400", "reconnection deposit", "bagong deposit"],
         answer: "Ang <strong>Customer's Deposit</strong> ay ang halagang napagkasunduan na inyong babayaran kasama sa new connection. Ito ay katumbas ng <strong>dalawang buwang minimum na singil</strong> na nagkakahalaga ng <strong>₱400</strong>.<br><br>🆕 <strong>Para sa bagong koneksyon:</strong><br>• Kasama ito sa babayaran bilang bahagi ng new connection<br><br>🔄 <strong>Para sa lumang konto na sinisingilan ng customer's deposit:</strong><br>• Ito ang halagang kailangan upang ma-update ang inyong customer's deposit<br><br>📊 <strong>Halimbawa:</strong><br>Kung ang inyong natitirang customer's deposit ay <strong>₱320</strong>, kailangan ng karagdagang <strong>₱80</strong> bukod pa sa <strong>₱200 reconnection fee</strong>. Kaya: ₱320 + ₱80 = <strong>₱400</strong>.<br><br>💡 <strong>Sa madaling salita:</strong> Kailangang updated ang customer's deposit. Sa susunod na kayo ay maputulan at updated naman ang inyong customer's deposit, <strong>hindi na kayo kailangang singilin ng karagdagang halaga</strong>.<br><br>Sana po ay naunawaan ninyo. May iba pa po ba kayong katanungan? 😊💧"
+    },
+
+    {
+        keywords: ["flushing", "flush", "flusing", "paglinis", "linis ng linya", "hydrant", "bakit nagtatapon", "bakit nagbubuga", "nagbubuga ng tubig", "nag-aaksaya", "aksaya", "bakit nag-aaksaya"],
+        answer: "Ang <strong>flushing</strong> ay ang paraan ng pagtatapon ng tubig mula sa mga <strong>fire hydrants</strong> upang linisin ang ating mga linya ng tubig. 🚿💧<br><br>🧹 <strong>Bakit ito ginagawa?</strong><br>• Upang alisin ang mga <strong>sediments</strong> (dumi, buhangin, kalawang)<br>• Upang alisin ang iba pang uri ng <strong>impurities</strong> sa tubo<br>• Upang mapanatili ang <strong>malinis at ligtas</strong> na daloy ng tubig<br><br>📅 <strong>Kailan ito ginagawa?</strong><br>• Tuwing <strong>huling Biyernes ng buwan</strong><br><br>💡 <strong>Paalala:</strong> Kapag may nakikita kayong tubig na bumubuga mula sa fire hydrant, ito ay <strong>hindi aksaya</strong>—ito ay regular maintenance para sa inyong kaligtasan. Pasensya na po kung may pansamantalang abala. May iba pa po ba kayong katanungan? 😊💧"
     },
 
 
@@ -137,7 +147,7 @@ const FAQ_NI_SIWADI = [
 
     {
     keywords: ["seminar", "tuwing kailan seminar", "iskedyul ng seminar", "orientation", "oras ng seminar", "schedules", "araw ng seminar", "paano dumalo", "requirement seminar"],
-    answer: "Ang seminar po ay tuwing <strong>Miyerkules, ala-una ng hapon (1:00 PM)</strong> sa <strong>SIWADI Building</strong>. 🏢📋<br><br>Kung kayo po ay na-inspeksyon na, maaari na po kayong dumalo ng seminar. Ito po ay bahagi ng proseso para sa bagong service connection. May iba pa po ba kayong katanungan? 😊💧"
+    answer: "Ang seminar po ay kailangan para ating malaman ang mga umiiral na alintuntunin hinggil sa pagpapakabit ng serbisyo ng tubig. Ito po ay ginaganap tuwing <strong>Miyerkules, ala-una ng hapon (1:00 PM)</strong> sa <strong>SIWADI Building</strong>. 🏢📋<br><br>Kung kayo po ay na-inspeksyon na, maaari na po kayong dumalo ng seminar. Ito po ay bahagi ng proseso para sa bagong service connection. May iba pa po ba kayong katanungan? 😊💧"
     },
 
     {
@@ -177,6 +187,7 @@ const FAQ_NI_SIWADI = [
         keywords: ["reklamo", "complaint", "ireklamo", "may reklamo", "complain", "report concern", "problem", "issue"],
         answer: "Para po sa mga complaints o reklamo, may dalawa po kayong pagpipilian:<br><br>🏢 <strong>Magtungo sa opisina</strong> — Bukas po mula Lunes hanggang Huwebes, 7:00 AM hanggang 6:00 PM. Personal po ninyong makakausap ang aming Customer Service.<br><br>💬 <strong>Mag-message sa Facebook Messenger</strong> — <a href='https://business.facebook.com/latest/inbox/all/?asset_id=138114919663818&business_id=1271512611614176&ir_qe_exposed=1&nav_ref=manage_page_ap_plus_inbox_message_button' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>I-click po ito para direktang mag-message sa aming Facebook Messenger 📘💬</a><br><br>Pakibanggit po ang inyong account number at detalye ng reklamo para agad naming maaksyunan. May iba pa po ba kayong katanungan? 😊"
     },
+
 
 ];
 
