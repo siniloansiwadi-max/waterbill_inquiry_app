@@ -6,12 +6,7 @@
   <meta name="description" content="SIWADI Services – GCash payment guide, new connection, water rates.">
   <title>SIWADI · Services</title>
   <style>
-    /* ===== RESET & VARIABLES ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --primary: #0a2e5c;
@@ -39,7 +34,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== HEADER ===== */
     header {
       background: var(--primary);
       color: white;
@@ -57,19 +51,9 @@
       gap: 10px;
     }
 
-    .header-text h1 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 0.2rem;
-      line-height: 1.2;
-    }
+    .header-text h1 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.2rem; line-height: 1.2; }
+    .header-text p { font-size: 0.8rem; opacity: 0.9; }
 
-    .header-text p {
-      font-size: 0.8rem;
-      opacity: 0.9;
-    }
-
-    /* Tubibot Button sa Header */
     .header-tubibot-btn {
       background: linear-gradient(to bottom, #00a86b, #007a4d);
       color: white;
@@ -102,7 +86,6 @@
       100% { box-shadow: 0 4px 12px rgba(0, 168, 107, 0.4); }
     }
 
-    /* ===== NAVIGATION ===== */
     nav {
       background: var(--primary-light);
       padding: 0.4rem;
@@ -137,16 +120,9 @@
       justify-content: center;
     }
 
-    nav a:hover, nav a:active {
-      background: var(--accent);
-    }
+    nav a:hover, nav a:active { background: var(--accent); }
+    nav a.active { background: var(--accent); font-weight: 600; }
 
-    nav a.active {
-      background: var(--accent);
-      font-weight: 600;
-    }
-
-    /* ===== MAIN CONTENT ===== */
     main {
       flex: 1;
       max-width: 1200px;
@@ -166,19 +142,9 @@
       border-bottom: 3px solid var(--accent);
     }
 
-    .page-header h2 {
-      color: var(--primary);
-      font-size: 1.8rem;
-      font-weight: 700;
-    }
+    .page-header h2 { color: var(--primary); font-size: 1.8rem; font-weight: 700; }
+    .page-header p { color: var(--text-light); font-size: 1rem; margin-top: 0.3rem; }
 
-    .page-header p {
-      color: var(--text-light);
-      font-size: 1rem;
-      margin-top: 0.3rem;
-    }
-
-    /* ===== SERVICE CARDS ===== */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -197,10 +163,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .service-card:active {
-      transform: scale(0.98);
-      border-color: var(--accent);
-    }
+    .service-card:active { transform: scale(0.98); border-color: var(--accent); }
 
     .card-header {
       background: var(--primary);
@@ -209,21 +172,10 @@
       text-align: center;
     }
 
-    .card-header h3 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 0.2rem;
-    }
+    .card-header h3 { font-size: 1.4rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .card-header p { opacity: 0.9; font-size: 0.9rem; }
 
-    .card-header p {
-      opacity: 0.9;
-      font-size: 0.9rem;
-    }
-
-    .image-area {
-      padding: 1.2rem;
-      text-align: center;
-    }
+    .image-area { padding: 1.2rem; text-align: center; }
 
     .service-img {
       max-width: 100%;
@@ -236,38 +188,9 @@
       background: #f0f4f8;
     }
 
-    .image-note {
-      margin-top: 0.5rem;
-      color: var(--text-light);
-      font-size: 0.8rem;
-      font-style: italic;
-    }
+    .image-note { margin-top: 0.5rem; color: var(--text-light); font-size: 0.8rem; font-style: italic; }
 
-    /* ===== FOOTER ===== */
-    footer {
-      background: var(--primary);
-      color: white;
-      padding: 1.2rem;
-      padding-bottom: calc(1.2rem + var(--safe-bottom));
-      margin-top: 1rem;
-      text-align: center;
-    }
-
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .footer-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.2rem;
-      margin-bottom: 0.8rem;
-      font-size: 0.9rem;
-    }
-
-    /* ===== MODAL ===== */
+    /* Fullscreen Image Modal */
     .modal {
       display: none;
       position: fixed;
@@ -280,26 +203,14 @@
       padding: 1rem;
     }
 
-    .modal-content {
-      max-width: 90%;
-      text-align: center;
-    }
+    .modal.active { display: flex; }
 
     .modal-img {
-      max-width: 100%;
-      max-height: 70vh;
+      max-width: 95%;
+      max-height: 85vh;
       border-radius: 1rem;
       border: 3px solid white;
-    }
-
-    .modal-caption {
-      color: white;
-      margin-top: 1rem;
-    }
-
-    .modal-caption h3 {
-      font-size: 1.4rem;
-      margin-bottom: 0.3rem;
+      object-fit: contain;
     }
 
     .modal-close {
@@ -320,170 +231,56 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .modal-close:active {
-      background: white;
-      color: black;
-    }
+    .modal-close:active { background: white; color: black; }
 
-    .modal-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 10px;
-      pointer-events: none;
-    }
-
-    .modal-nav-btn {
-      background: rgba(255,255,255,0.15);
+    footer {
+      background: var(--primary);
       color: white;
-      border: 2px solid white;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      font-size: 1.5rem;
-      cursor: pointer;
-      pointer-events: auto;
+      padding: 1.2rem;
+      padding-bottom: calc(1.2rem + var(--safe-bottom));
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+
+    .footer-row {
       display: flex;
-      align-items: center;
+      flex-wrap: wrap;
       justify-content: center;
-      -webkit-tap-highlight-color: transparent;
+      gap: 1.2rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
     }
 
-    .modal-nav-btn:active {
-      background: white;
-      color: black;
-    }
-
-    /* ===== SIDE WIDGETS (Desktop Only) ===== */
-    .side-widgets {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-      display: none;
-    }
-
-    @media (min-width: 1400px) {
-      .side-widgets { display: block; }
-    }
-
-    .widget-left {
-      position: fixed;
-      left: 15px;
-      top: 200px;
-      width: 180px;
-      pointer-events: auto;
-    }
-
-    .widget-right {
-      position: fixed;
-      right: 15px;
-      top: 200px;
-      width: 180px;
-      pointer-events: auto;
-    }
-
-    .widget-image-container {
-      width: 100%;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      border: 1px solid white;
-      background: white;
-      margin-bottom: 12px;
-    }
-
-    .widget-image {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-      aspect-ratio: 3/4;
-    }
-
-    /* ===== MOBILE OPTIMIZATION ===== */
     @media (max-width: 768px) {
       header { padding: 0.8rem 1rem; }
       .header-text h1 { font-size: 1.1rem; }
       .header-text p { font-size: 0.7rem; }
-      .header-tubibot-btn { 
-        padding: 8px 16px; 
-        font-size: 0.8rem;
-        animation: none;
-      }
-      
+      .header-tubibot-btn { padding: 8px 16px; font-size: 0.8rem; animation: none; }
       nav { padding: 0.3rem; }
       nav a { font-size: 0.75rem; padding: 0.4rem 0.7rem; min-height: 40px; }
-      
       main { padding: 1rem; width: 95%; margin: 1rem auto; }
-      
       .page-header h2 { font-size: 1.4rem; }
       .page-header p { font-size: 0.85rem; }
-      
       .services-grid { grid-template-columns: 1fr; gap: 1rem; }
-      
       .card-header h3 { font-size: 1.2rem; }
       .card-header p { font-size: 0.8rem; }
-      
       .service-img { max-height: 180px; }
-      
       .footer-row { flex-direction: column; gap: 0.5rem; font-size: 0.8rem; }
-      
-      .modal-close { width: 40px; height: 40px; font-size: 1.5rem; }
-      .modal-nav-btn { width: 40px; height: 40px; font-size: 1.3rem; }
     }
 
     @media (max-width: 480px) {
       .header-top { flex-direction: column; align-items: stretch; text-align: center; }
       .header-tubibot-btn { justify-content: center; }
-      
       .services-grid { gap: 0.8rem; }
       .image-area { padding: 1rem; }
     }
-
-    @media (max-width: 360px) {
-      nav a { font-size: 0.7rem; padding: 0.3rem 0.5rem; min-height: 38px; }
-      .page-header h2 { font-size: 1.2rem; }
-    }
   </style>
 </head>
+
 <body>
 
-<!-- ===== SIDE WIDGETS (Desktop) ===== -->
-  <div id="side-widgets-container"></div>
-
-  <script>
-    fetch('widgets.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('side-widgets-container').innerHTML = data;
-      })
-      .catch(error => {
-        console.log('Widgets failed to load:', error);
-        document.getElementById('side-widgets-container').innerHTML = `
-          <div class="side-widgets">
-            <div class="widget-left">
-              <div class="widget-image-container">
-                <img src="images/gcashlogo.png" alt="GCash" class="widget-image">
-              </div>
-            </div>
-            <div class="widget-right">
-              <div class="widget-image-container">
-                <img src="images/readingschedule.jpg" alt="Reading Schedule" class="widget-image">
-              </div>
-            </div>
-          </div>
-        `;
-      });
-  </script>
-
-<!-- ===== HEADER ===== -->
 <header>
   <div class="header-top">
     <div class="header-text">
@@ -494,7 +291,6 @@
   </div>
 </header>
 
-<!-- ===== NAVIGATION ===== -->
 <nav>
   <a href="services.html">🏠 Home</a>
   <a href="services2.html" class="active">🛠️ Services</a>
@@ -503,57 +299,51 @@
   <a href="index.html">📄 Inquiry</a>
 </nav>
 
-<!-- ===== MAIN CONTENT ===== -->
 <main>
   <div class="page-header">
     <h2>Our Services</h2>
-    <p>Tap any card to view details and enlarge images</p>
+    <p>Tap any card to view the full image</p>
   </div>
 
-  <!-- service cards (3) -->
-  <div class="services-grid" id="serviceGrid">
+  <div class="services-grid">
     <!-- GCash card -->
-    <div class="service-card" data-index="0">
+    <div class="service-card" onclick="openModal('images/gcash.jpg')">
       <div class="card-header">
         <h3>💳 GCash Payment</h3>
         <p>Pay via GCash</p>
       </div>
       <div class="image-area">
-        <img src="images/gcash.jpg" alt="GCash tutorial" class="service-img"
-             onerror="this.src='https://via.placeholder.com/400x250/0a5c8c/ffffff?text=GCash+Guide'">
+        <img src="images/gcash.jpg" alt="GCash tutorial" class="service-img" onerror="this.src='https://via.placeholder.com/400x250/0a5c8c/ffffff?text=GCash+Guide'">
         <div class="image-note">tap to enlarge</div>
       </div>
     </div>
 
     <!-- New Connection card -->
-    <div class="service-card" data-index="1">
+    <div class="service-card" onclick="openModal('images/newconnection.png')">
       <div class="card-header">
         <h3>🔧 New Connection</h3>
         <p>Apply online</p>
       </div>
       <div class="image-area">
-        <img src="images/newconnection.png" alt="new connection" class="service-img"
-             onerror="this.src='https://via.placeholder.com/400x250/014272/ffffff?text=New+Connection'">
+        <img src="images/newconnection.png" alt="new connection" class="service-img" onerror="this.src='https://via.placeholder.com/400x250/014272/ffffff?text=New+Connection'">
         <div class="image-note">tap to enlarge</div>
       </div>
     </div>
 
     <!-- Water Rates card -->
-    <div class="service-card" data-index="2">
+    <div class="service-card" onclick="openModal('images/rates.jpg')">
       <div class="card-header">
         <h3>📊 Water Rates</h3>
         <p>Latest schedule</p>
       </div>
       <div class="image-area">
-        <img src="images/rates.jpg" alt="water rates" class="service-img"
-             onerror="this.src='https://via.placeholder.com/400x250/0169b4/ffffff?text=Water+Rates'">
+        <img src="images/rates.jpg" alt="water rates" class="service-img" onerror="this.src='https://via.placeholder.com/400x250/0169b4/ffffff?text=Water+Rates'">
         <div class="image-note">tap to enlarge</div>
       </div>
     </div>
   </div>
 </main>
 
-<!-- ===== FOOTER ===== -->
 <footer>
   <div class="footer-inner">
     <div class="footer-row">
@@ -564,107 +354,34 @@
   </div>
 </footer>
 
-<!-- ===== MODAL ===== -->
-<div id="serviceModal" class="modal">
+<!-- Fullscreen Image Modal -->
+<div id="imageModal" class="modal" onclick="closeModal()">
   <button class="modal-close" onclick="closeModal()">×</button>
-  <div class="modal-content">
-    <img id="modalImg" class="modal-img" src="" alt="">
-    <div class="modal-caption">
-      <h3 id="modalTitle"></h3>
-      <p id="modalDesc" style="color:#ccc;"></p>
-    </div>
-  </div>
-  <div class="modal-nav">
-    <button class="modal-nav-btn" onclick="prevImage()">‹</button>
-    <button class="modal-nav-btn" onclick="nextImage()">›</button>
-  </div>
+  <img id="modalImg" class="modal-img" src="" alt="">
 </div>
 
 <script>
-  (function() {
-    // Service data
-    const serviceData = [
-      { 
-        title: 'GCash Payment', 
-        desc: 'Step-by-step guide for paying through GCash. Pay your water bills anytime, anywhere using the GCash app.' 
-      },
-      { 
-        title: 'New Connection', 
-        desc: 'Requirements and application process for new water service connections. Visit our office or apply online.' 
-      },
-      { 
-        title: 'Water Rates', 
-        desc: 'Current water rates and billing information. Updated as of January 2026.' 
-      }
-    ];
+  function openModal(imgSrc) {
+    document.getElementById('modalImg').src = imgSrc;
+    document.getElementById('imageModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
 
-    const cards = Array.from(document.querySelectorAll('.service-card'));
-    const modal = document.getElementById('serviceModal');
-    const modalImg = document.getElementById('modalImg');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDesc = document.getElementById('modalDesc');
-    let currentIdx = 0;
+  function closeModal() {
+    document.getElementById('imageModal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
 
-    function openModal(index) {
-      const card = cards[index];
-      if (!card) return;
-      const img = card.querySelector('.service-img');
-      modalImg.src = img.src;
-      modalTitle.innerText = serviceData[index].title;
-      modalDesc.innerText = serviceData[index].desc;
-      currentIdx = index;
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
+  // Keyboard
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
 
-    window.openModal = openModal;
-    
-    window.closeModal = function() {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    };
-
-    window.prevImage = function() {
-      currentIdx = (currentIdx - 1 + cards.length) % cards.length;
-      const img = cards[currentIdx].querySelector('.service-img');
-      modalImg.src = img.src;
-      modalTitle.innerText = serviceData[currentIdx].title;
-      modalDesc.innerText = serviceData[currentIdx].desc;
-    };
-
-    window.nextImage = function() {
-      currentIdx = (currentIdx + 1) % cards.length;
-      const img = cards[currentIdx].querySelector('.service-img');
-      modalImg.src = img.src;
-      modalTitle.innerText = serviceData[currentIdx].title;
-      modalDesc.innerText = serviceData[currentIdx].desc;
-    };
-
-    // Attach click to each card
-    cards.forEach((card, i) => {
-      card.addEventListener('click', () => openModal(i));
-    });
-
-    // Close on backdrop click
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (modal.style.display !== 'flex') return;
-      if (e.key === 'Escape') closeModal();
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
-    });
-
-    // Set active nav
-    const navLinks = document.querySelectorAll('nav a');
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === 'services2.html') link.classList.add('active');
-    });
-  })();
+  // Active nav
+  document.querySelectorAll('nav a').forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === 'services2.html') link.classList.add('active');
+  });
 </script>
 
 </body>
