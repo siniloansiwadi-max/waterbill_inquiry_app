@@ -3,15 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
-  <meta name="description" content="Siniloan Water District Official Portal – fast, clean, mobile-friendly.">
+  <meta name="description" content="Siniloan Water District Official Portal – Reading and Disconnection Schedules">
   <title>SIWADI · Home</title>
   <style>
-    /* ===== RESET & VARIABLES ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --primary: #0a2e5c;
@@ -39,7 +34,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== HEADER ===== */
     header {
       background: var(--primary);
       color: white;
@@ -69,7 +63,6 @@
       opacity: 0.9;
     }
 
-    /* Tubibot Button sa Header */
     .header-tubibot-btn {
       background: linear-gradient(to bottom, #00a86b, #007a4d);
       color: white;
@@ -102,7 +95,6 @@
       100% { box-shadow: 0 4px 12px rgba(0, 168, 107, 0.4); }
     }
 
-    /* ===== NAVIGATION ===== */
     nav {
       background: var(--primary-light);
       padding: 0.4rem;
@@ -137,16 +129,9 @@
       justify-content: center;
     }
 
-    nav a:hover, nav a:active {
-      background: var(--accent);
-    }
+    nav a:hover, nav a:active { background: var(--accent); }
+    nav a.active { background: var(--accent); font-weight: 600; }
 
-    nav a.active {
-      background: var(--accent);
-      font-weight: 600;
-    }
-
-    /* ===== MAIN CONTENT ===== */
     main {
       flex: 1;
       max-width: 1200px;
@@ -159,34 +144,6 @@
       padding-bottom: calc(1.5rem + var(--safe-bottom));
     }
 
-    /* ===== DATE BANNERS ===== */
-    .date-image-container {
-      width: 100%;
-      margin: 1rem 0 1.5rem 0;
-    }
-
-    .date-full-image {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 1rem;
-      border: 2px solid var(--accent);
-      box-shadow: var(--shadow-md);
-    }
-
-    .date-text {
-      text-align: center;
-      margin-top: 0.8rem;
-    }
-
-    .date-text p {
-      font-size: 1rem;
-      color: #000000;
-      font-weight: 700;
-      line-height: 1.4;
-    }
-
-    /* ===== TABBED INTERFACE ===== */
     .feature-tabs {
       display: flex;
       flex-wrap: nowrap;
@@ -221,34 +178,38 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .tab-btn i { font-size: 1.1rem; }
+    .tab-btn:hover, .tab-btn:active { background: var(--accent-light); color: var(--accent); }
+    .tab-btn.active { background: var(--accent); color: white; }
 
-    .tab-btn:hover, .tab-btn:active {
-      background: var(--accent-light);
-      color: var(--accent);
-    }
+    .tab-panel { display: none; width: 100%; clear: both; }
+    .tab-panel.active-panel { display: block !important; visibility: visible !important; opacity: 1 !important; position: relative; z-index: 1; }
 
-    .tab-btn.active {
-      background: var(--accent);
-      color: white;
-    }
-
-    /* ===== FIXED TAB PANELS ===== */
-    .tab-panel {
-      display: none;
+    .date-image-container {
       width: 100%;
-      clear: both;
+      margin: 1rem 0 1.5rem 0;
     }
 
-    .tab-panel.active-panel {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      position: relative;
-      z-index: 1;
+    .date-full-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 1rem;
+      border: 2px solid var(--accent);
+      box-shadow: var(--shadow-md);
     }
 
-    /* ===== CONTENT CARDS ===== */
+    .date-text {
+      text-align: center;
+      margin-top: 0.8rem;
+    }
+
+    .date-text p {
+      font-size: 1rem;
+      color: #000000;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -295,11 +256,8 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .btn:hover, .btn:active {
-      background: var(--primary);
-    }
+    .btn:hover, .btn:active { background: var(--primary); }
 
-    /* ===== GALLERY GRID ===== */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -313,14 +271,8 @@
       border-radius: 0.8rem;
       overflow: hidden;
       aspect-ratio: 1/1;
-      cursor: pointer;
       border: 2px solid transparent;
-      transition: border-color 0.2s;
       display: block;
-    }
-
-    .gallery-item:active {
-      border-color: var(--accent);
     }
 
     .gallery-img {
@@ -330,173 +282,6 @@
       display: block;
     }
 
-    /* ===== LINK GRID ===== */
-    .link-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 0.8rem;
-      margin: 1.5rem 0;
-    }
-
-    .link-tile {
-      background: #f8fafc;
-      border-radius: 1rem;
-      padding: 1rem 0.6rem;
-      text-align: center;
-      text-decoration: none;
-      color: var(--primary);
-      border: 1px solid #e2e8f0;
-      transition: all 0.2s;
-      min-height: 100px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .link-tile:active {
-      background: white;
-      box-shadow: var(--shadow-md);
-      transform: scale(0.97);
-    }
-
-    .link-tile .icon {
-      font-size: 2rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .link-tile h4 {
-      font-size: 0.9rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .coming-soon-badge {
-      display: inline-block;
-      background: var(--accent);
-      color: white;
-      font-size: 0.6rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
-      margin-top: 0.3rem;
-    }
-
-    /* ===== FULL-SIZE GALLERY MODAL ===== */
-    .gallery-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.98);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .gallery-modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-img-container {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-
-    .modal-img {
-      max-width: 100%;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 0.5rem;
-      box-shadow: 0 0 30px rgba(0,0,0,0.5);
-    }
-
-    .modal-caption {
-      position: absolute;
-      bottom: 2rem;
-      left: 0;
-      right: 0;
-      text-align: center;
-      color: white;
-      font-size: 1.1rem;
-      font-weight: 600;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-      background: rgba(0,0,0,0.6);
-      padding: 0.8rem;
-      margin: 0 2rem;
-      border-radius: 3rem;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      width: 44px;
-      height: 44px;
-      background: rgba(255,255,255,0.15);
-      border: 2px solid white;
-      border-radius: 50%;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .modal-close:active {
-      background: white;
-      color: black;
-    }
-
-    .modal-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 0.5rem;
-      pointer-events: none;
-    }
-
-    .modal-nav-btn {
-      width: 44px;
-      height: 44px;
-      background: rgba(255,255,255,0.15);
-      border: 2px solid white;
-      border-radius: 50%;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      pointer-events: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .modal-nav-btn:active {
-      background: white;
-      color: black;
-    }
-
-    /* ===== FOOTER ===== */
     footer {
       background: var(--primary);
       color: white;
@@ -506,10 +291,7 @@
       text-align: center;
     }
 
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
 
     .contact-row {
       display: flex;
@@ -520,142 +302,35 @@
       font-size: 0.85rem;
     }
 
-    /* ===== SIDE WIDGETS (Desktop Only) ===== */
-    .side-widgets {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-      display: none;
-    }
-
-    @media (min-width: 1400px) {
-      .side-widgets { display: block; }
-    }
-
-    .widget-left {
-      position: fixed;
-      left: 15px;
-      top: 200px;
-      width: 180px;
-      pointer-events: auto;
-    }
-
-    .widget-right {
-      position: fixed;
-      right: 15px;
-      top: 200px;
-      width: 180px;
-      pointer-events: auto;
-    }
-
-    .widget-image-container {
-      width: 100%;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      border: 1px solid white;
-      background: white;
-      margin-bottom: 12px;
-    }
-
-    .widget-image {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-      aspect-ratio: 3/4;
-    }
-
-    /* ===== MOBILE OPTIMIZATION ===== */
     @media (max-width: 768px) {
       header { padding: 0.8rem 1rem; }
       .header-text h1 { font-size: 1.1rem; }
       .header-text p { font-size: 0.7rem; }
-      .header-tubibot-btn { 
-        padding: 8px 16px; 
-        font-size: 0.8rem;
-        animation: none;
-      }
-      
+      .header-tubibot-btn { padding: 8px 16px; font-size: 0.8rem; animation: none; }
       nav { padding: 0.3rem; }
       nav a { font-size: 0.75rem; padding: 0.4rem 0.7rem; min-height: 40px; }
-      
       main { padding: 1rem; width: 95%; }
-      
       .feature-tabs { gap: 0.2rem; }
       .tab-btn { padding: 0.5rem 0.7rem; font-size: 0.8rem; min-height: 40px; }
-      
       .two-col { grid-template-columns: 1fr; gap: 1rem; }
-      
       .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
-      
-      .link-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
-      
       .date-text p { font-size: 0.9rem; }
-      
-      .modal-img-container { padding: 1rem; }
-      .modal-caption { 
-        font-size: 0.9rem; 
-        bottom: 1rem; 
-        padding: 0.6rem;
-        margin: 0 1rem;
-      }
-      .modal-nav-btn { width: 40px; height: 40px; font-size: 1.3rem; }
-      .modal-close { width: 40px; height: 40px; font-size: 1.3rem; }
     }
 
     @media (max-width: 480px) {
       .header-top { flex-direction: column; align-items: stretch; text-align: center; }
       .header-tubibot-btn { justify-content: center; }
-      
       .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-      .link-grid { grid-template-columns: repeat(2, 1fr); }
-      .link-tile { min-height: 85px; }
-      .link-tile .icon { font-size: 1.6rem; }
-      .link-tile h4 { font-size: 0.8rem; }
     }
 
     @media (max-width: 360px) {
       .gallery-grid { grid-template-columns: 1fr; }
-      .link-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 
 <body>
-  <!-- ===== SIDE WIDGETS (Desktop) ===== -->
-  <div id="side-widgets-container"></div>
 
-  <script>
-    fetch('widgets.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('side-widgets-container').innerHTML = data;
-      })
-      .catch(error => {
-        console.log('Widgets failed to load:', error);
-        document.getElementById('side-widgets-container').innerHTML = `
-          <div class="side-widgets">
-            <div class="widget-left">
-              <div class="widget-image-container">
-                <img src="images/gcashlogo.png" alt="GCash" class="widget-image">
-              </div>
-            </div>
-            <div class="widget-right">
-              <div class="widget-image-container">
-                <img src="images/readingschedule.jpg" alt="Reading Schedule" class="widget-image">
-              </div>
-            </div>
-          </div>
-        `;
-      });
-  </script>
-
-<!-- ===== HEADER ===== -->
 <header>
   <div class="header-top">
     <div class="header-text">
@@ -666,7 +341,6 @@
   </div>
 </header>
 
-<!-- ===== NAVIGATION ===== -->
 <nav>
   <a href="services.html" class="active">🏠 Home</a>
   <a href="services2.html">🛠️ Services</a>
@@ -675,27 +349,25 @@
   <a href="index.html">📄 Inquiry</a>
 </nav>
 
-<!-- ===== MAIN CONTENT ===== -->
 <main>
 
 <div class="feature-tabs">
     <button class="tab-btn" id="tab1-btn"><i>🖼️</i> Gallery</button>
     <button class="tab-btn active" id="tab2-btn"><i>📊</i> Reading & Disconnection</button>
-    <button class="tab-btn" id="tab3-btn"><i>🔗</i> Quick Links</button>
 </div>
 
 <!-- TAB 1: GALLERY -->
 <div class="tab-panel" id="panel1">
     <h2 style="color:var(--primary); margin-bottom: 1rem;">📸 SIWADI Moments</h2>
-    <div class="gallery-grid" id="galleryGrid">
-        <div class="gallery-item" data-index="0"><img src="images/bigas2.jpg" alt="Bigas" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Bigas'"></div>
-        <div class="gallery-item" data-index="1"><img src="images/employee.jpg" alt="Employee" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Employee'"></div>
-        <div class="gallery-item" data-index="2"><img src="images/senior.jpg" alt="Senior" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Senior'"></div>
-        <div class="gallery-item" data-index="3"><img src="images/gmador.jpg" alt="GM Ador" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=GM+Ador'"></div>
-        <div class="gallery-item" data-index="4"><img src="images/plumber.jpg" alt="Plumber" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Plumber'"></div>
-        <div class="gallery-item" data-index="5"><img src="images/plumber2.jpg" alt="Plumber 2" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Plumber+2'"></div>
-        <div class="gallery-item" data-index="6"><img src="images/direknic.jpg" alt="Service Award" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Service+Award'"></div>
-        <div class="gallery-item" data-index="7"><img src="images/womensmonth.jpg" alt="Womens Month" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Womens+Month'"></div>
+    <div class="gallery-grid">
+        <div class="gallery-item"><img src="images/bigas2.jpg" alt="Bigas" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Bigas'"></div>
+        <div class="gallery-item"><img src="images/employee.jpg" alt="Employee" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Employee'"></div>
+        <div class="gallery-item"><img src="images/senior.jpg" alt="Senior" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Senior'"></div>
+        <div class="gallery-item"><img src="images/gmador.jpg" alt="GM Ador" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=GM+Ador'"></div>
+        <div class="gallery-item"><img src="images/plumber.jpg" alt="Plumber" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Plumber'"></div>
+        <div class="gallery-item"><img src="images/plumber2.jpg" alt="Plumber 2" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Plumber+2'"></div>
+        <div class="gallery-item"><img src="images/direknic.jpg" alt="Service Award" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Service+Award'"></div>
+        <div class="gallery-item"><img src="images/womensmonth.jpg" alt="Womens Month" class="gallery-img" onerror="this.src='https://via.placeholder.com/200x200/0a5c8c/ffffff?text=Womens+Month'"></div>
     </div>
 </div>
 
@@ -703,12 +375,12 @@
 <div class="tab-panel active-panel" id="panel2">
     <div class="two-col">
         <div class="info-card">
-            <h3><i>💧</i> Welcome</h3>
+            <h3>💧 Welcome</h3>
             <p style="margin-bottom: 0.8rem;">Serbisyong Tapat, Serbisyong Sapat.</p>
             <p>Transparent water service management, online bill inquiry, and new connection applications.</p>
         </div>
         <div class="info-card">
-            <h3><i>🏢</i> Commercial Division</h3>
+            <h3>🏢 Commercial Division</h3>
             <p><strong>Hours:</strong> Lunes–Huwebes 7:00–18:00</p>
             <p><strong>Hotline:</strong> 049-501-6656</p>
             <button class="btn" style="margin-top: 0.8rem;" onclick="alert('Contact: 049-501-6656')">Contact support</button>
@@ -730,37 +402,8 @@
     </div>
 </div>
 
-<!-- TAB 3: QUICK LINKS -->
-<div class="tab-panel" id="panel3">
-    <h3 style="color:var(--primary); text-align: center; margin-bottom: 1.2rem;">🔧 Services</h3>
-    <div class="link-grid">
-        <div class="link-tile"><div class="icon">📄</div><h4>Bill inquiry</h4><div class="coming-soon-badge">soon</div></div>
-        <div class="link-tile"><div class="icon">🧮</div><h4>Calculator</h4><div class="coming-soon-badge">soon</div></div>
-        <div class="link-tile"><div class="icon">💳</div><h4>Pay online</h4><div class="coming-soon-badge">soon</div></div>
-        <div class="link-tile"><div class="icon">🚰</div><h4>New connection</h4><div class="coming-soon-badge">soon</div></div>
-        <div class="link-tile"><div class="icon">📞</div><h4>Report leak</h4><div class="coming-soon-badge">soon</div></div>
-        <div class="link-tile"><div class="icon">📅</div><h4>Schedule</h4><div class="coming-soon-badge">soon</div></div>
-    </div>
-</div>
-
 </main>
 
-<!-- ===== GALLERY MODAL ===== -->
-<div id="galleryModal" class="gallery-modal">
-  <div class="modal-content">
-    <button class="modal-close" onclick="closeGalleryModal()">×</button>
-    <div class="modal-img-container">
-      <img id="modalImg" class="modal-img" src="" alt="">
-    </div>
-    <div class="modal-caption" id="modalCaption"></div>
-    <div class="modal-nav">
-      <button class="modal-nav-btn" onclick="prevImage()">‹</button>
-      <button class="modal-nav-btn" onclick="nextImage()">›</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== FOOTER ===== -->
 <footer>
   <div class="footer-inner">
     <div class="contact-row">
@@ -773,99 +416,24 @@
 
 <script>
 (function() {
-  // Tab switching
   const tabBtns = document.querySelectorAll('.tab-btn');
-  const panels = {
-    panel1: document.getElementById('panel1'),
-    panel2: document.getElementById('panel2'),
-    panel3: document.getElementById('panel3')
-  };
+  const panel1 = document.getElementById('panel1');
+  const panel2 = document.getElementById('panel2');
 
-  function activateTab(index) {
-    tabBtns.forEach(btn => btn.classList.remove('active'));
-    Object.values(panels).forEach(p => p.classList.remove('active-panel'));
-    
-    if (index === 0) {
-        tabBtns[0].classList.add('active');
-        panels.panel1.classList.add('active-panel');
-    } else if (index === 1) {
-        tabBtns[1].classList.add('active');
-        panels.panel2.classList.add('active-panel');
-    } else if (index === 2) {
-        tabBtns[2].classList.add('active');
-        panels.panel3.classList.add('active-panel');
-    }
-  }
-
-  tabBtns[0].addEventListener('click', () => activateTab(0));
-  tabBtns[1].addEventListener('click', () => activateTab(1));
-  tabBtns[2].addEventListener('click', () => activateTab(2));
-
-  // Gallery modal
-  const galleryItems = document.querySelectorAll('#galleryGrid .gallery-item');
-  const modal = document.getElementById('galleryModal');
-  const modalImg = document.getElementById('modalImg');
-  const modalCaption = document.getElementById('modalCaption');
-  let currentIndex = 0;
-
-  const images = [
-    { src: 'images/bigas2.jpg', caption: 'Bigas Promo Winner' },
-    { src: 'images/employee.jpg', caption: 'SIWADI Employees' },
-    { src: 'images/senior.jpg', caption: 'Senior Citizen Discount' },
-    { src: 'images/gmador.jpg', caption: 'GM Ador - Excellence Award' },
-    { src: 'images/plumber.jpg', caption: 'Maintenance Team at Work' },
-    { src: 'images/plumber2.jpg', caption: 'Field Work - Line Repair' },
-    { src: 'images/direknic.jpg', caption: '15 Years Service Award' },
-    { src: 'images/womensmonth.jpg', caption: 'Happy Womens Month' }
-  ];
-
-  window.openGalleryModal = function(index) {
-    currentIndex = index;
-    updateModal();
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  };
-
-  window.closeGalleryModal = function() {
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-  };
-
-  window.prevImage = function() {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    updateModal();
-  };
-
-  window.nextImage = function() {
-    currentIndex = (currentIndex + 1) % images.length;
-    updateModal();
-  };
-
-  function updateModal() {
-    const img = images[currentIndex];
-    modalImg.src = img.src;
-    modalImg.onerror = function() {
-      this.src = 'https://via.placeholder.com/800x600/0a5c8c/ffffff?text=Image+Not+Found';
-    };
-    modalCaption.textContent = img.caption;
-  }
-
-  galleryItems.forEach((item, idx) => {
-    item.addEventListener('click', () => openGalleryModal(idx));
+  tabBtns[0].addEventListener('click', function() {
+    tabBtns[0].classList.add('active');
+    tabBtns[1].classList.remove('active');
+    panel1.classList.add('active-panel');
+    panel2.classList.remove('active-panel');
   });
 
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeGalleryModal();
+  tabBtns[1].addEventListener('click', function() {
+    tabBtns[1].classList.add('active');
+    tabBtns[0].classList.remove('active');
+    panel2.classList.add('active-panel');
+    panel1.classList.remove('active-panel');
   });
 
-  document.addEventListener('keydown', (e) => {
-    if (!modal.classList.contains('active')) return;
-    if (e.key === 'Escape') closeGalleryModal();
-    if (e.key === 'ArrowRight') nextImage();
-    if (e.key === 'ArrowLeft') prevImage();
-  });
-
-  // Set active nav
   document.querySelectorAll('nav a').forEach(link => {
     link.classList.remove('active');
     if (link.getAttribute('href') === 'services.html') link.classList.add('active');
