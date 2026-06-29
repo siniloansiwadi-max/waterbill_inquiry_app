@@ -5,23 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
   <title>SIWADI · Bill Calculator</title>
   <style>
-    /* ===== RESET & VARIABLES ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --primary: #0a2e5c;
       --primary-light: #1e4a7a;
       --accent: #0a5c8c;
-      --accent-light: #e6f0f9;
       --gray-bg: #f5f7fa;
       --white: #ffffff;
       --text-dark: #1e293b;
       --text-light: #4b5565;
-      --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
       --shadow-md: 0 4px 8px rgba(0,0,0,0.08);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
@@ -38,7 +31,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== HEADER ===== */
     header {
       background: var(--primary);
       color: white;
@@ -56,19 +48,9 @@
       gap: 10px;
     }
 
-    .header-text h1 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 0.2rem;
-      line-height: 1.2;
-    }
+    .header-text h1 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.2rem; line-height: 1.2; }
+    .header-text p { font-size: 0.8rem; opacity: 0.9; }
 
-    .header-text p {
-      font-size: 0.8rem;
-      opacity: 0.9;
-    }
-
-    /* Tubibot Button sa Header */
     .header-tubibot-btn {
       background: linear-gradient(to bottom, #00a86b, #007a4d);
       color: white;
@@ -101,7 +83,6 @@
       100% { box-shadow: 0 4px 12px rgba(0, 168, 107, 0.4); }
     }
 
-    /* ===== NAVIGATION ===== */
     nav {
       background: var(--primary-light);
       padding: 0.4rem;
@@ -136,16 +117,9 @@
       justify-content: center;
     }
 
-    nav a:hover, nav a:active {
-      background: var(--accent);
-    }
+    nav a:hover, nav a:active { background: var(--accent); }
+    nav a.active { background: var(--accent); font-weight: 600; }
 
-    nav a.active {
-      background: var(--accent);
-      font-weight: 600;
-    }
-
-    /* ===== MAIN PANEL ===== */
     main {
       flex: 1;
       max-width: 750px;
@@ -164,11 +138,8 @@
       margin-bottom: 1.5rem;
       font-size: 1.8rem;
       font-weight: 600;
-      border-left: 4px solid var(--accent);
-      padding-left: 1rem;
     }
 
-    /* form elements */
     label {
       display: block;
       margin-top: 1rem;
@@ -225,12 +196,8 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    button:hover, button:active {
-      background: var(--primary);
-      transform: scale(0.98);
-    }
+    button:hover, button:active { background: var(--primary); transform: scale(0.98); }
 
-    /* result area */
     #result-area {
       margin-top: 2rem;
       padding: 1.5rem;
@@ -257,7 +224,6 @@
       border-top: 2px solid var(--accent);
     }
 
-    /* footer */
     footer {
       background: var(--primary);
       color: white;
@@ -267,10 +233,7 @@
       text-align: center;
     }
 
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
 
     .contact-row {
       display: flex;
@@ -281,128 +244,34 @@
       font-size: 0.9rem;
     }
 
-    /* ===== SIDE WIDGETS (Desktop Only) ===== */
-    .side-widgets {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-      display: none;
-    }
-
-    @media (min-width: 1400px) {
-      .side-widgets { display: block; }
-    }
-
-    .widget-left {
-      position: fixed;
-      left: 15px;
-      top: 200px;
-      width: 180px;
-      pointer-events: auto;
-    }
-
-    .widget-right {
-      position: fixed;
-      right: 15px;
-      top: 200px;
-      width: 180px;
-      pointer-events: auto;
-    }
-
-    .widget-image-container {
-      width: 100%;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      border: 1px solid white;
-      background: white;
-      margin-bottom: 12px;
-    }
-
-    .widget-image {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-      aspect-ratio: 3/4;
-    }
-
-    /* ===== MOBILE OPTIMIZATION ===== */
     @media (max-width: 768px) {
       header { padding: 0.8rem 1rem; }
       .header-text h1 { font-size: 1.1rem; }
       .header-text p { font-size: 0.7rem; }
-      .header-tubibot-btn { 
-        padding: 8px 16px; 
-        font-size: 0.8rem;
-        animation: none;
-      }
-      
+      .header-tubibot-btn { padding: 8px 16px; font-size: 0.8rem; animation: none; }
       nav { padding: 0.3rem; }
       nav a { font-size: 0.75rem; padding: 0.4rem 0.7rem; min-height: 40px; }
-      
       main { padding: 1.2rem; width: 95%; margin: 1rem auto; }
-      
       h2 { font-size: 1.4rem; }
-      
       label { font-size: 0.95rem; }
       select, input { padding: 0.7rem; font-size: 0.95rem; }
       button { padding: 0.75rem; font-size: 1.1rem; min-height: 50px; }
-      
       .result-line { font-size: 0.9rem; }
       .total { font-size: 1.2rem; }
-      
       .contact-row { flex-direction: column; gap: 0.5rem; font-size: 0.8rem; }
     }
 
     @media (max-width: 480px) {
       .header-top { flex-direction: column; align-items: stretch; text-align: center; }
       .header-tubibot-btn { justify-content: center; }
-      
       main { padding: 1rem; }
       h2 { font-size: 1.3rem; }
     }
-
-    @media (max-width: 360px) {
-      nav a { font-size: 0.7rem; padding: 0.3rem 0.5rem; min-height: 38px; }
-    }
   </style>
 </head>
+
 <body>
-<!-- ===== SIDE WIDGETS (Desktop) ===== -->
-  <div id="side-widgets-container"></div>
 
-  <script>
-    fetch('widgets.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('side-widgets-container').innerHTML = data;
-      })
-      .catch(error => {
-        console.log('Widgets failed to load:', error);
-        document.getElementById('side-widgets-container').innerHTML = `
-          <div class="side-widgets">
-            <div class="widget-left">
-              <div class="widget-image-container">
-                <img src="images/gcashlogo.png" alt="GCash" class="widget-image">
-              </div>
-            </div>
-            <div class="widget-right">
-              <div class="widget-image-container">
-                <img src="images/readingschedule.jpg" alt="Reading Schedule" class="widget-image">
-              </div>
-            </div>
-          </div>
-        `;
-      });
-  </script>
-
-
-<!-- ===== HEADER ===== -->
 <header>
   <div class="header-top">
     <div class="header-text">
@@ -413,7 +282,6 @@
   </div>
 </header>
 
-<!-- ===== NAVIGATION ===== -->
 <nav>
   <a href="services.html">🏠 Home</a>
   <a href="services2.html">🛠️ Services</a>
@@ -422,7 +290,6 @@
   <a href="index.html">📄 Inquiry</a>
 </nav>
 
-<!-- ===== MAIN CALCULATOR ===== -->
 <main>
   <h2>💧 Water Bill Calculator</h2>
 
@@ -439,7 +306,6 @@
   <div id="result-area"></div>
 </main>
 
-<!-- ===== FOOTER ===== -->
 <footer>
   <div class="footer-inner">
     <div class="contact-row">
@@ -452,7 +318,6 @@
 
 <script>
   (function() {
-    // ----- exact rate data from original calculator -----
     const RATES = [
       { id: 'res-gov-1-2', class: 'RESIDENTIAL/GOVERNMENT', meter: '1/2"', minCharge: 200.00, rates: [21.13, 23.25, 26.00, 30.00, 34.40] },
       { id: 'com-1-2', class: 'COMMERCIAL', meter: '1/2"', minCharge: 400.00, rates: [42.26, 46.50, 52.00, 60.00, 68.80] },
@@ -466,7 +331,6 @@
 
     const formatCurrency = (amount) => `₱ ${amount.toFixed(2)}`;
 
-    // populate dropdown
     function populateClassification() {
       const select = document.getElementById('classification');
       select.innerHTML = '<option value="" disabled selected>— select classification —</option>';
@@ -478,7 +342,6 @@
       });
     }
 
-    // calculation
     function calculateBill(event) {
       event.preventDefault();
       const selectedId = document.getElementById('classification').value;
@@ -502,8 +365,8 @@
       let totalVolumeCharge = 0;
 
       breakdown.push({ desc: `Minimum Charge (first ${minVolume} m³)`, charge: rateData.minCharge });
-
       remaining -= minVolume;
+
       const blocks = [
         { start: 11, end: 20, rate: rateData.rates[0] },
         { start: 21, end: 30, rate: rateData.rates[1] },
@@ -524,7 +387,6 @@
 
       const total = rateData.minCharge + totalVolumeCharge;
 
-      // build result html
       let html = `<h3 style="color:#0a2e5c; margin-bottom: 1rem;">📊 Bill breakdown</h3>`;
       html += `<p><strong>${rateData.class} (${rateData.meter})</strong> · ${consumption.toFixed(2)} m³ consumed</p>`;
       breakdown.forEach(b => {
@@ -534,28 +396,17 @@
 
       resultArea.innerHTML = html;
       resultArea.style.display = 'block';
-      
-      // Scroll to result
       resultArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    // set active nav
-    function setActiveNav() {
-      const navLinks = document.querySelectorAll('nav a');
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === 'calculator.html') {
-          link.classList.add('active');
-        }
-      });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       populateClassification();
-      setActiveNav();
       document.getElementById('calculator-form').addEventListener('submit', calculateBill);
+      document.querySelectorAll('nav a').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === 'calculator.html') link.classList.add('active');
+      });
     });
-
   })();
 </script>
 </body>
