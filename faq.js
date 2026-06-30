@@ -106,14 +106,24 @@ const FAQ_NI_SIWADI = [
 
     // ========== RECONNECTION ==========
     {
-        keywords: ["reconnection", "reconnect", "kabit", "balik", "naputulan", "reconnection fee", "magkano reconnect"],
-        answer: "Ang reconnection fee po ay 200 pesos. Pumunta lang po sa opisina para ma-process ang reconnection. May iba pa po ba kayong katanungan? 🔌"
+        keywords: ["reconnection", "reconnect", "kabit", "pakabit", "reconnection fee", "magkano reconnect"],
+        answer: "Ang reconnection fee po ay 200 pesos. Babayaran nyo po ang water bill plus ang nasabing reconnection fee. Kailangan din po nating malaman kung updated ba ang inyong customer's deposit. Pumunta lang po sa opisina para ma-process ang reconnection. May iba pa po ba kayong katanungan? 🔌"
+    },
+
+    {
+        keywords: ["bakit naputulan", "bakit putol", "naputulan", "bayad naman", "bayad sa gcash", "nagbayad ako", "bakit ako putol", "putol kahit bayad", "reklamo putol"],
+        answer: "Ang GCash payment po ay <strong>hindi real-time</strong>—gumugugol po ito ng <strong>dalawa hanggang tatlong araw</strong> bago namin matanggap ang inyong bayad sa system. Ito po ang madalas na dahilan kung bakit napuputulan kahit nagbayad na sa GCash. 📱⏳<br><br>💡 <strong>Paalala:</strong><br>Pinapakiusapan po namin ang aming mga konsesyonaryo na <strong>i-send agad sa amin ang screenshot ng confirmation</strong> ng inyong kabayaran sa GCash sa aming <a href='https://www.facebook.com/SiniloanWaterDistrict/' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Facebook Messenger 📘</a> upang ito ay agad naming ma-update sa system.<br><br>🔧 <strong>Paumanhin:</strong><br>Humihingi po kami ng paumanhin kung kayo man po ay naputulan. Kung na-send na ninyo ang confirmation at na-verify na ang bayad, <strong>ikakabit po namin ito nang libre</strong>.<br><br>May iba pa po ba kayong katanungan? 😊💧"
     },
 
     // ========== LEAK AT EMERGENCY ==========
     {
         keywords: ["leak", "report", "tulo", "sirain", "mag-report", "emergency", "sira"],
         answer: "Para mag-report ng leak o sirang tubo, tumawag po agad sa (049) 501-6656 o i-message ang aming <a href='https://www.facebook.com/SiniloanWaterDistrict/' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Facebook page 📘</a>. Ibigay ang eksaktong lokasyon para mabilis na maaksyunan. Maraming salamat po sa pag-report! 🚨"
+    },
+
+    {
+        keywords: ["kapatalan", "walang tubig kapatalan", "bakit walang tubig kapatalan", "kapatalan area", "tubig kapatalan", "rationing", "water rationing"],
+        answer: "Paumanhin po sa mga taga-<strong>Kapatalan</strong>. Ang inyong lugar po ay kasalukuyang nakakaranas ng <strong>kakulangan ng tubig</strong> dahil hindi na po sumasapat ang aming produksyon sa pangangailangan ng mga konsesyonaryo sa lugar. 🚰💧<br><br>💡 <strong>Huwag po kayong mag-alala:</strong><br>• Lahat po ay aming ginagawa upang maayos ang problemang ito<br>• Mayroon po kaming <strong>scheduled Water Rationing</strong> upang mapagsilbihan ang lahat<br>• Patuloy po ang aming pagsisikap na mapabuti ang serbisyo<br><br>Muli po, humihingi kami ng paumanhin sa abala. Maraming salamat po sa inyong pang-unawa at patuloy na pagtitiwala sa SIWADI. May iba pa po ba kayong katanungan? 🙏💧"
     },
 
     // ========== WATER INTERRUPTION ==========
