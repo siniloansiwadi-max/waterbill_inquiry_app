@@ -95,11 +95,6 @@ const FAQ_NI_SIWADI = [
     },
 
     {
-        keywords: ["water bill", "bill inquiry", "alamin ang bill", "check bill", "tingnan ang bill", "balance", "how much", "magkano babayaran", "amount due", "total bill"],
-        answer: "Kung nais niyo pong malaman ang inyong water bill, magpunta po kayo dito: <a href='index.html' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Water Bill Inquiry</a>. Ilagay po ang tamang account number—mahalaga pong alam ninyo ang eksaktong account number ninyo. Kung hindi po kayo sigurado, maaari ninyong gamitin ang <strong>Name Search</strong>, ilagay lamang ang pangalan o apelyido ng nais hanapin. 💧🔍 Mag antay lamang po ng ilang segundo at lalabas ang resulta"
-    },
-
-    {
     keywords: ["putol", "putulan", "disconnection", "diskoneksyon", "kailan putol", "kailan mapuputulan", "disconnection schedule", "iskedyul ng putol"],
     answer: "Para po malaman ang disconnection schedule sa inyong lugar, <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/services.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>i-click po ito para makita ang Disconnection Schedule ⚠️📅</a>. Makikita niyo po doon ang petsa ng putulan para sa inyong area. May iba pa po ba kayong katanungan?"
     },
