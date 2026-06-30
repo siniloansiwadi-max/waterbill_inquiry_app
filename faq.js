@@ -43,8 +43,18 @@ const FAQ_NI_SIWADI = [
 
     // ========== APPLICATION AT REQUIREMENTS ==========
     {
+        keywords: ["Magkano po ang pakabit", "Paano po magpakabit"],
+        answer: "Reconnection po Ba? or New Connection?"
+    },
+
+    {
         keywords: ["apply", "application", "new connection", "mag-apply", "bagong connection", "requirements", "requirement", "kailangan", "dalhin"],
         answer: "Para po mag-apply ng bagong water connection, pumunta po sa opisina at magdala ng: (1) Dalawang photocopy ng valid government-issued ID na may original signature. (2) Proof of ownership ng lupa—alinman sa mga sumusunod: Land Title, Tax Declaration of Real Property, OHA, o Notarized Deed of Sale. Kung nakikigamit ng lupa: magdala ng Notarized Authorization na may kalakip na proof of ownership ng may-ari, at photocopy ng government-issued ID ng may-ari. May paunang bayad na anim na libong piso(6000), at ang magiging balanse at maaaring bayaran ng hanggang anim na buwan 😊"
+    },
+
+    {
+        keywords: ["online application", "online apply", "apply online", "may online ba", "google form", "form", "online registration", "mag-apply online", "paano mag-apply online"],
+        answer: "Opo, mayroon po tayong <strong>Online Application</strong>! 📱💻<br><br>📋 <a href='https://docs.google.com/forms/d/e/1FAIpQLSfSohwI-ApoA9RCKmuyycSnauCCvwsAxziUCuX4qAr44Jd9SA/viewform' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>I-click po ito para sa Online Application Form</a><br><br>Puwede po kayong mag-apply kahit nasa bahay lang—hindi na kailangang pumunta ng opisina. Punan lang po ang Google Form at kami na ang bahala sa susunod na hakbang. May iba pa po ba kayong katanungan? 😊💧"
     },
 
     {
@@ -63,7 +73,7 @@ const FAQ_NI_SIWADI = [
     },
 
     {
-        keywords: ["customer deposit", "customers deposit", "320", "400", "reconnection deposit", "bagong deposit"],
+        keywords: ["customer deposit", "customers deposit", "320", "400", "80"],
         answer: "Ang <strong>Customer's Deposit</strong> ay ang halagang napagkasunduan na inyong babayaran kasama sa new connection. Ito ay katumbas ng <strong>dalawang buwang minimum na singil</strong> na nagkakahalaga ng <strong>₱400</strong>.<br><br>🆕 <strong>Para sa bagong koneksyon:</strong><br>• Kasama ito sa babayaran bilang bahagi ng new connection<br><br>🔄 <strong>Para sa lumang konto na sinisingilan ng customer's deposit:</strong><br>• Ito ang halagang kailangan upang ma-update ang inyong customer's deposit<br><br>📊 <strong>Halimbawa:</strong><br>Kung ang inyong natitirang customer's deposit ay <strong>₱320</strong>, kailangan ng karagdagang <strong>₱80</strong> bukod pa sa <strong>₱200 reconnection fee</strong>. Kaya: ₱320 + ₱80 = <strong>₱400</strong>.<br><br>💡 <strong>Sa madaling salita:</strong> Kailangang updated ang customer's deposit. Sa susunod na kayo ay maputulan at updated naman ang inyong customer's deposit, <strong>hindi na kayo kailangang singilin ng karagdagang halaga</strong>.<br><br>Sana po ay naunawaan ninyo. May iba pa po ba kayong katanungan? 😊💧"
     },
 
@@ -85,7 +95,7 @@ const FAQ_NI_SIWADI = [
     },
 
     {
-        keywords: ["magkano ang bill", "water bill", "magkano bill ko", "alamin ang bill", "check bill", "tingnan ang bill", "balance", "how much", "magkano babayaran", "amount due", "total bill"],
+        keywords: ["water bill", "bill inquiry", "alamin ang bill", "check bill", "tingnan ang bill", "balance", "how much", "magkano babayaran", "amount due", "total bill"],
         answer: "Kung nais niyo pong malaman ang inyong water bill, magpunta po kayo dito: <a href='index.html' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Water Bill Inquiry</a>. Ilagay po ang tamang account number—mahalaga pong alam ninyo ang eksaktong account number ninyo. Kung hindi po kayo sigurado, maaari ninyong gamitin ang <strong>Name Search</strong>, ilagay lamang ang pangalan o apelyido ng nais hanapin. 💧🔍 Mag antay lamang po ng ilang segundo at lalabas ang resulta"
     },
 
