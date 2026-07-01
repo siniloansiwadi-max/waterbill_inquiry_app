@@ -118,7 +118,7 @@ const FAQ_NI_SIWADI = [
 
     {
         keywords: ["kapatalan", "walang tubig kapatalan", "bakit walang tubig kapatalan", "kapatalan area", "tubig kapatalan", "rationing", "water rationing"],
-        answer: "Paumanhin po sa mga taga-<strong>Kapatalan</strong>. Ang inyong lugar po ay kasalukuyang nakakaranas ng <strong>kakulangan ng tubig</strong> dahil hindi na po sumasapat ang aming produksyon sa pangangailangan ng mga konsesyonaryo sa lugar. 🚰💧<br><br>💡 <strong>Huwag po kayong mag-alala:</strong><br>• Lahat po ay aming ginagawa upang maayos ang problemang ito<br>• Mayroon po kaming <strong>scheduled Water Rationing</strong> upang mapagsilbihan ang lahat<br>• Patuloy po ang aming pagsisikap na mapabuti ang serbisyo<br><br>Muli po, humihingi kami ng paumanhin sa abala. Maraming salamat po sa inyong pang-unawa at patuloy na pagtitiwala sa SIWADI. May iba pa po ba kayong katanungan? 🙏💧"
+        answer: "Paumanhin po sa mga taga-<strong>Kapatalan</strong>. 🚰💧<br><br>Dahil po sa patuloy na <strong>tag-init</strong>, bumababa ang suplay ng tubig sa mga source natin sa Kapatalan na nagreresulta sa <strong>mahinang pressure</strong>. Dahil dito, hindi po sapat ang lakas ng daloy upang makarating sa mga <strong>matataas at malalayong lugar</strong>.<br><br>💡 <strong>Huwag po kayong mag-alala:</strong><br>• Lahat po ay aming ginagawa upang maayos ang problemang ito<br>• Mayroon po kaming <strong>scheduled Water Rationing</strong> upang mapagsilbihan ang lahat<br>• Patuloy po ang aming pagsisikap na mapabuti ang serbisyo<br><br>Muli po, humihingi kami ng paumanhin sa abala. Maraming salamat po sa inyong pang-unawa at patuloy na pagtitiwala sa SIWADI. May iba pa po ba kayong katanungan? 🙏💧"
     },
 
     // ========== WATER INTERRUPTION ==========
