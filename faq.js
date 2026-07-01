@@ -43,7 +43,7 @@ const FAQ_NI_SIWADI = [
 
     // ========== APPLICATION AT REQUIREMENTS ==========
     {
-        keywords: ["magkano po ang pakabit", "magkano ang pakabit", "magkano pakabit", "Paano po magpakabit"],
+        keywords: ["Magkano po ang pakabit", "Paano po magpakabit"],
         answer: "Reconnection po Ba? or New Connection?"
     },
 
@@ -95,30 +95,25 @@ const FAQ_NI_SIWADI = [
     },
 
     {
+        keywords: ["water bill", "bill inquiry", "alamin ang bill", "check bill", "tingnan ang bill", "balance", "how much", "magkano babayaran", "amount due", "total bill"],
+        answer: "Kung nais niyo pong malaman ang inyong water bill, magpunta po kayo dito: <a href='index.html' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Water Bill Inquiry</a>. Ilagay po ang tamang account number—mahalaga pong alam ninyo ang eksaktong account number ninyo. Kung hindi po kayo sigurado, maaari ninyong gamitin ang <strong>Name Search</strong>, ilagay lamang ang pangalan o apelyido ng nais hanapin. 💧🔍 Mag antay lamang po ng ilang segundo at lalabas ang resulta"
+    },
+
+    {
     keywords: ["putol", "putulan", "disconnection", "diskoneksyon", "kailan putol", "kailan mapuputulan", "disconnection schedule", "iskedyul ng putol"],
     answer: "Para po malaman ang disconnection schedule sa inyong lugar, <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/services.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>i-click po ito para makita ang Disconnection Schedule ⚠️📅</a>. Makikita niyo po doon ang petsa ng putulan para sa inyong area. May iba pa po ba kayong katanungan?"
     },
 
     // ========== RECONNECTION ==========
     {
-        keywords: ["reconnection", "reconnect", "kabit", "pakabit", "reconnection fee", "magkano reconnect"],
-        answer: "Ang reconnection fee po ay 200 pesos. Babayaran nyo po ang water bill plus ang nasabing reconnection fee. Kailangan din po nating malaman kung updated ba ang inyong customer's deposit. Pumunta lang po sa opisina para ma-process ang reconnection. May iba pa po ba kayong katanungan? 🔌"
-    },
-
-    {
-        keywords: ["bakit naputulan", "bakit putol", "naputulan", "bayad naman", "bayad sa gcash", "nagbayad ako", "bakit ako putol", "putol kahit bayad", "reklamo putol"],
-        answer: "Ang GCash payment po ay <strong>hindi real-time</strong>—gumugugol po ito ng <strong>dalawa hanggang tatlong araw</strong> bago namin matanggap ang inyong bayad sa system. Ito po ang madalas na dahilan kung bakit napuputulan kahit nagbayad na sa GCash. 📱⏳<br><br>💡 <strong>Paalala:</strong><br>Pinapakiusapan po namin ang aming mga konsesyonaryo na <strong>i-send agad sa amin ang screenshot ng confirmation</strong> ng inyong kabayaran sa GCash sa aming <a href='https://www.facebook.com/SiniloanWaterDistrict/' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Facebook Messenger 📘</a> upang ito ay agad naming ma-update sa system.<br><br>🔧 <strong>Paumanhin:</strong><br>Humihingi po kami ng paumanhin kung kayo man po ay naputulan. Kung na-send na ninyo ang confirmation at na-verify na ang bayad, <strong>ikakabit po namin ito nang libre</strong>.<br><br>May iba pa po ba kayong katanungan? 😊💧"
+        keywords: ["reconnection", "reconnect", "kabit", "balik", "naputulan", "reconnection fee", "magkano reconnect"],
+        answer: "Ang reconnection fee po ay 200 pesos. Pumunta lang po sa opisina para ma-process ang reconnection. May iba pa po ba kayong katanungan? 🔌"
     },
 
     // ========== LEAK AT EMERGENCY ==========
     {
         keywords: ["leak", "report", "tulo", "sirain", "mag-report", "emergency", "sira"],
         answer: "Para mag-report ng leak o sirang tubo, tumawag po agad sa (049) 501-6656 o i-message ang aming <a href='https://www.facebook.com/SiniloanWaterDistrict/' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Facebook page 📘</a>. Ibigay ang eksaktong lokasyon para mabilis na maaksyunan. Maraming salamat po sa pag-report! 🚨"
-    },
-
-    {
-        keywords: ["kapatalan", "walang tubig kapatalan", "bakit walang tubig kapatalan", "kapatalan area", "tubig kapatalan", "rationing", "water rationing"],
-        answer: "Paumanhin po sa mga taga-<strong>Kapatalan</strong>. 🚰💧<br><br>Dahil po sa patuloy na <strong>tag-init</strong>, bumababa ang suplay ng tubig sa mga source natin sa Kapatalan na nagreresulta sa <strong>mahinang pressure</strong>. Dahil dito, hindi po sapat ang lakas ng daloy upang makarating sa mga <strong>matataas at malalayong lugar</strong>.<br><br>💡 <strong>Huwag po kayong mag-alala:</strong><br>• Lahat po ay aming ginagawa upang maayos ang problemang ito<br>• Mayroon po kaming <strong>scheduled Water Rationing</strong> upang mapagsilbihan ang lahat<br>• Patuloy po ang aming pagsisikap na mapabuti ang serbisyo<br><br>Muli po, humihingi kami ng paumanhin sa abala. Maraming salamat po sa inyong pang-unawa at patuloy na pagtitiwala sa SIWADI. May iba pa po ba kayong katanungan? 🙏💧"
     },
 
     // ========== WATER INTERRUPTION ==========
@@ -201,6 +196,16 @@ const FAQ_NI_SIWADI = [
     {
         keywords: ["reklamo", "complaint", "ireklamo", "may reklamo", "complain", "report concern", "problem", "issue"],
         answer: "Para po sa mga complaints o reklamo, may dalawa po kayong pagpipilian:<br><br>🏢 <strong>Magtungo sa opisina</strong> — Bukas po mula Lunes hanggang Huwebes, 7:00 AM hanggang 6:00 PM. Personal po ninyong makakausap ang aming Customer Service.<br><br>💬 <strong>Mag-message sa Facebook Messenger</strong> — <a href='https://business.facebook.com/latest/inbox/all/?asset_id=138114919663818&business_id=1271512611614176&ir_qe_exposed=1&nav_ref=manage_page_ap_plus_inbox_message_button' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>I-click po ito para direktang mag-message sa aming Facebook Messenger 📘💬</a><br><br>Pakibanggit po ang inyong account number at detalye ng reklamo para agad naming maaksyunan. May iba pa po ba kayong katanungan? 😊"
+    },
+
+    {
+        keywords: ["kapatalan", "walang tubig kapatalan", "bakit walang tubig kapatalan", "kapatalan area", "tubig kapatalan", "rationing", "water rationing"],
+        answer: "Paumanhin po sa mga taga-<strong>Kapatalan</strong>. 🚰💧<br><br>Dahil po sa patuloy na <strong>tag-init</strong>, bumababa ang suplay ng tubig sa mga source natin sa Kapatalan na nagreresulta sa <strong>mahinang pressure</strong>. Dahil dito, hindi po sapat ang lakas ng daloy upang makarating sa mga <strong>matataas at malalayong lugar</strong>.<br><br>💡 <strong>Huwag po kayong mag-alala:</strong><br>• Lahat po ay aming ginagawa upang maayos ang problemang ito<br>• Mayroon po kaming <strong>scheduled Water Rationing</strong> upang mapagsilbihan ang lahat<br>• Patuloy po ang aming pagsisikap na mapabuti ang serbisyo<br><br>Muli po, humihingi kami ng paumanhin sa abala. Maraming salamat po sa inyong pang-unawa at patuloy na pagtitiwala sa SIWADI. May iba pa po ba kayong katanungan? 🙏💧"
+    },
+
+    {
+        keywords: ["/help", "help", "tulong", "ano ang pwede itanong", "list", "menu", "commands"],
+        answer: "Narito po ang mga puwede ninyong itanong kay Tubibot:<br><br>💳 <strong>Billing at Payment</strong><br>• Paano magbayad ng bill?<br>• Magkano ang water bill ko?<br>• Kailan ang due date?<br>• Bakit malaki ang bill ko?<br>• Water Bill Inquiry.<br>• Paano magbayad sa GCash?<br>• Bakit ako naputulan? Bayad naman ako sa GCash!<br><br>🔌 <strong>Reconnection</strong><br>• Magkano ang reconnection fee?<br>• Ano ang Customer's Deposit?<br><br>📋 <strong>New Connection Application</strong><br>• Paano mag-apply ng connection?<br>• Ano ang mga requirements?<br>• May online application ba?<br>• Magkano ang downpayment (₱6,000)?<br>• Paano mag-apply ng Change of Name?<br>• Paano ang Transfer of Location?<br><br>🎓 <strong>Seminar</strong><br>• Tuwing kailan ang seminar?<br>• Kailangan ba ng seminar?<br>• Saan gaganapin ang seminar?<br><br>🔧 <strong>Maintenance at Emergency</strong><br>• Paano mag-report ng leak?<br>• Bakit walang tubig?<br>• Bakit mahina ang tubig?<br>• Bakit madumi ang tubig?<br>• Ano ang flushing?<br>• Bakit walang tubig sa Kapatalan?<br><br>📅 <strong>Schedules</strong><br>• Kailan ang reading schedule?<br>• Kailan ang putulan?<br>• Bukas ba kayo ngayon?<br><br>🏢 <strong>General Info</strong><br>• Ano ang SIWADI?<br>• Paano mag-reklamo?<br>• Contact number ng SIWADI<br>• Facebook page ng SIWADI<br><br>🧮 <strong>Calculator</strong><br>• Paano magwenta ng bill?<br>• Sample computation<br><br>💡 I-type lang po ang inyong tanong at sasagutin ko po agad! May iba pa po ba kayong katanungan? 😊💧"
     },
 
 
