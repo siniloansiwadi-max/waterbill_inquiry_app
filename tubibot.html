@@ -243,40 +243,6 @@
             30% { transform: translateY(-10px); }
         }
 
-        /* Quick Replies */
-        .quick-replies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding: 8px 20px;
-            background: white;
-            border-top: 1px solid #e0e0e0;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-
-        .quick-replies::-webkit-scrollbar { display: none; }
-
-        .quick-reply-btn {
-            background: #e8f5e9;
-            color: #00a86b;
-            border: 1.5px solid #00a86b;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
-
-        .quick-reply-btn:hover, .quick-reply-btn:active {
-            background: #00a86b;
-            color: white;
-        }
 
         /* Input Area */
         .tubibot-full-input-area {
@@ -443,7 +409,7 @@
         <!-- Header -->
         <div class="tubibot-full-header">
                 <div class="tubibot-avatar">
-                    <img src="tubibot.png" alt="Tubibot" onerror="this.style.display='none'; this.parentElement.innerHTML='💧'">
+                    <img src="swdmascot.png" alt="Tubibot" onerror="this.style.display='none'; this.parentElement.innerHTML='💧'">
                     <div class="online-dot"></div>
                 </div>
             <div class="tubibot-header-info">
@@ -467,7 +433,7 @@
                 <div class="tubibot-msg tubibot-bot">
                     Magandang araw po! Ako po si <strong>Tubibot (Ang Tuberong Bibo!)</strong>, ang inyong AI assistant dito sa SIWADI. 😊💧
                     <br><br>
-                    Itanong niyo lang po ang tungkol sa billing, application, reconnection, leak reporting, reading schedule, water interruption, at iba pa!
+                    i-type po ang salitang "help" para sa mga keywords na pwede nyong itanong.
                     <br><br>
                     Paano ko po kayo matutulungan ngayon?
                 </div>
@@ -475,14 +441,9 @@
             </div>
         </div>
 
-        <!-- Quick Replies -->
-        <div class="quick-replies" id="quick-replies">
-            <button class="quick-reply-btn" onclick="askQuickReply('Paano magbayad ng bill?')">💳 Paano magbayad?</button>
-            <button class="quick-reply-btn" onclick="askQuickReply('Bakit walang tubig?')">🚰 Bakit walang tubig?</button>
-            <button class="quick-reply-btn" onclick="askQuickReply('Magkano ang reconnection fee?')">🔌 Reconnection fee?</button>
-            <button class="quick-reply-btn" onclick="askQuickReply('Kailan ang reading?')">📅 Reading schedule</button>
-            <button class="quick-reply-btn" onclick="askQuickReply('Paano mag-apply ng connection?')">📋 New connection</button>
-            <button class="quick-reply-btn" onclick="askQuickReply('Paano mag-report ng leak?')">🔧 Report leak</button>
+        <!-- Help Hint -->
+        <div style="text-align: center; padding: 6px 20px; background: #f0f0f0; font-size: 12px; color: #666; border-top: 1px solid #ddd;">
+            💡 I-type ang <strong>/help</strong> para makita ang listahan ng mga puwedeng itanong
         </div>
 
         <!-- Input Area -->
@@ -515,12 +476,6 @@
             setTimeout(function() {
                 window.location.href = 'index.html';
             }, 300);
-        }
-
-        // Quick Reply
-        function askQuickReply(question) {
-            document.getElementById('tubibot-input').value = question;
-            sendMessage();
         }
 
         // Get current time string
