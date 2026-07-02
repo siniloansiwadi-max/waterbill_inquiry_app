@@ -457,6 +457,8 @@
     <script>
         // Google Sheets API URL (kapareho ng sa index.html)
         const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwC6-socVVW3dxUbcNzwnSKg-fEDdEWtbLn77xcBz28coPQ4ED-C8OWB_6MHWDnQ3pH/exec';
+        // Google Sheets Logging URL (palitan ng URL mula sa deployment)
+        const LOG_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyrjG2xOnM7ldjeCP99vQ172MQRsWGXCQeJhJ_D47FESJSLIYRcH_731LhlFAnFXe3Wtw/exec';
 
         // Set welcome message time
         (function() {
@@ -646,46 +648,72 @@
             type();
         }
 
-        function sendMessage() {
-            const input = document.getElementById('tubibot-input');
-            const msg = input.value.trim();
-            if (!msg) return;
+    async function sendMessage() {
+        const input = document.getElementById('tubibot-input');
+        const msg = input.value.trim();
+        if (!msg) return;
 
-            const msgsDiv = document.getElementById('tubibot-messages');
+        const msgsDiv = document.getElementById('tubibot-messages');
 
-            // Add user message
-            addMessage('user', msg.replace(/</g, '&lt;'));
-            input.value = '';
+        // Add user message
+        addMessage('user', msg.replace(/</g, '&lt;'));
+        input.value = '';
 
-            // Show typing indicator
-            const typingWrapper = document.createElement('div');
-            typingWrapper.className = 'message-wrapper bot';
-            typingWrapper.id = 'typing-wrapper';
-            typingWrapper.innerHTML = '<div class="tubibot-msg tubibot-bot typing-indicator"><span></span><span></span><span></span></div>';
-            msgsDiv.appendChild(typingWrapper);
-            msgsDiv.scrollTop = msgsDiv.scrollHeight;
+        // Show typing indicator
+        const typingWrapper = document.createElement('div');
+        typingWrapper.className = 'message-wrapper bot';
+        typingWrapper.id = 'typing-wrapper';
+        typingWrapper.innerHTML = '<div class="tubibot-msg tubibot-bot typing-indicator"><span></span><span></span><span></span></div>';
+        msgsDiv.appendChild(typingWrapper);
+        msgsDiv.scrollTop = msgsDiv.scrollHeight;
 
-            // Get reply after delay
-            setTimeout(async function() {
-                // Remove typing indicator
-                const tw = document.getElementById('typing-wrapper');
-                if (tw) tw.remove();
+        // Get reply after delay
+        setTimeout(async function() {
+            // Remove typing indicator
+            const tw = document.getElementById('typing-wrapper');
+            if (tw) tw.remove();
 
-                const reply = findBestAnswer(msg);
+            const reply = findBestAnswer(msg);
+            
+            // CHECK KUNG BILL FETCH ANG SAGOT
+            if (reply && reply.type === 'fetch_bill') {
+                const loadingMsg = addMessage('bot', '⏳ Kinukuha ko po ang inyong bill... Sandali lang po. 💧');
+                const billResult = await fetchBillData(reply.account);
+                loadingMsg.innerHTML = billResult.replace(/\n/g, '<br>');
                 
-                // CHECK KUNG BILL FETCH ANG SAGOT
-                if (reply && reply.type === 'fetch_bill') {
-                    // Mag-fetch ng bill data
-                    const loadingMsg = addMessage('bot', '⏳ Kinukuha ko po ang inyong bill... Sandali lang po. 💧');
-                    const billResult = await fetchBillData(reply.account);
-                    // Palitan ang loading message
-                    loadingMsg.innerHTML = billResult.replace(/\n/g, '<br>');
-                } else {
-                    // Regular FAQ answer
-                    addMessage('bot', reply);
-                }
-            }, 800);
+                // 🔥 LOG SA GOOGLE SHEETS
+                logConversation(msg, billResult);
+            } else {
+                addMessage('bot', reply);
+                
+                // 🔥 LOG SA GOOGLE SHEETS
+                logConversation(msg, reply);
+            }
+        }, 800);
+    }
+
+    // 🔥 LOGGING FUNCTION
+    function logConversation(userMessage, botResponse) {
+        if (!LOG_WEB_APP_URL || LOG_WEB_APP_URL.includes('PASTE')) {
+            console.warn('⚠️ LOG_WEB_APP_URL not configured.');
+            return;
         }
+        
+        try {
+            fetch(LOG_WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userMessage: userMessage,
+                    botResponse: botResponse
+                })
+            });
+            console.log('✅ Conversation logged');
+        } catch(e) {
+            console.error('❌ Logging failed:', e);
+        }
+    }
 
         // Event listeners
         document.getElementById('tubibot-send').addEventListener('click', sendMessage);
