@@ -43,7 +43,7 @@ const FAQ_NI_SIWADI = [
 
     // ========== APPLICATION AT REQUIREMENTS ==========
     {
-        keywords: ["Magkano po ang pakabit", "Magkano ang pakabit", "Paano po magpakabit"],
+        keywords: ["Magkano po ang pakabit", "Magkano ang pakabit", "Magkano pakabit", "Paano po magpakabit"],
         answer: "Reconnection po Ba? or New Connection?"
     },
 
