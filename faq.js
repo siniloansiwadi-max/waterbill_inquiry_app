@@ -43,7 +43,7 @@ const FAQ_NI_SIWADI = [
 
     // ========== APPLICATION AT REQUIREMENTS ==========
     {
-        keywords: ["Magkano po ang pakabit", "Paano po magpakabit"],
+        keywords: ["Magkano po ang pakabit", "Magkano ang pakabit", "Paano po magpakabit"],
         answer: "Reconnection po Ba? or New Connection?"
     },
 
@@ -106,8 +106,8 @@ const FAQ_NI_SIWADI = [
 
     // ========== RECONNECTION ==========
     {
-        keywords: ["reconnection", "reconnect", "kabit", "balik", "naputulan", "reconnection fee", "magkano reconnect"],
-        answer: "Ang reconnection fee po ay 200 pesos. Pumunta lang po sa opisina para ma-process ang reconnection. May iba pa po ba kayong katanungan? 🔌"
+        keywords: ["reconnection", "reconnect", "kabit", "pakabit", "reconnection fee", "magkano reconnect"],
+        answer: "Ang reconnection fee po ay 200 pesos. Babayaran nyo po ang water bill plus ang nasabing reconnection fee. Kailangan din po nating malaman kung updated ba ang inyong customer's deposit. Pumunta lang po sa opisina para ma-process ang reconnection. May iba pa po ba kayong katanungan? 🔌"
     },
 
     // ========== LEAK AT EMERGENCY ==========
