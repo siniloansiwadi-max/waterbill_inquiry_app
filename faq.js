@@ -32,7 +32,7 @@ const FAQ_NI_SIWADI = [
     },
 
     {
-        keywords: ["paalam", "bye", "goodbye", "sige", "wala na", "salamat"],
+        keywords: ["paalam", "bye", "goodbye", "sige", "wala na"],
         answer: "Sige po! Salamat sa pakikipag-usap. Kung may katanungan pa po kayo, huwag mag-atubiling bumalik. Ingat po palagi at magtipid ng tubig! 💧👋"
     },
 
@@ -41,10 +41,16 @@ const FAQ_NI_SIWADI = [
         answer: "Ang aming opisina po ay bukas mula <strong>Lunes hanggang Huwebes, 7:00 AM hanggang 6:00 PM</strong>. 🏢⏰<br><br>Para naman po sa mga araw na walang pasok (Biyernes, Sabado, Linggo, at holidays), mayroon pong <strong>skeletal force</strong> na naka-duty para sa mga emergency repairs at maintenance. 💧🔧<br><br>May iba pa po ba kayong katanungan? 😊"
     },
 
+    // ========== SHORT REPLIES ==========
+    {
+        keywords: ["ok", "okay", "ah", "ahh", "ahhh", "ha", "haha", "hehe", "hmm", "oh", "oo", "opo", "oo nga", "ayos", "ge", "geh", "cge", "sgesge"],
+        answer: "Salamat po! May iba pa po ba akong maipaglilingkod? 😊💧"
+    },
+
     // ========== APPLICATION AT REQUIREMENTS ==========
     {
-        keywords: ["Magkano po ang pakabit", "Magkano ang pakabit", "Magkano pakabit", "Paano po magpakabit"],
-        answer: "Reconnection po Ba? or New Connection?"
+        keywords: ["magkano po ang pakabit", "magkano ang pakabit", "magkano pakabit", "paano po magpakabit"],
+        answer: "Para po sa pagpapakabit, may dalawang sitwasyon:<br><br>🆕 <strong>New Connection:</strong> Ang paunang bayad ay <strong>₱6,000</strong> (downpayment). Ang natitirang balanse ay maaaring bayaran sa loob ng anim na buwan.<br><br>🔌 <strong>Reconnection:</strong> Kung kayo po ay naputulan, ang reconnection fee ay <strong>₱200</strong> (bukod sa water bill at customer's deposit kung kinakailangan).<br><br>Alin po sa dalawa ang inyong sitwasyon? I-type ang <strong>'new connection'</strong> o <strong>'reconnection'</strong> para sa mas detalyadong impormasyon. 😊💧"
     },
 
     {
@@ -58,12 +64,12 @@ const FAQ_NI_SIWADI = [
     },
 
     {
-        keywords: ["change", "change of name", "name", "palit ng pangalan", "transfer"],
+        keywords: ["change of name", "palit ng pangalan", "change name"],
         answer: "Para po mag-apply ng <strong>Change of Name</strong>, kailangan lamang po ang mga sumusunod:<br><br>📋 <strong>1. Nabiling ari-arian mula sa dating may-ari:</strong><br>• Katibayan ng bilihan<br>• Notaryadong Authorization mula sa dating may-ari<br><br>💀 <strong>2. Namayapang asawa:</strong><br>• Death Certificate<br><br>🕊️ <strong>3. Namayapang kamag-anak o magulang:</strong><br>• Notaryadong Authorization mula sa mga naiwan<br><br>📄 <strong>Kalakip ng lahat ng ito:</strong><br>• Dalawang photocopy ng valid government-issued ID na may original signature (mula sa aplikante at dating may-ari)<br><br>May iba pa po ba kayong katanungan? 😊"
     },
 
     {
-        keywords: ["transfer", "transfer of location", "lipat", "maglipat", "ilipat", "lipat ng metro", "relocation"],
+        keywords: ["transfer of location", "lipat ng metro", "relocation", "maglipat ng metro", "ilipat ang metro"],
         answer: "Para po sa <strong>Transfer of Location</strong>, narito ang mga kailangan:<br><br>📋 <strong>1. Dokumento ng pagmamay-ari ng paglilipatan:</strong><br>• Patunay na pag-aari nila ang lupang paglilipatan<br>• Kung HINDI nila pag-aari: Notaryadong Authorization mula sa may-ari ng lupa<br><br>🔍 <strong>2. Inspeksyon:</strong><br>• Pagkatapos maitala ang mga dokumento, iinspeksyunin ng aming inspector ang lugar upang malaman kung saan magandang ilagay ang metro<br><br>💰 <strong>3. Mga Bayarin:</strong><br>• Paunang bayad para sa materyales: <strong>₱2,000</strong><br>• Transfer fee: <strong>₱125</strong><br><br>Pumunta lamang po sa opisina para ma-process ang inyong transfer of location. May iba pa po ba kayong katanungan? 🏠💧"
     },
 
@@ -82,10 +88,9 @@ const FAQ_NI_SIWADI = [
         answer: "Ang <strong>flushing</strong> ay ang paraan ng pagtatapon ng tubig mula sa mga <strong>fire hydrants</strong> upang linisin ang ating mga linya ng tubig. 🚿💧<br><br>🧹 <strong>Bakit ito ginagawa?</strong><br>• Upang alisin ang mga <strong>sediments</strong> (dumi, buhangin, kalawang)<br>• Upang alisin ang iba pang uri ng <strong>impurities</strong> sa tubo<br>• Upang mapanatili ang <strong>malinis at ligtas</strong> na daloy ng tubig<br><br>📅 <strong>Kailan ito ginagawa?</strong><br>• Tuwing <strong>huling Biyernes ng buwan</strong><br><br>💡 <strong>Paalala:</strong> Kapag may nakikita kayong tubig na bumubuga mula sa fire hydrant, ito ay <strong>hindi aksaya</strong>—ito ay regular maintenance para sa inyong kaligtasan. Pasensya na po kung may pansamantalang abala. May iba pa po ba kayong katanungan? 😊💧"
     },
 
-
     // ========== BILLING AT PAYMENT ==========
     {
-        keywords: ["bayad", "payment", "magbayad", "bill", "landbank", "saan magbayad", "paano magbayad", "gcash", "linkbiz"],
+        keywords: ["saan magbayad", "paano magbayad", "gcash", "linkbiz", "landbank", "gcash payment guide", "payment options"],
         answer: "Puwede po kayong magbayad sa:<br><br>🏢 <strong>Opisina</strong> — 7AM-6PM, Lunes hanggang Huwebes<br>📱 <strong>GCash</strong> — <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/services2.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>I-click po ito para sa GCash Payment Guide</a><br>🏦 <strong>Landbank LinkBiz</strong> — online payment<br><br>⚠️ <strong>Mahalagang paalala:</strong> Kapag online payment (GCash o LinkBiz), i-send agad ang confirmation sa amin dahil hindi ito real-time—dalawa hanggang tatlong araw bago namin matanggap at ma-update sa system. May iba pa po ba kayong katanungan? 💳"
     },
 
@@ -95,19 +100,29 @@ const FAQ_NI_SIWADI = [
     },
 
     {
-        keywords: ["water bill", "bill inquiry", "alamin ang bill", "check bill", "tingnan ang bill", "balance", "how much", "magkano babayaran", "amount due", "total bill"],
-        answer: "Kung nais niyo pong malaman ang inyong water bill, magpunta po kayo dito: <a href='index.html' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Water Bill Inquiry</a>. Ilagay po ang tamang account number—mahalaga pong alam ninyo ang eksaktong account number ninyo. Kung hindi po kayo sigurado, maaari ninyong gamitin ang <strong>Name Search</strong>, ilagay lamang ang pangalan o apelyido ng nais hanapin. 💧🔍 Mag antay lamang po ng ilang segundo at lalabas ang resulta"
+        keywords: ["magkano ang bill ko", "magkano bill ko", "alamin ang bill", "check bill", "tingnan ang bill ko", "gusto ko malaman bill", "bill ko ngayon", "magkano babayaran ko"],
+        answer: "Kung nais niyo pong malaman ang inyong water bill, magpunta po kayo dito: <a href='index.html' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Water Bill Inquiry</a>. Ilagay po ang tamang account number—mahalaga pong alam ninyo ang eksaktong account number ninyo. Kung hindi po kayo sigurado, maaari ninyong gamitin ang <strong>Name Search</strong>, ilagay lamang ang pangalan o apelyido ng nais hanapin. 💧🔍 Mag-antay lamang po ng ilang segundo at lalabas ang resulta."
     },
 
     {
-    keywords: ["putol", "putulan", "disconnection", "diskoneksyon", "kailan putol", "kailan mapuputulan", "disconnection schedule", "iskedyul ng putol"],
-    answer: "Para po malaman ang disconnection schedule sa inyong lugar, <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/services.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>i-click po ito para makita ang Disconnection Schedule ⚠️📅</a>. Makikita niyo po doon ang petsa ng putulan para sa inyong area. May iba pa po ba kayong katanungan?"
+        keywords: ["disconnection schedule", "kailan putol", "kailan mapuputulan", "iskedyul ng putol"],
+        answer: "Para po malaman ang disconnection schedule sa inyong lugar, <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/services.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>i-click po ito para makita ang Disconnection Schedule ⚠️📅</a>. Makikita niyo po doon ang petsa ng putulan para sa inyong area. May iba pa po ba kayong katanungan?"
+    },
+
+    {
+        keywords: ["bakit naputulan kahit bayad", "bayad naman sa gcash", "nagbayad ako gcash", "putol kahit bayad", "gcash putol", "nagbayad sa gcash naputulan pa rin"],
+        answer: "Ang pagkakaputol po ng serbisyo ay karaniwang dahil sa <strong>hindi nakabayad ng dalawang (2) buwan</strong>. Kapag lumagpas na ng dalawang buwan na hindi nababayaran ang bill, kami po ay may karapatang mag-putol ng serbisyo. ⚠️<br><br>📱 <strong>Pero nagbayad naman ako sa GCash—bakit naputulan pa rin?</strong><br>Ang GCash payment po ay <strong>hindi real-time</strong>—gumugugol po ito ng <strong>dalawa hanggang tatlong araw</strong> bago namin matanggap ang inyong bayad sa system. Kung malapit na ang due date kayo nagbayad, maaaring hindi pa ito pumasok sa system bago ang araw ng putulan.<br><br>💡 <strong>Paalala:</strong><br>Pinapakiusapan po namin ang aming mga konsesyonaryo na <strong>i-send agad sa amin ang screenshot ng confirmation</strong> ng inyong kabayaran sa GCash sa aming <a href='https://www.facebook.com/SiniloanWaterDistrict/' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Facebook Messenger 📘</a> upang ito ay agad naming ma-update sa system.<br><br>🔧 <strong>Paumanhin:</strong><br>Humihingi po kami ng paumanhin kung kayo man po ay naputulan. Kung na-send na ninyo ang confirmation at na-verify na ang bayad, <strong>ikakabit po namin ito nang libre</strong>.<br><br>May iba pa po ba kayong katanungan? 😊💧"
+    },
+
+    {
+        keywords: ["bakit ako naputulan", "bakit naputulan", "bakit kami naputulan", "naputulan ako", "bakit nawalan", "disconnected ako", "bakit naputol serbisyo", "anong dahilan ng putol"],
+        answer: "Ang pagkakaputol po ng serbisyo ay karaniwang dahil sa <strong>hindi nakabayad ng dalawang (2) buwan</strong>. Kapag lumagpas na ng dalawang buwan na hindi nababayaran ang bill, kami po ay may karapatang mag-putol ng serbisyo.<br><br>⏰ <strong>Alamin ang inyong Due Date</strong><br>• Ang due date ay <strong>15 araw mula sa reading date</strong><br>• Halimbawa: Kung na-reading kayo ng July 1, ang due date ay July 16<br>• Ang putol ay <strong>kinabukasan pagkatapos ng due date</strong>—July 17 (depende sa araw na may pasok)<br><br>💡 <strong>Paalala:</strong><br>• Palaging tandaan ang inyong due date para maiwasan ang disconnection<br>• Kung hindi nakatanggap ng bill, responsibilidad pa rin ng konsesyonaryo na alamin ang dapat bayaran<br>• Puwede ring mag-check ng bill online sa aming <a href='index.html' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Water Bill Inquiry</a><br><br>Kung naputulan na po, pumunta lamang sa opisina para sa reconnection. May iba pa po ba kayong katanungan? ⚠️💧"
     },
 
     // ========== RECONNECTION ==========
     {
         keywords: ["reconnection", "reconnect", "kabit", "pakabit", "reconnection fee", "magkano reconnect"],
-        answer: "Ang reconnection fee po ay 200 pesos. Babayaran nyo po ang water bill plus ang nasabing reconnection fee. Kailangan din po nating malaman kung updated ba ang inyong customer's deposit. Pumunta lang po sa opisina para ma-process ang reconnection. May iba pa po ba kayong katanungan? 🔌"
+        answer: "Ang reconnection fee po ay <strong>₱200</strong>. Babayaran ninyo po ang water bill plus ang nasabing reconnection fee. Kailangan din po nating malaman kung updated ba ang inyong customer's deposit. Pumunta lang po sa opisina para ma-process ang reconnection. May iba pa po ba kayong katanungan? 🔌"
     },
 
     // ========== LEAK AT EMERGENCY ==========
@@ -118,28 +133,19 @@ const FAQ_NI_SIWADI = [
 
     // ========== WATER INTERRUPTION ==========
     {
-        keywords: ["walang tubig", "bakit wala", "interruption", "no water", "putol tubig", "nawalan"],
-        answer: "Maaaring may scheduled interruption o emergency repair sa inyong lugar. I-check po ang aming Facebook page para sa latest advisory. Kung wala pong announcement, tumawag sa (049) 501-6656 para ma-verify. Pasensya na po sa abala. 🙏"
-    },
-    {
-        keywords: ["interruption schedule", "iskedyul", "schedule", "kailan mawawalan", "advisory", "announcement", "update"],
-        answer: "Mag-follow po sa aming Facebook page para laging updated sa mga announcements tungkol sa water interruptions. Doon po namin pino-post ang lahat ng schedule at updates. 📢"
-    },
-
-    {
-        keywords: ["bakit malaki", "bakit tumaas", "laki ng bill", "malaki bill", "taas ng bill", "biglang taas", "sobrang laki", "bakit ganun", "bill ko", "singil", "bakit mataas"],
-        answer: "Ang biglaang pagtaas ng bill ay maaaring dahil sa: <br><br>🔧 <strong>Undetected leak</strong> — sirang toilet flush, tubo sa ilalim ng lababo, o outdoor hose. <br>👥 <strong>Dagdag na gumagamit</strong> — bagong miyembro ng pamilya, bisita, swimming pool, o washing machine. <br>📏 <strong>Maling pagbasa ng metro</strong> — human error o hindi nabasang numero. <br><br>💡 <strong>Inirerekomendang gawin:</strong> <br>1. Makipag-ugnayan agad sa opisina para sa <strong>re-reading</strong>. <br>2. Hilingin ang pagkukumpuni ng nasirang linya. <br>3. Ipa-testing ang metro kung kinakailangan. <br>4. Maghain ng reklamo para sa billing adjustment kung nararapat. <br><br>Tumawag po sa (049) 501-6656 para maaksyunan agad. 💧📞"
+        keywords: ["walang tubig", "wala po kaming tubig", "bakit wala", "interruption", "no water", "putol tubig", "nawalan", "interruption schedule", "iskedyul", "kailan mawawalan", "advisory", "announcement", "update"],
+        answer: "Maaaring may <strong>scheduled interruption</strong> o <strong>emergency repair</strong> sa inyong lugar. 🚧💧<br><br>📢 <strong>Para sa latest updates:</strong><br>• Mag-follow po sa aming <strong>Facebook page</strong> para laging updated sa mga announcements tungkol sa water interruptions<br>• Doon po namin pino-post ang lahat ng schedule at updates<br><br>📞 Kung wala pong announcement, tumawag sa <strong>(049) 501-6656</strong> para ma-verify.<br><br>Pasensya na po sa abala. May iba pa po ba kayong katanungan? 🙏"
     },
 
     // ========== READING ==========
     {
         keywords: ["reading", "meter reading", "kailan reading", "tuwing kailan", "metro", "reading schedule"],
-        answer: "May 8-araw pong reading schedule simula sa unang araw ng buwan na may pasok, depende sa inyong lokasyon. <br><br>📅 <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/services.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>I-click po ito para makita ang buong Reading Schedule</a>"
+        answer: "May 8-araw pong reading schedule simula sa unang araw ng buwan na may pasok, depende sa inyong lokasyon. <br><br>📅 <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/services.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>I-click po ito para makita ang buong Reading Schedule</a><br><br>⚠️ <strong>Mahalagang Paalala:</strong><br>Kung hindi ninyo natanggap ang inyong Water Bill sa loob ng <strong>tatlong (3) araw</strong> matapos ang nakatakdang petsa ng Reading ng metro, hinihikayat namin kayong agad na makipag-ugnayan sa amin sa pamamagitan ng mga sumusunod:<br><br>📞 <strong>Telepono:</strong> (049) 501-6656<br>📘 <strong>Facebook Page:</strong> <a href='https://www.facebook.com/SiniloanWaterDistrict/' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Siniloan Water District</a><br><br>Huwag mag-atubiling makipag-ugnayan—narito kami para tumulong! May iba pa po ba kayong katanungan? 😊💧"
     },
 
     // ========== WATER BILL CALCULATOR ==========
     {
-        keywords: ["kwentahin", "konsumo", "compute", "calculation", "calculator", "kalkulahin", "magkano bill", "estimate", "consumption", "tantiya", "paano malaman"],
+        keywords: ["calculator", "kalkulahin", "magkano bill", "estimate", "consumption", "tantiya"],
         answer: "Para po malaman ang inyong konsumo sa tubig, <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/calculator.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>i-click po ito para magamit ang aming Water Bill Calculator 🧮💧</a>. Ilagay lang po ang inyong konsumo (cubic meters) at ang klasipikasyon. May iba pa po ba kayong katanungan?"
     },
 
@@ -156,8 +162,8 @@ const FAQ_NI_SIWADI = [
     },
 
     {
-    keywords: ["seminar", "tuwing kailan seminar", "iskedyul ng seminar", "orientation", "oras ng seminar", "schedules", "araw ng seminar", "paano dumalo", "requirement seminar"],
-    answer: "Ang seminar po ay kailangan para ating malaman ang mga umiiral na alintuntunin hinggil sa pagpapakabit ng serbisyo ng tubig. Ito po ay ginaganap tuwing <strong>Miyerkules, ala-una ng hapon (1:00 PM)</strong> sa <strong>SIWADI Building</strong>. 🏢📋<br><br>Kung kayo po ay na-inspeksyon na, maaari na po kayong dumalo ng seminar. Ito po ay bahagi ng proseso para sa bagong service connection. May iba pa po ba kayong katanungan? 😊💧"
+        keywords: ["seminar", "tuwing kailan ang seminar", "tuwing kelan ang seminar", "iskedyul ng seminar", "orientation", "oras ng seminar", "araw ng seminar", "requirement seminar"],
+        answer: "Ang seminar po ay kailangan para ating malaman ang mga umiiral na alintuntunin hinggil sa pagpapakabit ng serbisyo ng tubig. Ito po ay ginaganap tuwing <strong>Miyerkules, ala-una ng hapon (1:00 PM)</strong> sa <strong>SIWADI Building</strong>. 🏢📋<br><br>Kung kayo po ay na-inspeksyon na, maaari na po kayong dumalo ng seminar. Ito po ay bahagi ng proseso para sa bagong service connection. May iba pa po ba kayong katanungan? 😊💧"
     },
 
     {
@@ -171,20 +177,40 @@ const FAQ_NI_SIWADI = [
     },
 
     {
-        keywords: ["magwenta", "magkwenta", "kwentahin", "kalkulahin", "pano malaman", "paano i-compute", "sample computation", "halimbawa", "pano magcompute", "mag compute", "wenta", "tuition", "calculation example", "example"],
+        keywords: ["magwenta", "kwenta", "magkwenta", "kwentahin", "pano malaman", "paano i-compute", "sample computation", "pano magcompute", "mag compute", "calculation example"],
         answer: "Narito po ang halimbawa ng pagwenta ng water bill para sa <strong>Residential/Government (1/2\" meter)</strong> kung ang konsumo ay <strong>25 cubic meters</strong>:<br><br>📊 <strong>Minimum Charge</strong> (first 10 m³) = <strong>₱ 200.00</strong><br><br>📏 <strong>Commodity Charges:</strong><br>• 11–20 m³ (10 m³ × ₱21.13) = <strong>₱ 211.30</strong><br>• 21–30 m³ (5 m³ × ₱23.25) = <strong>₱ 116.25</strong><br><br>💰 <strong>Total Bill:</strong> ₱ 200.00 + ₱ 211.30 + ₱ 116.25 = <strong>₱ 527.55</strong><br><br>🧮 Kung nais niyo pong mag-compute ng sarili ninyong konsumo, gamitin po ang aming <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/calculator.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Water Bill Calculator dito</a>. Piliin lang po ang klasipikasyon at ilagay ang inyong konsumo. May iba pa po ba kayong katanungan? 🧮💧"
-    },   
+    },
+
+    {
+        keywords: ["magkano per cubic", "per cubic", "cubic meter", "rate per cubic", "magkano ang cubic", "presyo ng tubig", "water rate", "singil sa cubic"],
+        answer: "Narito po ang <strong>water rates per cubic meter</strong> para sa dalawang pinaka-karaniwang klasipikasyon:<br><br>🏠 <strong>RESIDENTIAL / GOVERNMENT (1/2\" meter)</strong><br>💰 Minimum Charge (first 10 m³): <strong>₱ 200.00</strong><br><br>📏 <strong>Commodity Charges (per cubic meter):</strong><br>• 11–20 m³ → <strong>₱ 21.13</strong> per cubic<br>• 21–30 m³ → <strong>₱ 23.25</strong> per cubic<br>• 31–40 m³ → <strong>₱ 26.00</strong> per cubic<br>• 41–50 m³ → <strong>₱ 30.00</strong> per cubic<br>• 51 m³ pataas → <strong>₱ 34.40</strong> per cubic<br><br>🏢 <strong>COMMERCIAL (1/2\" meter)</strong><br>💰 Minimum Charge (first 10 m³): <strong>₱ 400.00</strong><br><br>📏 <strong>Commodity Charges (per cubic meter):</strong><br>• 11–20 m³ → <strong>₱ 42.26</strong> per cubic<br>• 21–30 m³ → <strong>₱ 46.50</strong> per cubic<br>• 31–40 m³ → <strong>₱ 52.00</strong> per cubic<br>• 41–50 m³ → <strong>₱ 60.00</strong> per cubic<br>• 51 m³ pataas → <strong>₱ 68.80</strong> per cubic<br><br>💡 <strong>Paalala:</strong> Ang singil ay <strong>nag-iiba depende sa dami ng konsumo</strong>—mas mataas na block, mas mataas ang rate. Para sa eksaktong kuwenta, gamitin po ang aming <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/calculator.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Water Bill Calculator dito 🧮💧</a>. May iba pa po ba kayong katanungan? 😊"
+    },
+
+    {
+        keywords: ["commercial rate", "commercial", "bakit commercial", "bakit ako commercial", "400 minimum", "ano ang commercial", "commercial classification", "establishment"],
+        answer: "Ang <strong>Commercial Rates</strong> ay ipinapataw sa mga <strong>establishment na direktang gumagamit ng tubig</strong> para sa kanilang negosyo o operasyon. 🏢💧<br><br>📋 <strong>Mga Halimbawa ng Commercial:</strong><br>• 🍽️ Restaurant, kainan, karinderya<br>• 💧 Water Refilling Station<br>• 🏠 Mga bahay na <strong>nagsama-sama (share) sa iisang metro</strong><br>• 🏘️ Halimbawa: Isang metro, tatlong bahay ang naka-konekta<br>• 🏬 Laundry shop, bakery, at iba pang negosyo<br><br>💰 <strong>Minimum Charge:</strong> <strong>₱ 400.00</strong> (first 10 cubic meters)<br><br>💡 <strong>Bakit ako naka-Commercial?</strong><br>Kung ang inyong metro ay ginagamit ng <strong>higit sa isang pamilya</strong> o may <strong>negosyo</strong> sa inyong lugar, ikaw ay naka-classify bilang Commercial. Ito ay batay sa aming inspeksyon at assessment.<br><br>Kung may katanungan pa po tungkol sa inyong classification, tumawag po sa (049) 501-6656 o bumisita sa opisina. May iba pa po ba kayong katanungan? 😊💧"
+    },
+
+    {
+        keywords: ["palit metro", "nais kong papalitan ang aking metro", "palitan metro", "metro sira", "bagong metro", "metro replacement", "replace meter", "sira ang metro", "magpalit ng metro", "metro defective", "palitan ang metro"],
+        answer: "Para po sa pagpapalit ng metro, narito ang dapat ninyong malaman:<br><br>🔍 <strong>1. Inspeksyon at Pagsusuri</strong><br>• Ang metro ay hindi agad pinapalitan—kailangan muna itong <strong>suriin at i-test</strong><br>• Kailangang <strong>mapatunayan na ito ay depektibo</strong> bago palitan<br><br>✅ <strong>2. Quality Assurance</strong><br>• Lahat ng metro ng SIWADI ay <strong>tested at calibrated</strong><br>• Naayon ito sa <strong>legal na standards</strong>—hindi po kayo dapat mag-alala sa accuracy<br><br>📋 <strong>3. Proseso ng Pagpapalit</strong><br>• Makipag-ugnayan sa opisina para sa <strong>dokumentasyon</strong><br>• Maghain ng request para sa water meter replacement<br><br>💰 <strong>4. Halaga ng Bagong Metro</strong><br>• Ang bagong metro ay nagkakahalaga ng <strong>₱ 2,740.00</strong><br><br>Pumunta lamang po sa opisina o tumawag sa (049) 501-6656 para sa karagdagang impormasyon. May iba pa po ba kayong katanungan? 🔧💧"
+    },
+
+    {
+        keywords: ["bakit malaki", "anlaki ng aking bill", "bakit tumaas", "laki ng bill", "malaki bill", "taas ng bill", "biglang taas", "sobrang laki", "bakit ganun", "bill ko", "singil", "bakit mataas"],
+        answer: "Ang biglaang pagtaas ng bill ay maaaring dahil sa: <br><br>🔧 <strong>Undetected leak</strong> — sirang toilet flush, tubo sa ilalim ng lababo, o outdoor hose. <br>👥 <strong>Dagdag na gumagamit</strong> — bagong miyembro ng pamilya, bisita, swimming pool, o washing machine. <br>📏 <strong>Maling pagbasa ng metro</strong> — human error o hindi nabasang numero. <br><br>💡 <strong>Inirerekomendang gawin:</strong> <br>1. Makipag-ugnayan agad sa opisina para sa <strong>re-reading</strong>. <br>2. Hilingin ang pagkukumpuni ng nasirang linya. <br>3. Ipa-testing ang metro kung kinakailangan. <br>4. Maghain ng reklamo para sa billing adjustment kung nararapat. <br><br>Tumawag po sa (049) 501-6656 para maaksyunan agad. 💧📞"
+    },
 
     // ========== OFFICE INFO ==========
     {
-        keywords: ["office", "opisina", "location", "saan", "address", "open", "oras", "punta", "bisitahin"],
-        answer: "Ang opisina po ng SIWADI ay bukas mula Lunes hanggang Huebes(opisina), 7:00 AM hanggang 6:00 PM. Matatagpuan po ito sa aming main office. Para sa eksaktong direksyon, tumawag po sa (049) 501-6656. 🏢"
+        keywords: ["office", "opisina", "location", "saan", "address", "oras", "punta", "bisitahin"],
+        answer: "Ang opisina po ng SIWADI ay bukas mula Lunes hanggang Huwebes, 7:00 AM hanggang 6:00 PM. Matatagpuan po ito sa P. Burgos St., Siniloan, Laguna. Para sa eksaktong direksyon, tumawag po sa (049) 501-6656. 🏢"
     },
 
     // ========== CONTACT ==========
     {
         keywords: ["contact", "tawag", "number", "telepono", "phone", "cellphone", "tumawag"],
-        answer: "Tumawag po sa (049) 501-6656. Bukas po ang opisina mula Lunes hanggang Huebes(opisina), 7:00 AM hanggang 6:00 PM. Puwede rin po kayong mag-message sa aming <a href='https://www.facebook.com/SiniloanWaterDistrict/' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Facebook page 📘</a>📞"
+        answer: "Tumawag po sa (049) 501-6656. Bukas po ang opisina mula Lunes hanggang Huwebes, 7:00 AM hanggang 6:00 PM. Puwede rin po kayong mag-message sa aming <a href='https://www.facebook.com/SiniloanWaterDistrict/' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Facebook page 📘</a>📞"
     },
 
     // ========== FACEBOOK AT SOCIAL MEDIA ==========
@@ -204,11 +230,15 @@ const FAQ_NI_SIWADI = [
     },
 
     {
-        keywords: ["/help", "help", "tulong", "ano ang pwede itanong", "list", "menu", "commands"],
-        answer: "Narito po ang mga puwede ninyong itanong kay Tubibot:<br><br>💳 <strong>Billing at Payment</strong><br>• Paano magbayad ng bill?<br>• Magkano ang water bill ko?<br>• Kailan ang due date?<br>• Bakit malaki ang bill ko?<br>• Water Bill Inquiry.<br>• Paano magbayad sa GCash?<br>• Bakit ako naputulan? Bayad naman ako sa GCash!<br><br>🔌 <strong>Reconnection</strong><br>• Magkano ang reconnection fee?<br>• Ano ang Customer's Deposit?<br><br>📋 <strong>New Connection Application</strong><br>• Paano mag-apply ng connection?<br>• Ano ang mga requirements?<br>• May online application ba?<br>• Magkano ang downpayment (₱6,000)?<br>• Paano mag-apply ng Change of Name?<br>• Paano ang Transfer of Location?<br><br>🎓 <strong>Seminar</strong><br>• Tuwing kailan ang seminar?<br>• Kailangan ba ng seminar?<br>• Saan gaganapin ang seminar?<br><br>🔧 <strong>Maintenance at Emergency</strong><br>• Paano mag-report ng leak?<br>• Bakit walang tubig?<br>• Bakit mahina ang tubig?<br>• Bakit madumi ang tubig?<br>• Ano ang flushing?<br>• Bakit walang tubig sa Kapatalan?<br><br>📅 <strong>Schedules</strong><br>• Kailan ang reading schedule?<br>• Kailan ang putulan?<br>• Bukas ba kayo ngayon?<br><br>🏢 <strong>General Info</strong><br>• Ano ang SIWADI?<br>• Paano mag-reklamo?<br>• Contact number ng SIWADI<br>• Facebook page ng SIWADI<br><br>🧮 <strong>Calculator</strong><br>• Paano magwenta ng bill?<br>• Sample computation<br><br>💡 I-type lang po ang inyong tanong at sasagutin ko po agad! May iba pa po ba kayong katanungan? 😊💧"
+        keywords: ["magkano ngayon ang minimum", "minimum rates", "minimum rate", "magkano minimum ngayon", "magkano ang minimum", "minimum charge"],
+        answer: "Ang minimum charge po ay <strong>₱ 200.00</strong> para sa unang <strong>10 cubic meters</strong> (Residential/Government, 1/2\" meter). 🏠💧<br><br>💡 <strong>Para sa iba pang katanungan:</strong><br>• I-type ang <strong>'kwenta'</strong> para sa sample computation<br>• I-type ang <strong>'calculator'</strong> para magamit ang aming Water Bill Calculator<br>• I-type ang <strong>'per cubic'</strong> para sa kumpletong rates ng Residential at Commercial<br><br>May iba pa po ba kayong katanungan? 😊"
     },
 
+    {
+        keywords: ["/help", "help", "tulong", "ano ang pwede itanong", "list", "menu", "commands", "seminar", "deposit", "commercial", "minimum"],
+        answer: "Narito po ang mga puwede ninyong itanong kay Tubibot:<br><br>💳 <strong>Billing at Payment</strong><br>• Paano magbayad ng bill? — I-type ang <strong>'paano magbayad'</strong><br>• Magkano ang water bill ko? — I-type ang <strong>'bill ko'</strong><br>• Kailan ang due date? — I-type ang <strong>'due date'</strong><br>• Bakit malaki ang bill ko? — I-type ang <strong>'bakit malaki'</strong><br>• Water Bill Inquiry — I-type ang <strong>'bill ko'</strong><br>• Paano magbayad sa GCash? — I-type ang <strong>'gcash'</strong><br>• Bakit ako naputulan? Bayad naman ako sa GCash! — I-type ang <strong>'gcash putol'</strong><br><br>🔌 <strong>Reconnection</strong><br>• Magkano ang reconnection fee? — I-type ang <strong>'reconnection'</strong><br>• Ano ang Customer's Deposit? — I-type ang <strong>'deposit'</strong><br><br>📋 <strong>New Connection Application</strong><br>• Paano mag-apply ng connection? — I-type ang <strong>'apply'</strong><br>• Ano ang mga requirements? — I-type ang <strong>'requirements'</strong><br>• May online application ba? — I-type ang <strong>'online application'</strong><br>• Magkano ang downpayment (₱6,000)? — I-type ang <strong>'6000'</strong> o <strong>'deposit'</strong><br>• Paano mag-apply ng Change of Name? — I-type ang <strong>'change of name'</strong><br>• Paano ang Transfer of Location? — I-type ang <strong>'transfer'</strong><br><br>🎓 <strong>Seminar</strong><br>• Tuwing kailan ang seminar? — I-type ang <strong>'seminar'</strong><br>• Kailangan ba ng seminar? — I-type ang <strong>'seminar'</strong><br>• Saan gaganapin ang seminar? — I-type ang <strong>'seminar'</strong><br><br>🔧 <strong>Maintenance at Emergency</strong><br>• Paano mag-report ng leak? — I-type ang <strong>'leak'</strong><br>• Bakit walang tubig? — I-type ang <strong>'walang tubig'</strong><br>• Bakit mahina ang tubig? — I-type ang <strong>'mahina'</strong><br>• Bakit madumi ang tubig? — I-type ang <strong>'madumi'</strong><br>• Ano ang flushing? — I-type ang <strong>'flushing'</strong><br>• Bakit walang tubig sa Kapatalan? — I-type ang <strong>'kapatalan'</strong><br><br>📅 <strong>Schedules</strong><br>• Kailan ang reading schedule? — I-type ang <strong>'reading'</strong><br>• Kailan ang putulan? — I-type ang <strong>'putol'</strong> o <strong>'disconnection'</strong><br>• Bukas ba kayo ngayon? — I-type ang <strong>'bukas ba'</strong><br><br>🏢 <strong>General Info</strong><br>• Ano ang SIWADI? — I-type ang <strong>'siwadi'</strong><br>• Ano ang Commercial classification? — I-type ang <strong>'commercial'</strong><br>• Magkano ang minimum rates? — I-type ang <strong>'minimum'</strong><br>• Paano mag-reklamo? — I-type ang <strong>'reklamo'</strong><br>• Contact number ng SIWADI — I-type ang <strong>'contact'</strong><br>• Facebook page ng SIWADI — I-type ang <strong>'facebook'</strong><br><br>🧮 <strong>Calculator</strong><br>• Paano magwenta ng bill? — I-type ang <strong>'kwenta'</strong><br>• Sample computation — I-type ang <strong>'kwenta'</strong><br>• Magkano per cubic? — I-type ang <strong>'per cubic'</strong><br><br>💡 I-type lang po ang inyong tanong at sasagutin ko po agad! May iba pa po ba kayong katanungan? 😊💧"
+    },
 
 ];
 
-const DEFAULT_ANSWER = "Pasensya na po, hindi ko po masyadong naintindihan ang inyong katanungan. Puwede po bang pakiusapan na mas detalyado ang tanong? Puwede rin po kayong tumawag sa (049) 501-6656 o bumisita sa opisina ng SIWADI, Lunes hanggang Huebes(opisina), 7:00 AM hanggang 6:00 PM. May iba pa po ba kayong maitutulong ko? 😊";
+const DEFAULT_ANSWER = "Pasensya na po, hindi ko po masyadong naintindihan ang inyong katanungan. <strong style='color: red;'>Puwede po bang pakiusapan na mas detalyado ang tanong?</strong> Puwede rin po kayong tumawag sa <strong style='color: #1e3c72;'>📞 (049) 501-6656</strong> o bumisita sa opisina ng SIWADI, Lunes hanggang Huwebes, 7:00 AM hanggang 6:00 PM. May iba pa po ba kayong maitutulong ko? 😊";
