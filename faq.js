@@ -105,7 +105,7 @@ const FAQ_NI_SIWADI = [
     },
 
     {
-        keywords: ["disconnection schedule", "kailan putol", "kailan mapuputulan", "iskedyul ng putol"],
+        keywords: ["disconnection schedule", "disconnection", "iskedyul ng putol", "kailan mapuputulan", "petsa ng putulan"],
         answer: "Para po malaman ang disconnection schedule sa inyong lugar, <a href='https://siniloansiwadi-max.github.io/waterbill_inquiry_app/services.html' target='_blank' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>i-click po ito para makita ang Disconnection Schedule ⚠️📅</a>. Makikita niyo po doon ang petsa ng putulan para sa inyong area. May iba pa po ba kayong katanungan?"
     },
 
@@ -115,10 +115,9 @@ const FAQ_NI_SIWADI = [
     },
 
     {
-        keywords: ["bakit ako naputulan", "bakit naputulan", "bakit kami naputulan", "naputulan ako", "bakit nawalan", "disconnected ako", "bakit naputol serbisyo", "anong dahilan ng putol"],
+        keywords: ["bakit ako naputulan", "bakit naputulan", "bakit kami naputulan", "naputulan ako", "bakit nawalan", "disconnected ako", "bakit naputol serbisyo", "anong dahilan ng putol", "putol", "putulan"],
         answer: "Ang pagkakaputol po ng serbisyo ay karaniwang dahil sa <strong>hindi nakabayad ng dalawang (2) buwan</strong>. Kapag lumagpas na ng dalawang buwan na hindi nababayaran ang bill, kami po ay may karapatang mag-putol ng serbisyo.<br><br>⏰ <strong>Alamin ang inyong Due Date</strong><br>• Ang due date ay <strong>15 araw mula sa reading date</strong><br>• Halimbawa: Kung na-reading kayo ng July 1, ang due date ay July 16<br>• Ang putol ay <strong>kinabukasan pagkatapos ng due date</strong>—July 17 (depende sa araw na may pasok)<br><br>💡 <strong>Paalala:</strong><br>• Palaging tandaan ang inyong due date para maiwasan ang disconnection<br>• Kung hindi nakatanggap ng bill, responsibilidad pa rin ng konsesyonaryo na alamin ang dapat bayaran<br>• Puwede ring mag-check ng bill online sa aming <a href='index.html' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Water Bill Inquiry</a><br><br>Kung naputulan na po, pumunta lamang sa opisina para sa reconnection. May iba pa po ba kayong katanungan? ⚠️💧"
     },
-
     // ========== RECONNECTION ==========
     {
         keywords: ["reconnection", "reconnect", "kabit", "pakabit", "reconnection fee", "magkano reconnect"],
