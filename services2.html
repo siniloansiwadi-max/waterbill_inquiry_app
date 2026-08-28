@@ -5,62 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
   <meta name="description" content="SIWADI Services – GCash payment guide, new connection, water rates.">
   <title>SIWADI · Services</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <style>
     :root {
-      --primary: #0a2e5c;
-      --primary-light: #1e4a7a;
-      --accent: #0a5c8c;
-      --accent-light: #e6f0f9;
-      --gray-bg: #f5f7fa;
-      --white: #ffffff;
-      --text-dark: #1e293b;
-      --text-light: #4b5565;
-      --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-      --shadow-md: 0 4px 8px rgba(0,0,0,0.08);
+      --primary: #1e3c72;
+      --primary-dark: #12264c;
+      --primary-light: #2a5298;
+      --accent-green: #00a86b;
+      --accent-green-dark: #007a4d;
+      --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --card-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+      --text-main: #2d3748;
+      --text-muted: #718096;
+      --border-color: #e2e8f0;
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
 
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+      -webkit-tap-highlight-color: transparent;
+    }
+
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--gray-bg);
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg-gradient);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      color: var(--text-dark);
+      color: var(--text-main);
       line-height: 1.5;
-      -webkit-tap-highlight-color: transparent;
       -webkit-font-smoothing: antialiased;
     }
 
+    /* 🏷️ HEADER */
     header {
-      background: var(--primary);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(10px);
       color: white;
       padding: 1rem 1.5rem;
-      box-shadow: var(--shadow-md);
-      border-bottom: 3px solid var(--accent);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
       width: 100%;
     }
 
     .header-top {
+      max-width: 1100px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
     }
 
-    .header-text h1 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.2rem; line-height: 1.2; }
-    .header-text p { font-size: 0.8rem; opacity: 0.9; }
+    .header-text h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      letter-spacing: -0.3px;
+    }
+
+    .header-text p {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+    }
 
     .header-tubibot-btn {
-      background: linear-gradient(to bottom, #00a86b, #007a4d);
+      background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark));
       color: white;
-      padding: 10px 20px;
-      border: none;
+      padding: 10px 18px;
       border-radius: 50px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
@@ -68,134 +87,183 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 4px 12px rgba(0, 168, 107, 0.4);
-      animation: pulse-tubibot 2s infinite;
-      transition: all 0.2s;
-      font-family: 'Inter', sans-serif;
-      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 4px 14px rgba(0, 168, 107, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .header-tubibot-btn:hover, .header-tubibot-btn:active {
-      background: linear-gradient(to bottom, #007a4d, #005a30);
       transform: scale(1.03);
     }
 
-    @keyframes pulse-tubibot {
-      0% { box-shadow: 0 4px 12px rgba(0, 168, 107, 0.4); }
-      50% { box-shadow: 0 4px 22px rgba(0, 168, 107, 0.7); }
-      100% { box-shadow: 0 4px 12px rgba(0, 168, 107, 0.4); }
-    }
-
+    /* 🧭 NAVIGATION BAR */
     nav {
-      background: var(--primary-light);
-      padding: 0.4rem;
+      background: rgba(30, 60, 114, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 0.5rem 1rem;
       display: flex;
-      align-items: center;
-      gap: 0.2rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      justify-content: center;
+      gap: 0.4rem;
       position: sticky;
       top: 0;
       z-index: 100;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     nav::-webkit-scrollbar { display: none; }
 
     nav a {
-      color: white;
+      color: #e2e8f0;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 0.8rem;
       padding: 0.5rem 0.9rem;
       border-radius: 30px;
-      transition: background-color 0.2s;
+      transition: all 0.2s ease;
       white-space: nowrap;
       flex-shrink: 0;
-      text-align: center;
-      min-height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    nav a:hover, nav a:active { background: var(--accent); }
-    nav a.active { background: var(--accent); font-weight: 600; }
+    nav a:hover, nav a:active { 
+      background: rgba(255, 255, 255, 0.2); 
+      color: #fff;
+    }
+    
+    nav a.active { 
+      background: #ffffff; 
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
 
+    /* 📱 MAIN CARD CONTAINER */
     main {
       flex: 1;
-      max-width: 1200px;
+      max-width: 900px;
       width: 92%;
       margin: 1.5rem auto;
-      background: var(--white);
-      border-radius: 1.2rem;
-      box-shadow: var(--shadow-md);
-      padding: 1.5rem;
-      padding-bottom: calc(1.5rem + var(--safe-bottom));
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: var(--card-shadow);
+      padding: 1.8rem;
+      padding-bottom: calc(1.8rem + var(--safe-bottom));
+      border: 1px solid rgba(255, 255, 255, 0.4);
     }
 
     .page-header {
       text-align: center;
       margin-bottom: 1.5rem;
       padding-bottom: 0.8rem;
-      border-bottom: 3px solid var(--accent);
+      border-bottom: 2px solid var(--border-color);
     }
 
-    .page-header h2 { color: var(--primary); font-size: 1.8rem; font-weight: 700; }
-    .page-header p { color: var(--text-light); font-size: 1rem; margin-top: 0.3rem; }
+    .page-header h2 { 
+      color: var(--primary); 
+      font-size: 1.5rem; 
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
 
+    .page-header p { 
+      color: var(--text-muted); 
+      font-size: 0.85rem; 
+      margin-top: 0.3rem; 
+    }
+
+    /* 🗂️ SERVICES GRID */
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin: 1.5rem 0;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.2rem;
+      margin: 1.2rem 0;
     }
 
     .service-card {
       background: #f8fafc;
-      border-radius: 1.2rem;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.2s ease;
-      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: all 0.25s ease;
+      border: 1px solid var(--border-color);
       cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
+      display: flex;
+      flex-direction: column;
     }
 
-    .service-card:active { transform: scale(0.98); border-color: var(--accent); }
+    .service-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-light);
+    }
+
+    .service-card:active { 
+      transform: scale(0.98); 
+    }
 
     .card-header {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: white;
-      padding: 1.2rem 1rem;
+      padding: 1rem;
       text-align: center;
     }
 
-    .card-header h3 { font-size: 1.4rem; font-weight: 600; margin-bottom: 0.2rem; }
-    .card-header p { opacity: 0.9; font-size: 0.9rem; }
+    .card-header h3 { 
+      font-size: 1.15rem; 
+      font-weight: 700; 
+      margin-bottom: 0.2rem; 
+    }
 
-    .image-area { padding: 1.2rem; text-align: center; }
+    .card-header p { 
+      opacity: 0.85; 
+      font-size: 0.75rem; 
+      font-weight: 500;
+    }
+
+    .image-area { 
+      padding: 1rem; 
+      text-align: center; 
+      background: #ffffff;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
 
     .service-img {
       max-width: 100%;
-      max-height: 200px;
-      border-radius: 0.8rem;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      height: 180px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
       object-fit: cover;
       width: 100%;
-      height: auto;
-      background: #f0f4f8;
+      background: #f1f5f9;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     }
 
-    .image-note { margin-top: 0.5rem; color: var(--text-light); font-size: 0.8rem; font-style: italic; }
+    .image-note { 
+      margin-top: 0.6rem; 
+      color: var(--primary-light); 
+      font-size: 0.75rem; 
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
 
-    /* Fullscreen Image Modal */
+    /* 🔍 FULLSCREEN IMAGE MODAL */
     .modal {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.95);
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(8px);
       z-index: 2000;
       align-items: center;
       justify-content: center;
@@ -208,73 +276,74 @@
     .modal-img {
       max-width: 95%;
       max-height: 85vh;
-      border-radius: 1rem;
-      border: 3px solid white;
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
       object-fit: contain;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
 
     .modal-close {
       position: absolute;
-      top: 16px;
-      right: 16px;
+      top: 18px;
+      right: 18px;
       width: 44px;
       height: 44px;
-      font-size: 2rem;
+      font-size: 1.8rem;
       color: white;
-      background: rgba(255,255,255,0.15);
-      border: 2px solid white;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      -webkit-tap-highlight-color: transparent;
+      transition: all 0.2s;
     }
 
-    .modal-close:active { background: white; color: black; }
+    .modal-close:hover, .modal-close:active { 
+      background: white; 
+      color: var(--primary-dark); 
+    }
 
+    /* ⚓ FOOTER */
     footer {
-      background: var(--primary);
-      color: white;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(8px);
+      color: #94a3b8;
       padding: 1.2rem;
       padding-bottom: calc(1.2rem + var(--safe-bottom));
-      margin-top: 1rem;
+      margin-top: auto;
       text-align: center;
+      font-size: 0.8rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-inner { max-width: 900px; margin: 0 auto; }
 
     .footer-row {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 1.2rem;
-      margin-bottom: 0.8rem;
-      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: #cbd5e1;
     }
 
+    /* 📱 RESPONSIVE ADJUSTMENTS */
     @media (max-width: 768px) {
       header { padding: 0.8rem 1rem; }
       .header-text h1 { font-size: 1.1rem; }
-      .header-text p { font-size: 0.7rem; }
-      .header-tubibot-btn { padding: 8px 16px; font-size: 0.8rem; animation: none; }
-      nav { padding: 0.3rem; }
-      nav a { font-size: 0.75rem; padding: 0.4rem 0.7rem; min-height: 40px; }
-      main { padding: 1rem; width: 95%; margin: 1rem auto; }
-      .page-header h2 { font-size: 1.4rem; }
-      .page-header p { font-size: 0.85rem; }
+      nav { justify-content: flex-start; }
+      nav a { font-size: 0.75rem; padding: 0.4rem 0.7rem; }
+      main { padding: 1.2rem 1rem; width: 95%; margin: 1rem auto; }
       .services-grid { grid-template-columns: 1fr; gap: 1rem; }
-      .card-header h3 { font-size: 1.2rem; }
-      .card-header p { font-size: 0.8rem; }
-      .service-img { max-height: 180px; }
-      .footer-row { flex-direction: column; gap: 0.5rem; font-size: 0.8rem; }
+      .service-img { height: 160px; }
+      .footer-row { flex-direction: column; gap: 0.4rem; }
     }
 
     @media (max-width: 480px) {
       .header-top { flex-direction: column; align-items: stretch; text-align: center; }
-      .header-tubibot-btn { justify-content: center; }
-      .services-grid { gap: 0.8rem; }
-      .image-area { padding: 1rem; }
+      .header-tubibot-btn { justify-content: center; width: 100%; }
     }
   </style>
 </head>
@@ -287,7 +356,7 @@
       <h1>Commercial Division · Siniloan Water District</h1>
       <p>P. Burgos St., Siniloan, Laguna · 049-501-6656</p>
     </div>
-    <a href="tubibot.html" target="_blank" class="header-tubibot-btn">🤖 Ask Tubibot</a>
+    <a href="tubibot.html" target="_blank" class="header-tubibot-btn">💧 Ask Tubibot</a>
   </div>
 </header>
 
@@ -301,8 +370,8 @@
 
 <main>
   <div class="page-header">
-    <h2>Our Services</h2>
-    <p>Tap any card to view the full image</p>
+    <h2>Our Services & Guides</h2>
+    <p>Pindutin ang alinmang card upang i-fullscreen ang gabay</p>
   </div>
 
   <div class="services-grid">
@@ -310,11 +379,11 @@
     <div class="service-card" onclick="openModal('images/gcash.jpg')">
       <div class="card-header">
         <h3>💳 GCash Payment</h3>
-        <p>Pay via GCash</p>
+        <p>Gabay sa Pagbabayad gamit ang GCash</p>
       </div>
       <div class="image-area">
-        <img src="images/gcash.jpg" alt="GCash tutorial" class="service-img" onerror="this.src='https://via.placeholder.com/400x250/0a5c8c/ffffff?text=GCash+Guide'">
-        <div class="image-note">tap to enlarge</div>
+        <img src="images/gcash.jpg" alt="GCash tutorial" class="service-img" onerror="this.src='https://via.placeholder.com/400x250/1e3c72/ffffff?text=GCash+Guide'">
+        <div class="image-note">🔍 Tap to enlarge</div>
       </div>
     </div>
 
@@ -322,11 +391,11 @@
     <div class="service-card" onclick="openModal('images/newconnection.png')">
       <div class="card-header">
         <h3>🔧 New Connection</h3>
-        <p>Apply online</p>
+        <p>Aplikasyon para sa Bagong Linya</p>
       </div>
       <div class="image-area">
-        <img src="images/newconnection.png" alt="new connection" class="service-img" onerror="this.src='https://via.placeholder.com/400x250/014272/ffffff?text=New+Connection'">
-        <div class="image-note">tap to enlarge</div>
+        <img src="images/newconnection.png" alt="New Connection" class="service-img" onerror="this.src='https://via.placeholder.com/400x250/1e3c72/ffffff?text=New+Connection'">
+        <div class="image-note">🔍 Tap to enlarge</div>
       </div>
     </div>
 
@@ -334,11 +403,11 @@
     <div class="service-card" onclick="openModal('images/rates.jpg')">
       <div class="card-header">
         <h3>📊 Water Rates</h3>
-        <p>Latest schedule</p>
+        <p>Pinakabagong Iskedyul ng Singilin</p>
       </div>
       <div class="image-area">
-        <img src="images/rates.jpg" alt="water rates" class="service-img" onerror="this.src='https://via.placeholder.com/400x250/0169b4/ffffff?text=Water+Rates'">
-        <div class="image-note">tap to enlarge</div>
+        <img src="images/rates.jpg" alt="Water Rates" class="service-img" onerror="this.src='https://via.placeholder.com/400x250/1e3c72/ffffff?text=Water+Rates'">
+        <div class="image-note">🔍 Tap to enlarge</div>
       </div>
     </div>
   </div>
@@ -356,8 +425,8 @@
 
 <!-- Fullscreen Image Modal -->
 <div id="imageModal" class="modal" onclick="closeModal()">
-  <button class="modal-close" onclick="closeModal()">×</button>
-  <img id="modalImg" class="modal-img" src="" alt="">
+  <button class="modal-close" onclick="closeModal()">&times;</button>
+  <img id="modalImg" class="modal-img" src="" alt="Fullscreen Guide">
 </div>
 
 <script>
@@ -372,12 +441,12 @@
     document.body.style.overflow = 'auto';
   }
 
-  // Keyboard
+  // Close modal via Escape key
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeModal();
   });
 
-  // Active nav
+  // Highlight active link
   document.querySelectorAll('nav a').forEach(link => {
     link.classList.remove('active');
     if (link.getAttribute('href') === 'services2.html') link.classList.add('active');
