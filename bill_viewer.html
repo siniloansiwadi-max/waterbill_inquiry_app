@@ -2,81 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Water Bill - Official Receipt</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --primary: #1e3c72;
+            --primary-dark: #12264c;
+            --primary-light: #2a5298;
+            --accent-green: #00a86b;
+            --accent-green-dark: #007a4d;
+            --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --card-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --border-color: #e2e8f0;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: var(--bg-gradient);
             min-height: 100vh;
-            padding: 20px;
+            padding: 20px 12px;
             font-family: 'Montserrat', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
+            color: var(--text-main);
         }
         
         .bill-container {
-            max-width: 500px;
+            max-width: 480px;
             width: 100%;
             margin: 0 auto;
         }
         
         .bill-card {
-            background: white;
-            border-radius: 16px;
+            background: var(--card-bg);
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .bill-header {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
-            padding: 30px 20px;
+            padding: 24px 20px;
             text-align: center;
         }
         
         .bill-header h1 {
-            font-size: 24px;
-            margin-bottom: 8px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
         }
         
         .bill-header p {
-            opacity: 0.9;
-            font-size: 14px;
+            opacity: 0.85;
+            font-size: 0.78rem;
+            font-weight: 500;
         }
         
         .bill-content {
-            padding: 25px;
+            padding: 20px;
         }
         
         .bill-section {
-            margin-bottom: 25px;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 15px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
         }
         
         .bill-section h3 {
-            color: #1e3c72;
-            font-size: 16px;
-            margin-bottom: 12px;
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         
         .bill-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            font-size: 14px;
+            align-items: flex-start;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color);
+            font-size: 13.5px;
+            gap: 10px;
         }
         
         .bill-row:last-child {
@@ -85,90 +110,131 @@
         
         .bill-row .label {
             font-weight: 600;
-            color: #666;
+            color: var(--text-muted);
+            font-size: 13px;
+            flex-shrink: 0;
         }
         
         .bill-row .value {
-            color: #333;
-            font-weight: 500;
+            color: var(--text-main);
+            font-weight: 600;
             text-align: right;
+            word-break: break-word;
         }
         
         .total-row {
-            background: #f8f9fa;
+            background: #f8fafc;
             margin-top: 15px;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 14px 16px;
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-weight: 700;
-            font-size: 18px;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary-light);
         }
         
         .total-row .label {
-            color: #1e3c72;
+            color: var(--primary);
+            font-size: 0.9rem;
         }
         
         .total-row .value {
-            color: #2a5298;
-            font-size: 20px;
+            color: var(--accent-green-dark);
+            font-size: 1.35rem;
         }
         
         .payment-instructions {
-            background: #e8f5e9;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            border-left: 4px solid #4caf50;
-        }
-        
-        .payment-instructions p {
-            font-size: 13px;
-            color: #2e7d32;
-            margin-bottom: 8px;
+            background: #f0fdf4;
+            padding: 14px;
+            border-radius: 12px;
+            margin-top: 16px;
+            border-left: 4px solid var(--accent-green);
+            border: 1px solid #dcfce7;
         }
         
         .payment-instructions strong {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            color: var(--accent-green-dark);
+            font-size: 13px;
+        }
+
+        .payment-instructions p {
+            font-size: 12px;
+            color: #166534;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .payment-instructions p:last-child {
+            margin-bottom: 0;
         }
         
         .footer {
-            background: #f8f9fa;
-            padding: 15px;
+            background: #f8fafc;
+            padding: 12px 16px;
             text-align: center;
             font-size: 11px;
-            color: #999;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            line-height: 1.4;
         }
         
+        .btn-print {
+            width: 100%;
+            padding: 14px;
+            margin-top: 12px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 4px 14px rgba(30, 60, 114, 0.3);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-print:active {
+            transform: scale(0.98);
+        }
+
+        /* 🖨️ PRINT MEDIA QUERY */
         @media print {
             body {
                 background: white;
                 padding: 0;
             }
+            .bill-container {
+                max-width: 100%;
+            }
             .bill-card {
                 box-shadow: none;
+                border: 1px solid #000;
+                border-radius: 0;
             }
-            .payment-instructions {
-                background: #f0f0f0;
+            .bill-header {
+                background: #1e3c72 !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .btn-print {
+                display: none;
             }
         }
         
-        button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 15px;
-            background: #2a5298;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-        }
-        
-        button:hover {
-            background: #1e3c72;
+        @media (max-width: 380px) {
+            .bill-content { padding: 16px; }
+            .bill-header h1 { font-size: 1.2rem; }
+            .total-row .value { font-size: 1.15rem; }
         }
     </style>
 </head>
@@ -178,7 +244,7 @@
     <div class="bill-card">
         <div class="bill-header">
             <h1>💧 OFFICIAL WATER BILL</h1>
-            <p>Please present this bill when paying</p>
+            <p>Siniloan Water District · Account Summary</p>
         </div>
         
         <div class="bill-content">
@@ -217,7 +283,7 @@
                     <span class="value" id="readingDate">-</span>
                 </div>
                 <div class="bill-row">
-                    <span class="label">Due Date:</span>
+                    <span class="label">Payment Due Date:</span>
                     <span class="value" id="dueDate">-</span>
                 </div>
             </div>
@@ -228,20 +294,19 @@
             </div>
             
             <div class="payment-instructions">
-                <strong>📌 How to Pay:</strong>
-                <p>✅ This is your actual bill and accont info.</p>
-                <p>✅ Use GCash for payment</p>
-                <p>✅ Pay at our office</p>
-                <p>⚠️ Late payment will incur penalties after due date</p>
+                <strong>📌 Payment Information:</strong>
+                <p>✅ Official statement from SIWADI portal.</p>
+                <p>✅ Pay through GCash or at the SIWADI Office.</p>
+                <p>⚠️ Please pay on or before the due date to avoid penalties.</p>
             </div>
         </div>
         
         <div class="footer">
-            This is a system-generated bill. For disputes, please visit our office within 15 days.
+            This is a system-generated statement. For inquiries or disputes, please visit our office within 15 days from the reading date.
         </div>
     </div>
     
-    <button onclick="window.print()">🖨️ Print or Save as PDF</button>
+    <button type="button" class="btn-print" onclick="window.print()">🖨️ Print or Save as PDF</button>
 </div>
 
 <script>
@@ -269,23 +334,32 @@ const readingDate = urlParams.get('readingDate');
 
 if (dueDate) {
     const date = new Date(dueDate);
-    document.getElementById('dueDate').textContent = date.toLocaleDateString('en-PH');
+    if (!isNaN(date.getTime())) {
+        document.getElementById('dueDate').textContent = date.toLocaleDateString('en-PH');
+    } else {
+        document.getElementById('dueDate').textContent = dueDate;
+    }
 }
 
 if (readingDate) {
     const date = new Date(readingDate);
-    document.getElementById('readingDate').textContent = date.toLocaleDateString('en-PH');
+    if (!isNaN(date.getTime())) {
+        document.getElementById('readingDate').textContent = date.toLocaleDateString('en-PH');
+    } else {
+        document.getElementById('readingDate').textContent = readingDate;
+    }
 }
 
-// If no data in URL (direct access), show error
+// If no data in URL (direct access), show friendly error
 if (!urlParams.get('account')) {
     document.querySelector('.bill-content').innerHTML = `
-        <div style="text-align: center; padding: 40px;">
-            <h3>⚠️ No Bill Data Found</h3>
-            <p>Please scan a valid QR code from your water bill inquiry.</p>
-            <button onclick="window.location.href='index.html'" style="margin-top: 20px;">Go to Inquiry Page</button>
+        <div style="text-align: center; padding: 30px 10px;">
+            <h3 style="color: #e53e3e; margin-bottom: 8px;">⚠️ No Bill Data Found</h3>
+            <p style="font-size: 13px; color: #718096; margin-bottom: 16px;">Please scan a valid QR code from your water bill inquiry or search your account.</p>
+            <button onclick="window.location.href='index.html'" class="btn-print" style="margin-top: 0;">Go to Inquiry Page</button>
         </div>
     `;
+    document.querySelector('.btn-print').style.display = 'none';
 }
 </script>
 
