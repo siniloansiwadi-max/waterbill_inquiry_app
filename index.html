@@ -18,6 +18,7 @@
             --primary-light: #2a5298;
             --accent-green: #00a86b;
             --accent-green-dark: #007a4d;
+            --accent-blue: #0284c7;
             --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             --card-bg: rgba(255, 255, 255, 0.95);
             --card-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
@@ -34,7 +35,7 @@
         body { 
             background: var(--bg-gradient);
             min-height: 100vh; 
-            margin: 0;
+            margin: 0; 
             padding: 20px 12px;
             display: flex; 
             flex-direction: column;
@@ -247,7 +248,7 @@
         }
 
         /* 📑 MODAL STYLING */
-        #modal-container {
+        #modal-container, #email-modal-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 23, 42, 0.75);
@@ -259,7 +260,7 @@
             z-index: 1000;
         }
 
-        #modal-content {
+        #modal-content, #email-modal-content {
             background: white;
             border-radius: 18px;
             padding: 22px;
@@ -357,8 +358,14 @@
 
         .modal-buttons {
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            gap: 8px;
             margin-top: 14px;
+        }
+
+        .modal-button-row {
+            display: flex;
+            gap: 8px;
         }
 
         .modal-button {
@@ -366,6 +373,7 @@
             font-size: 13px;
         }
 
+        #register-email-btn { background: #0284c7; color: white; }
         #qr-code-button { background: var(--accent-green); color: white; }
         #new-inquiry-button { background: #64748b; color: white; }
 
@@ -388,7 +396,7 @@
         @media (max-width: 380px) {
             .container { padding: 20px 16px; }
             h1 { font-size: 1.35rem; }
-            .modal-buttons { flex-direction: column; }
+            .modal-button-row { flex-direction: column; }
         }
     </style>
 </head>
@@ -432,11 +440,11 @@
 
     <!-- Loading Message -->
     <div id="loading-message">
-        <div class="spinner"></div> Hinahanap ang records...
+        <div class="spinner"></div> Paki antay po. Lalabas po yan promise. Wag Mainip.
     </div>
 </div>
 
-<!-- Modal Container -->
+<!-- Main Bill Details Modal -->
 <div id="modal-container">
     <div id="modal-content">
         <div id="modal-result"></div>
@@ -457,8 +465,47 @@
         </div>
         
         <div class="modal-buttons">
-            <button id="qr-code-button" class="modal-button" onclick="showQRCode()">📱 Generate QR</button>
-            <button id="new-inquiry-button" class="modal-button" onclick="closeModal()">🔄 New Inquiry</button>
+            <button id="register-email-btn" class="modal-button" onclick="openEmailRegistrationModal()">
+                📧 Receive Bill via Email (Register)
+            </button>
+            <div class="modal-button-row">
+                <button id="qr-code-button" class="modal-button" style="flex:1;" onclick="showQRCode()">📱 Generate QR</button>
+                <button id="new-inquiry-button" class="modal-button" style="flex:1;" onclick="closeModal()">🔄 New Inquiry</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Email Registration Popup Modal -->
+<div id="email-modal-container">
+    <div id="email-modal-content">
+        <h3 style="margin: 0 0 8px 0; color: var(--primary);">📧 Register for e-Billing</h3>
+        <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 0;">
+            Awtomatikong matatanggap ang billing statement sa iyong email bawat buwan.
+        </p>
+
+        <div class="input-wrapper" style="margin-bottom: 12px;">
+            <label>Account Number:</label>
+            <input type="text" id="regAccountNo" readonly style="background: #f1f5f9; font-weight: bold; cursor: not-allowed;">
+        </div>
+
+        <div class="input-wrapper" style="margin-bottom: 12px;">
+            <label>Account Name:</label>
+            <input type="text" id="regAccountName" readonly style="background: #f1f5f9; cursor: not-allowed;">
+        </div>
+
+        <div class="input-wrapper" style="margin-bottom: 18px;">
+            <label>Email Address:</label>
+            <input type="email" id="regEmailAddress" placeholder="halimbawa: pangalan@gmail.com" required>
+        </div>
+
+        <div class="modal-button-row">
+            <button id="btnSubmitRegistration" style="background: #16a34a; color: white; flex: 2;" onclick="submitEmailRegistration()">
+                💾 I-save ang Email
+            </button>
+            <button style="background: #94a3b8; color: white; flex: 1;" onclick="closeEmailRegistrationModal()">
+                Kanselahin
+            </button>
         </div>
     </div>
 </div>
@@ -477,7 +524,7 @@
 // ---------------------------
 // App URLs & Field Mapping
 // ---------------------------
-const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwC6-socVVW3dxUbcNzwnSKg-fEDdEWtbLn77xcBz28coPQ4ED-C8OWB_6MHWDnQ3pH/exec';
+const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxHOsuZ4MUOBxekFccfi84Wv5rSZxGDCyqLdd1pt0DyhIUMsWsRRTZd7K6JC66rs3o_/exec';
 const LOG_WEB_APP_URL  = 'https://script.google.com/macros/s/AKfycbxQKyzoU1AczxwzSiM24DA7TNRsUmiXocgH-TBY7JoM5Xux9wVNZUWBB6ycD4sr-pBE/exec';
 
 const DISPLAY_MAP = {
@@ -530,34 +577,35 @@ function maskName(fullName) {
 }
 
 function formatResult(data) {
-    let output = '<ul>'; 
-    for (const sheetHeader in DISPLAY_MAP) {
-        if (data.hasOwnProperty(sheetHeader)) {
-            let value = String(data[sheetHeader]).replace(/"/g, ''); 
-            const displayLabel = DISPLAY_MAP[sheetHeader];
+    let output = '<ul>';
+    for (const key in data) {
+        if (!data.hasOwnProperty(key)) continue;
+        let value = String(data[key]).replace(/"/g, '');
+        let label = DISPLAY_MAP[key] || key;
 
-            if (displayLabel.toUpperCase() === 'NAME' || displayLabel.toUpperCase() === 'CUSTOMER NAME') {
-                value = maskName(value);
-            }
-            
-            if (displayLabel.includes('Date') && value) { 
-                const dateObj = new Date(value); 
-                if (!isNaN(dateObj.getTime())) { 
-                    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-                    const day = String(dateObj.getDate()).padStart(2, '0');
-                    const year = String(dateObj.getFullYear()).slice(-2);
-                    value = `${month}-${day}-${year}`;
-                }
-            }
-            
-            if (displayLabel.includes('Charge') || displayLabel.includes('Amount') || displayLabel.includes('Bill')) {
-                if (!isNaN(parseFloat(value))) {
-                    value = `₱ ${parseFloat(value).toFixed(2)}`;
-                }
-            }
-
-            output += `<li><strong>${displayLabel}:</strong> <span>${value}</span></li>`;
+        // Masking para sa pangalan
+        if (key.toLowerCase().includes('name')) {
+            value = maskName(value);
         }
+
+        // Petsa formatting
+        if (key.toLowerCase().includes('date') && value) {
+            const dateObj = new Date(value);
+            if (!isNaN(dateObj.getTime())) {
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const day = String(dateObj.getDate()).padStart(2, '0');
+                const year = String(dateObj.getFullYear()).slice(-2);
+                value = `${month}-${day}-${year}`;
+            }
+        }
+
+        // Currency format para sa balance / amount
+        if (key.toLowerCase().includes('balance') || key.toLowerCase().includes('total') || key.toLowerCase().includes('amount') || key.toLowerCase().includes('bill')) {
+            let num = parseFloat(value);
+            if (!isNaN(num)) value = `₱ ${num.toFixed(2)}`;
+        }
+
+        output += `<li><strong>${label}:</strong> <span>${value}</span></li>`;
     }
     output += '</ul>';
     return output;
@@ -565,7 +613,7 @@ function formatResult(data) {
 
 function generateQRCodeLink(billData) {
     const params = new URLSearchParams({
-        account: billData['Account No.'] || '',
+        account: billData['Account No.'] || billData['Account No'] || '',
         name: billData['Name'] || '',
         address: billData['Address'] || '',
         meter: billData['No.'] || '',
@@ -605,6 +653,64 @@ function showQRCode() {
     }
 }
 
+// -------------------------------------------------------------------------
+// 📧 EMAIL REGISTRATION LOGIC
+// -------------------------------------------------------------------------
+function openEmailRegistrationModal() {
+    if (!currentBillData) return;
+    const accountNo = currentBillData['Account No.'] || currentBillData['Account No'] || '';
+    const rawName = currentBillData['Name'] || '';
+
+    document.getElementById('regAccountNo').value = accountNo;
+    document.getElementById('regAccountName').value = rawName;
+    document.getElementById('regEmailAddress').value = '';
+    document.getElementById('email-modal-container').style.display = 'flex';
+}
+
+function closeEmailRegistrationModal() {
+    document.getElementById('email-modal-container').style.display = 'none';
+}
+
+async function submitEmailRegistration() {
+    const accountNo = document.getElementById('regAccountNo').value.trim();
+    const email = document.getElementById('regEmailAddress').value.trim();
+    const btnSubmit = document.getElementById('btnSubmitRegistration');
+
+    if (!email || !email.includes('@') || !email.includes('.')) {
+        return alert('Pakilagay ang isang wastong email address.');
+    }
+
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = '⏳ Sine-save...';
+
+    try {
+        const response = await fetch(DATA_WEB_APP_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ 
+                accountNo: accountNo, 
+                email: email 
+            })
+        });
+        const res = await response.json();
+
+        if (res.success) {
+            alert('🎉 Matagumpay na nairehistro ang iyong email!\nMakakatanggap ka na ng billing notifications.');
+            closeEmailRegistrationModal();
+        } else {
+            alert('❌ Nabigo ang pag-save: ' + (res.error || 'Unknown error'));
+        }
+    } catch (err) {
+        alert('❌ Error sa koneksyon: ' + err.message);
+    } finally {
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = '💾 I-save ang Email';
+    }
+}
+
+// -------------------------------------------------------------------------
+// SEARCH CONTROLS
+// -------------------------------------------------------------------------
 function toggleSearchType(type) {
     const searchLabel = document.getElementById('searchLabel');
     const toggleOptions = document.querySelectorAll('.toggle-option');
@@ -653,10 +759,12 @@ async function fetchAccountData() {
         return;
     }
 
+    // ⚡ CHECK INSTANT CACHE FIRST
     const cachedData = sessionStorage.getItem('acc_' + searchKey);
     if (cachedData) {
         const data = JSON.parse(cachedData);
         currentBillData = data;
+        document.getElementById('register-email-btn').style.display = 'block';
         document.getElementById('qr-modal-container').style.display = 'none';
         modalResult.innerHTML = `
             <h3>Results for Account: ${rawAccountNumber}</h3>
@@ -667,13 +775,13 @@ async function fetchAccountData() {
         modalContainer.style.display = 'flex';
         return;
     }
-    
+
     modalContainer.style.display = 'none'; 
     loadingMessage.style.display = 'flex';
     searchButton.disabled = true; 
 
     try {
-        const response = await fetch(`${DATA_WEB_APP_URL}?account=${searchKey}`);
+        const response = await fetch(`${DATA_WEB_APP_URL}?account=${encodeURIComponent(searchKey)}`);
         const data = await response.json();
 
         let resultTitle = `Results for Account: ${rawAccountNumber}`;
@@ -683,10 +791,15 @@ async function fetchAccountData() {
             resultTitle = `Search Failed`;
             resultHtml = `<p style="color: #e53e3e; font-weight: bold; margin: 0;">${data.error}</p>`;
             currentBillData = null;
+            document.getElementById('register-email-btn').style.display = 'none';
         } else {
             resultHtml = formatResult(data); 
             currentBillData = data;
+            
+            // 💾 SAVE TO BROWSER SESSION CACHE (INSTANT SPEED NEXT TIME)
             sessionStorage.setItem('acc_' + searchKey, JSON.stringify(data));
+            
+            document.getElementById('register-email-btn').style.display = 'block';
             document.getElementById('qr-modal-container').style.display = 'none';
 
             try {
@@ -741,6 +854,7 @@ async function fetchByName() {
             resultHtml = `<p style="text-align: center; color: #718096; margin: 10px 0;">No accounts found matching "${searchName}".</p>`;
         }
         
+        document.getElementById('register-email-btn').style.display = 'none';
         modalResult.innerHTML = `
             <h3>${resultTitle}</h3>
             <div style="border: 1px solid #e2e8f0; padding: 10px; background: #f8fafc; border-radius: 12px;">
@@ -774,7 +888,7 @@ function formatNameSearchResults(results) {
     `;
     
     results.forEach((result) => {
-        const accountNo = result['Account No.'] || 'N/A';
+        const accountNo = result['Account No.'] || result['Account No'] || 'N/A';
         const name = maskName(result['Name'] || 'N/A');
         const address = result['Address'] || 'N/A';
         
@@ -811,6 +925,7 @@ async function fetchAccountDetails(accountNo) {
 
     const renderDetails = (data) => {
         currentBillData = data;
+        document.getElementById('register-email-btn').style.display = 'block';
         document.getElementById('qr-modal-container').style.display = 'none';
         modalResult.innerHTML = `
             <h3>Account: ${accountNo}</h3>
@@ -823,6 +938,7 @@ async function fetchAccountDetails(accountNo) {
         `;
     };
 
+    // ⚡ CHECK INSTANT CACHE FIRST
     const cachedData = sessionStorage.getItem('acc_' + cleanAcc);
     if (cachedData) {
         renderDetails(JSON.parse(cachedData));
@@ -835,8 +951,10 @@ async function fetchAccountDetails(accountNo) {
         const data = await response.json();
         
         if (!data.error) {
+            // 💾 SAVE TO SESSION CACHE
             sessionStorage.setItem('acc_' + cleanAcc, JSON.stringify(data));
             renderDetails(data);
+
             try {
                 if (data['Account No.'] && data['Name']) logInquiry(data['Account No.'], data['Name']);
             } catch (e) {}
