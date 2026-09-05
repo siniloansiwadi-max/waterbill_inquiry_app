@@ -178,6 +178,16 @@
             transform: scale(0.98);
         }
 
+        #register-email-front-btn {
+            background: linear-gradient(135deg, var(--accent-blue), #0369a1);
+            color: white;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+        }
+
+        #register-email-front-btn:active {
+            transform: scale(0.98);
+        }
+
         #search-button {
             background: linear-gradient(135deg, var(--primary-light), var(--primary));
             color: white;
@@ -398,6 +408,65 @@
             h1 { font-size: 1.35rem; }
             .modal-button-row { flex-direction: column; }
         }
+
+        /* 📱 2-COLUMN RESPONSIVE BUTTON GRID */
+        .action-button-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            width: 100%;
+        }
+
+        #calculator-btn {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: white;
+            box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+        }
+
+        #reading-sched-btn {
+            background: linear-gradient(135deg, #475569, #334155);
+            color: white;
+            box-shadow: 0 4px 14px rgba(71, 85, 105, 0.35);
+        }
+
+        /* 🖼️ FULLSCREEN IMAGE VIEWER */
+        #image-viewer-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            z-index: 2000;
+        }
+
+        #image-viewer-modal img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 12px;
+            object-fit: contain;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-img-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            font-size: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2010;
+        }
     </style>
 </head>
 <body>
@@ -435,7 +504,16 @@
     <!-- Action Buttons -->
     <div class="button-group">
         <button id="search-button" onclick="handleSearch()">🔍 Search Bill</button>
-        <button id="ask-tubibot-button-top" onclick="window.open('tubibot.html', '_blank')">💧 Ask Tubibot</button>
+        
+        <div class="action-button-grid">
+            <button id="register-email-front-btn" onclick="openDirectEmailRegistrationModal()">📧 Register Email</button>
+            <button id="ask-tubibot-button-top" onclick="window.open('tubibot.html', '_blank')">💧 Ask Tubibot</button>
+        </div>
+
+        <div class="action-button-grid">
+            <button id="calculator-btn" onclick="location.href='calculator.html'">🧮 Usage Calculator</button>
+            <button id="reading-sched-btn" onclick="openReadingSchedule()">📅 Reading Schedule</button>
+        </div>
     </div>
 
     <!-- Loading Message -->
@@ -444,7 +522,7 @@
     </div>
 </div>
 
-<!-- Main Bill Details Modal -->
+<!-- Main Bill Details Modal (Kasama ang Register Email Button matapos mag-search) -->
 <div id="modal-container">
     <div id="modal-content">
         <div id="modal-result"></div>
@@ -486,10 +564,10 @@
 
         <div class="input-wrapper" style="margin-bottom: 12px;">
             <label>Account Number:</label>
-            <input type="text" id="regAccountNo" readonly style="background: #f1f5f9; font-weight: bold; cursor: not-allowed;">
+            <input type="text" id="regAccountNo" placeholder="halimbawa: 011-101-001">
         </div>
 
-        <div class="input-wrapper" style="margin-bottom: 12px;">
+        <div class="input-wrapper" id="regAccountNameWrapper" style="margin-bottom: 12px;">
             <label>Account Name:</label>
             <input type="text" id="regAccountName" readonly style="background: #f1f5f9; cursor: not-allowed;">
         </div>
@@ -512,9 +590,6 @@
 
 <!-- Bottom Action Links -->
 <div class="new-button-container">
-    <a href="services.html">
-        <button type="button" class="action-btn">🖼️ Gallery</button>
-    </a>
     <a href="https://www.siniloanwd.gov.ph/">
         <button type="button" class="action-btn">🏠 Main Site</button>
     </a>
@@ -583,12 +658,10 @@ function formatResult(data) {
         let value = String(data[key]).replace(/"/g, '');
         let label = DISPLAY_MAP[key] || key;
 
-        // Masking para sa pangalan
         if (key.toLowerCase().includes('name')) {
             value = maskName(value);
         }
 
-        // Petsa formatting
         if (key.toLowerCase().includes('date') && value) {
             const dateObj = new Date(value);
             if (!isNaN(dateObj.getTime())) {
@@ -599,7 +672,6 @@ function formatResult(data) {
             }
         }
 
-        // Currency format para sa balance / amount
         if (key.toLowerCase().includes('balance') || key.toLowerCase().includes('total') || key.toLowerCase().includes('amount') || key.toLowerCase().includes('bill')) {
             let num = parseFloat(value);
             if (!isNaN(num)) value = `₱ ${num.toFixed(2)}`;
@@ -635,7 +707,8 @@ function generateQRCodeLink(billData) {
         width: 160,
         height: 160,
         colorDark: "#1e3c72",
-        colorLight: "#ffffff"
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.L
     });
 }
 
@@ -654,16 +727,45 @@ function showQRCode() {
 }
 
 // -------------------------------------------------------------------------
-// 📧 EMAIL REGISTRATION LOGIC
+// 📧 EMAIL REGISTRATION MODAL CONTROLS
 // -------------------------------------------------------------------------
+
+// 1. Kapag pinindot mula sa HARAP (Direct Button)
+function openDirectEmailRegistrationModal() {
+    const accField = document.getElementById('regAccountNo');
+    const nameWrapper = document.getElementById('regAccountNameWrapper');
+    
+    // Kuhanin ang nakasulat sa search input kung mayroon
+    accField.value = accountInput.value.trim();
+    accField.readOnly = false;
+    accField.style.background = '#ffffff';
+    accField.style.cursor = 'text';
+
+    // Itago ang account name dahil hindi pa nagse-search
+    nameWrapper.style.display = 'none';
+    document.getElementById('regEmailAddress').value = '';
+    
+    document.getElementById('email-modal-container').style.display = 'flex';
+}
+
+// 2. Kapag pinindot matapos MAG-SEARCH (Loob ng Result Modal)
 function openEmailRegistrationModal() {
     if (!currentBillData) return;
     const accountNo = currentBillData['Account No.'] || currentBillData['Account No'] || '';
     const rawName = currentBillData['Name'] || '';
 
-    document.getElementById('regAccountNo').value = accountNo;
+    const accField = document.getElementById('regAccountNo');
+    const nameWrapper = document.getElementById('regAccountNameWrapper');
+
+    accField.value = accountNo;
+    accField.readOnly = true;
+    accField.style.background = '#f1f5f9';
+    accField.style.cursor = 'not-allowed';
+
+    nameWrapper.style.display = 'block';
     document.getElementById('regAccountName').value = rawName;
     document.getElementById('regEmailAddress').value = '';
+    
     document.getElementById('email-modal-container').style.display = 'flex';
 }
 
@@ -672,14 +774,36 @@ function closeEmailRegistrationModal() {
 }
 
 async function submitEmailRegistration() {
-    const accountNo = document.getElementById('regAccountNo').value.trim();
+    const rawAccountNo = document.getElementById('regAccountNo').value.trim();
     const email = document.getElementById('regEmailAddress').value.trim();
     const btnSubmit = document.getElementById('btnSubmitRegistration');
 
-    if (!email || !email.includes('@') || !email.includes('.')) {
-        return alert('Pakilagay ang isang wastong email address.');
+    // 1. Suriin kung may laman ang Account Number
+    if (!rawAccountNo) {
+        alert('Pakilagay ang inyong Account Number.');
+        return;
     }
 
+    // 2. Format validation: Tinatanggap lamang ang 9 digits (tuloy-tuloy o may gitling)
+    // Halimbawa: "063101074" o "063-101-074"
+    const validAccountPattern = /^(\d{3}-\d{3}-\d{3}|\d{9})$/;
+    if (!validAccountPattern.test(rawAccountNo)) {
+        alert('❌ Mali ang format ng Account Number!\n\nAng tinatanggap lamang ay 9-digit format tulad ng:\n• 063-101-074\n• 063101074\n\nPaki-check kung may kulang na numero o leading zero.');
+        return;
+    }
+
+    // 3. Email format validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailPattern.test(email)) {
+        alert('Pakilagay ang isang wastong email address.');
+        return;
+    }
+
+    // 4. I-standardize ang Account Number sa format na "XXX-XXX-XXX"
+    const cleanDigits = rawAccountNo.replace(/\D/g, '');
+    const formattedAccountNo = `${cleanDigits.slice(0, 3)}-${cleanDigits.slice(3, 6)}-${cleanDigits.slice(6, 9)}`;
+
+    // 5. I-disable ang button habang nagpapadala
     btnSubmit.disabled = true;
     btnSubmit.textContent = '⏳ Sine-save...';
 
@@ -688,14 +812,14 @@ async function submitEmailRegistration() {
             method: 'POST',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify({ 
-                accountNo: accountNo, 
+                accountNo: formattedAccountNo, 
                 email: email 
             })
         });
         const res = await response.json();
 
         if (res.success) {
-            alert('🎉 Matagumpay na nairehistro ang iyong email!\nMakakatanggap ka na ng billing notifications.');
+            alert('🎉 Matagumpay na nairehistro ang iyong email!\nMakakatanggap ka na ng billing notifications tuwing pagkatapos ng reading sa inyong area.');
             closeEmailRegistrationModal();
         } else {
             alert('❌ Nabigo ang pag-save: ' + (res.error || 'Unknown error'));
@@ -759,7 +883,6 @@ async function fetchAccountData() {
         return;
     }
 
-    // ⚡ CHECK INSTANT CACHE FIRST
     const cachedData = sessionStorage.getItem('acc_' + searchKey);
     if (cachedData) {
         const data = JSON.parse(cachedData);
@@ -796,7 +919,6 @@ async function fetchAccountData() {
             resultHtml = formatResult(data); 
             currentBillData = data;
             
-            // 💾 SAVE TO BROWSER SESSION CACHE (INSTANT SPEED NEXT TIME)
             sessionStorage.setItem('acc_' + searchKey, JSON.stringify(data));
             
             document.getElementById('register-email-btn').style.display = 'block';
@@ -938,7 +1060,6 @@ async function fetchAccountDetails(accountNo) {
         `;
     };
 
-    // ⚡ CHECK INSTANT CACHE FIRST
     const cachedData = sessionStorage.getItem('acc_' + cleanAcc);
     if (cachedData) {
         renderDetails(JSON.parse(cachedData));
@@ -951,7 +1072,6 @@ async function fetchAccountDetails(accountNo) {
         const data = await response.json();
         
         if (!data.error) {
-            // 💾 SAVE TO SESSION CACHE
             sessionStorage.setItem('acc_' + cleanAcc, JSON.stringify(data));
             renderDetails(data);
 
@@ -987,7 +1107,22 @@ async function logInquiry(accountNo, name) {
 
 accountInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleSearch(); });
 nameInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleSearch(); });
+
+function openReadingSchedule() {
+    document.getElementById('image-viewer-modal').style.display = 'flex';
+}
+
+function closeReadingSchedule() {
+    document.getElementById('image-viewer-modal').style.display = 'none';
+}
+
 </script>
+
+<!-- Fullscreen Image Viewer Modal -->
+<div id="image-viewer-modal" onclick="closeReadingSchedule()">
+    <button type="button" class="close-img-btn" onclick="closeReadingSchedule()">✕</button>
+    <img src="readingdate.jpg" alt="Reading Schedule" onclick="event.stopPropagation()">
+</div>
 
 </body>
 </html>
