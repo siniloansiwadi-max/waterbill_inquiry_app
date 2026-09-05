@@ -417,14 +417,13 @@
                 <p>🟢 Online | AI Customer Service</p>
             </div>
             <div class="tubibot-header-buttons">
-                <button class="header-btn back-btn" onclick="goBackToIndex()" title="Bumalik">🏠</button>
-                <button class="header-btn close-btn" onclick="closeWindow()" title="Isara">✕</button>
+                <button class="header-btn close-btn" onclick="closeWindow()" title="Close">✕</button>
             </div>
         </div>
         
         <!-- Back Link -->
         <div class="back-to-site">
-            <a href="services.html">⬅ Bumalik sa SIWADI Home</a>
+            <a href="index.html">⬅ Back</a>
         </div>
 
         <!-- Messages -->
@@ -456,7 +455,7 @@
 
     <script>
         // Google Sheets API URL (kapareho ng sa index.html)
-        const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwC6-socVVW3dxUbcNzwnSKg-fEDdEWtbLn77xcBz28coPQ4ED-C8OWB_6MHWDnQ3pH/exec';
+        const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxHOsuZ4MUOBxekFccfi84Wv5rSZxGDCyqLdd1pt0DyhIUMsWsRRTZd7K6JC66rs3o_/exec';
         // Google Sheets Logging URL (palitan ng URL mula sa deployment)
         const LOG_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyrjG2xOnM7ldjeCP99vQ172MQRsWGXCQeJhJ_D47FESJSLIYRcH_731LhlFAnFXe3Wtw/exec';
 
@@ -469,15 +468,12 @@
 
         // Back to services.html
         function goBackToIndex() {
-            window.location.href = 'services.html';
+            window.location.href = 'index.html';
         }
 
         // Close window/tab
         function closeWindow() {
-            window.close();
-            setTimeout(function() {
-                window.location.href = 'index.html';
-            }, 300);
+            window.location.replace('index.html');
         }
 
         // Get current time string
