@@ -9,7 +9,10 @@
     
     <!-- QR Code Library & FAQ -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-    <script src="faq.js"></script>    
+    <script src="faq.js"></script>
+    
+    <!-- 🔥 SUPABASE LIBRARY -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
         :root {
@@ -45,7 +48,6 @@
             color: var(--text-main);
         }
 
-        /* 📱 MAIN CARD */
         .container {
             background: var(--card-bg);
             backdrop-filter: blur(10px);
@@ -66,7 +68,6 @@
             letter-spacing: -0.5px;
         }
 
-        /* 🖼️ LOGO */
         #site-logo {
             width: 90px;
             height: auto;
@@ -75,7 +76,6 @@
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
 
-        /* 🔘 SEARCH TOGGLE */
         .search-type-toggle {
             display: flex;
             background: #edf2f7;
@@ -110,7 +110,6 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
 
-        /* ⌨️ INPUT FIELDS */
         .input-wrapper {
             display: flex;
             flex-direction: column;
@@ -145,7 +144,6 @@
             box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.15);
         }
 
-        /* 🚀 BUTTONS */
         .button-group {
             display: flex;
             flex-direction: column;
@@ -203,7 +201,6 @@
             cursor: not-allowed;
         }
 
-        /* ⏳ LOADING */
         #loading-message {
             margin-top: 15px;
             color: var(--primary-light);
@@ -229,7 +226,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* 🔗 BOTTOM ACTION BUTTONS */
         .new-button-container {
             margin-top: 20px;
             display: flex;
@@ -257,7 +253,6 @@
             background: rgba(255, 255, 255, 0.25) !important;
         }
 
-        /* 📑 MODAL STYLING */
         #modal-container, #email-modal-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -307,7 +302,6 @@
             font-weight: 600;
         }
 
-        /* 📊 RESULTS TABLE (NAME SEARCH) */
         .results-table {
             width: 100%;
             border-collapse: collapse;
@@ -409,7 +403,6 @@
             .modal-button-row { flex-direction: column; }
         }
 
-        /* 📱 2-COLUMN RESPONSIVE BUTTON GRID */
         .action-button-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -429,7 +422,6 @@
             box-shadow: 0 4px 14px rgba(71, 85, 105, 0.35);
         }
 
-        /* 🖼️ FULLSCREEN IMAGE VIEWER */
         #image-viewer-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -475,7 +467,6 @@
     <img src="swdmascot.png" alt="SIWADI Mascot" id="site-logo" onerror="this.src='siwadilogo.png'">
     <h1>Water Bill Inquiry</h1>
     
-    <!-- Search Tabs -->
     <div class="search-type-toggle">
         <label class="toggle-option active">
             <input type="radio" name="searchType" value="account" checked onchange="toggleSearchType('account')">
@@ -487,21 +478,12 @@
         </label>
     </div>
     
-    <!-- Input Field Area -->
     <div class="input-wrapper">
         <label for="accountNumber" id="searchLabel">Account Number</label>
-        <input type="text" 
-               id="accountNumber" 
-               placeholder="e.g., 011-101-001" 
-               inputmode="numeric"
-               autofocus>
-        <input type="text" 
-               id="nameSearchInput" 
-               placeholder="Enter last name or full name..." 
-               style="display: none;">
+        <input type="text" id="accountNumber" placeholder="e.g., 011-101-001" inputmode="numeric" autofocus>
+        <input type="text" id="nameSearchInput" placeholder="Enter last name or full name..." style="display: none;">
     </div>
     
-    <!-- Action Buttons -->
     <div class="button-group">
         <button id="search-button" onclick="handleSearch()">🔍 Search Bill</button>
         
@@ -516,13 +498,11 @@
         </div>
     </div>
 
-    <!-- Loading Message -->
     <div id="loading-message">
         <div class="spinner"></div> Paki antay po. Lalabas po yan promise. Wag Mainip.
     </div>
 </div>
 
-<!-- Main Bill Details Modal (Kasama ang Register Email Button matapos mag-search) -->
 <div id="modal-container">
     <div id="modal-content">
         <div id="modal-result"></div>
@@ -554,7 +534,6 @@
     </div>
 </div>
 
-<!-- Email Registration Popup Modal -->
 <div id="email-modal-container">
     <div id="email-modal-content">
         <h3 style="margin: 0 0 8px 0; color: var(--primary);">📧 Register for e-Billing</h3>
@@ -588,7 +567,6 @@
     </div>
 </div>
 
-<!-- Bottom Action Links -->
 <div class="new-button-container">
     <a href="https://www.siniloanwd.gov.ph/">
         <button type="button" class="action-btn">🏠 Main Site</button>
@@ -596,24 +574,37 @@
 </div>
 
 <script>
-// ---------------------------
-// App URLs & Field Mapping
-// ---------------------------
-const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxHOsuZ4MUOBxekFccfi84Wv5rSZxGDCyqLdd1pt0DyhIUMsWsRRTZd7K6JC66rs3o_/exec';
-const LOG_WEB_APP_URL  = 'https://script.google.com/macros/s/AKfycbxQKyzoU1AczxwzSiM24DA7TNRsUmiXocgH-TBY7JoM5Xux9wVNZUWBB6ycD4sr-pBE/exec';
+// ============================================================
+// 🔥 SUPABASE CONFIGURATION
+// ============================================================
+const SUPABASE_URL = 'https://eavuwdjjmofxuwhtompp.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_kRq0ET-3jP4Ul6DoGSxjrQ_GqmVdPaI';
 
+// Initialize Supabase client
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ============================================================
+// 📧 EMAIL REGISTRATION (Google Apps Script - tuloy pa rin)
+// ============================================================
+const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxHOsuZ4MUOBxekFccfi84Wv5rSZxGDCyqLdd1pt0DyhIUMsWsRRTZd7K6JC66rs3o_/exec';
+
+// ============================================================
+// 📋 DISPLAY MAP
+// ============================================================
 const DISPLAY_MAP = {
-    'Account No.': 'Account Number', 
-    'Name': 'Name',
-    'Address': 'Billing Address', 
-    'No.': 'Meter Number',
-    'Status for App': 'Account Status',
-    'BALANCE': 'Water Bill',
-    'AROBALANCE': 'S.C. / Materials', 
-    'Total': 'Total Amount Due',  
-    'Reading Date': 'Reading Date',
-    'Due Date': 'Payment Due Date',       
-    'Discon Date': 'Disconnection Date'
+    'account_no': 'Account Number', 
+    'name': 'Name',
+    'address': 'Billing Address', 
+    'meter_no': 'Meter Number',
+    'status_for_app': 'Account Status',
+    'balance': 'Water Bill',
+    'arobalance': 'S.C. / Materials', 
+    'total': 'Total Amount Due',  
+    'reading_date': 'Reading Date',
+    'due_date': 'Payment Due Date',       
+    'discon_date': 'Disconnection Date',
+    'status': 'Status',
+    'zone': 'Zone'
 };
 
 const loadingMessage = document.getElementById('loading-message');
@@ -655,7 +646,10 @@ function formatResult(data) {
     let output = '<ul>';
     for (const key in data) {
         if (!data.hasOwnProperty(key)) continue;
-        let value = String(data[key]).replace(/"/g, '');
+        // Skip internal fields
+        if (key === 'id' || key === 'updated_at') continue;
+        
+        let value = String(data[key] ?? '').replace(/"/g, '');
         let label = DISPLAY_MAP[key] || key;
 
         if (key.toLowerCase().includes('name')) {
@@ -685,15 +679,15 @@ function formatResult(data) {
 
 function generateQRCodeLink(billData) {
     const params = new URLSearchParams({
-        account: billData['Account No.'] || billData['Account No'] || '',
-        name: billData['Name'] || '',
-        address: billData['Address'] || '',
-        meter: billData['No.'] || '',
-        waterBill: billData['BALANCE'] || '0',
-        scMaterials: billData['AROBALANCE'] || '0',
-        total: billData['Total'] || '0',
-        dueDate: billData['Due Date'] || '',
-        readingDate: billData['Reading Date'] || ''
+        account: billData['account_no'] || '',
+        name: billData['name'] || '',
+        address: billData['address'] || '',
+        meter: billData['meter_no'] || '',
+        waterBill: billData['balance'] || '0',
+        scMaterials: billData['arobalance'] || '0',
+        total: billData['total'] || '0',
+        dueDate: billData['due_date'] || '',
+        readingDate: billData['reading_date'] || ''
     });
     
     const baseUrl = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
@@ -726,33 +720,28 @@ function showQRCode() {
     }
 }
 
-// -------------------------------------------------------------------------
-// 📧 EMAIL REGISTRATION MODAL CONTROLS
-// -------------------------------------------------------------------------
-
-// 1. Kapag pinindot mula sa HARAP (Direct Button)
+// ============================================================
+// 📧 EMAIL REGISTRATION FUNCTIONS (Google Apps Script)
+// ============================================================
 function openDirectEmailRegistrationModal() {
     const accField = document.getElementById('regAccountNo');
     const nameWrapper = document.getElementById('regAccountNameWrapper');
     
-    // Kuhanin ang nakasulat sa search input kung mayroon
     accField.value = accountInput.value.trim();
     accField.readOnly = false;
     accField.style.background = '#ffffff';
     accField.style.cursor = 'text';
 
-    // Itago ang account name dahil hindi pa nagse-search
     nameWrapper.style.display = 'none';
     document.getElementById('regEmailAddress').value = '';
     
     document.getElementById('email-modal-container').style.display = 'flex';
 }
 
-// 2. Kapag pinindot matapos MAG-SEARCH (Loob ng Result Modal)
 function openEmailRegistrationModal() {
     if (!currentBillData) return;
-    const accountNo = currentBillData['Account No.'] || currentBillData['Account No'] || '';
-    const rawName = currentBillData['Name'] || '';
+    const accountNo = currentBillData['account_no'] || '';
+    const rawName = currentBillData['name'] || '';
 
     const accField = document.getElementById('regAccountNo');
     const nameWrapper = document.getElementById('regAccountNameWrapper');
@@ -778,32 +767,26 @@ async function submitEmailRegistration() {
     const email = document.getElementById('regEmailAddress').value.trim();
     const btnSubmit = document.getElementById('btnSubmitRegistration');
 
-    // 1. Suriin kung may laman ang Account Number
     if (!rawAccountNo) {
         alert('Pakilagay ang inyong Account Number.');
         return;
     }
 
-    // 2. Format validation: Tinatanggap lamang ang 9 digits (tuloy-tuloy o may gitling)
-    // Halimbawa: "063101074" o "063-101-074"
     const validAccountPattern = /^(\d{3}-\d{3}-\d{3}|\d{9})$/;
     if (!validAccountPattern.test(rawAccountNo)) {
         alert('❌ Mali ang format ng Account Number!\n\nAng tinatanggap lamang ay 9-digit format tulad ng:\n• 063-101-074\n• 063101074\n\nPaki-check kung may kulang na numero o leading zero.');
         return;
     }
 
-    // 3. Email format validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailPattern.test(email)) {
         alert('Pakilagay ang isang wastong email address.');
         return;
     }
 
-    // 4. I-standardize ang Account Number sa format na "XXX-XXX-XXX"
     const cleanDigits = rawAccountNo.replace(/\D/g, '');
     const formattedAccountNo = `${cleanDigits.slice(0, 3)}-${cleanDigits.slice(3, 6)}-${cleanDigits.slice(6, 9)}`;
 
-    // 5. I-disable ang button habang nagpapadala
     btnSubmit.disabled = true;
     btnSubmit.textContent = '⏳ Sine-save...';
 
@@ -832,9 +815,9 @@ async function submitEmailRegistration() {
     }
 }
 
-// -------------------------------------------------------------------------
+// ============================================================
 // SEARCH CONTROLS
-// -------------------------------------------------------------------------
+// ============================================================
 function toggleSearchType(type) {
     const searchLabel = document.getElementById('searchLabel');
     const toggleOptions = document.querySelectorAll('.toggle-option');
@@ -874,29 +857,21 @@ function handleSearch() {
     }
 }
 
+// ============================================================
+// 🔥 SUPABASE: ACCOUNT SEARCH
+// ============================================================
 async function fetchAccountData() {
     let rawAccountNumber = accountInput.value.trim();
-    const searchKey = rawAccountNumber.replace(/[\s\-\–]/g, ''); 
+    let searchKey = rawAccountNumber.replace(/[\s\-\–]/g, ''); 
     
     if (!searchKey) {
         alert("Please enter an account number.");
         return;
     }
 
-    const cachedData = sessionStorage.getItem('acc_' + searchKey);
-    if (cachedData) {
-        const data = JSON.parse(cachedData);
-        currentBillData = data;
-        document.getElementById('register-email-btn').style.display = 'block';
-        document.getElementById('qr-modal-container').style.display = 'none';
-        modalResult.innerHTML = `
-            <h3>Results for Account: ${rawAccountNumber}</h3>
-            <div style="border: 1px solid #e2e8f0; padding: 12px; background: #f8fafc; border-radius: 12px;">
-                ${formatResult(data)}
-            </div>
-        `;
-        modalContainer.style.display = 'flex';
-        return;
+    // I-format sa XXX-XXX-XXX
+    if (searchKey.length === 9) {
+        searchKey = `${searchKey.slice(0,3)}-${searchKey.slice(3,6)}-${searchKey.slice(6,9)}`;
     }
 
     modalContainer.style.display = 'none'; 
@@ -904,28 +879,35 @@ async function fetchAccountData() {
     searchButton.disabled = true; 
 
     try {
-        const response = await fetch(`${DATA_WEB_APP_URL}?account=${encodeURIComponent(searchKey)}`);
-        const data = await response.json();
+        // 🔥 SUPABASE QUERY
+        const { data, error } = await sb
+            .from('balances')
+            .select('*')
+            .eq('account_no', searchKey)
+            .maybeSingle();
 
         let resultTitle = `Results for Account: ${rawAccountNumber}`;
         let resultHtml = '';
 
-        if (data.error) {
+        if (error) {
             resultTitle = `Search Failed`;
-            resultHtml = `<p style="color: #e53e3e; font-weight: bold; margin: 0;">${data.error}</p>`;
+            resultHtml = `<p style="color: #e53e3e; font-weight: bold; margin: 0;">${error.message}</p>`;
+            currentBillData = null;
+            document.getElementById('register-email-btn').style.display = 'none';
+        } else if (!data) {
+            resultTitle = `No Results`;
+            resultHtml = `<p style="text-align: center; color: #718096; margin: 10px 0;">No account found with number "${rawAccountNumber}".</p>`;
             currentBillData = null;
             document.getElementById('register-email-btn').style.display = 'none';
         } else {
             resultHtml = formatResult(data); 
             currentBillData = data;
-            
-            sessionStorage.setItem('acc_' + searchKey, JSON.stringify(data));
-            
+                        
             document.getElementById('register-email-btn').style.display = 'block';
             document.getElementById('qr-modal-container').style.display = 'none';
 
             try {
-                if (data['Account No.'] && data['Name']) logInquiry(data['Account No.'], data['Name']);
+                if (data['account_no'] && data['name']) logInquiry(data['account_no'], data['name']);
             } catch (e) {}
         }
 
@@ -945,6 +927,9 @@ async function fetchAccountData() {
     }
 }
 
+// ============================================================
+// 🔥 SUPABASE: NAME SEARCH
+// ============================================================
 async function fetchByName() {
     const searchName = nameInput.value.trim();
     lastNameSearchQuery = searchName;
@@ -959,18 +944,22 @@ async function fetchByName() {
     searchButton.disabled = true; 
     
     try {
-        const response = await fetch(`${DATA_WEB_APP_URL}?name=${encodeURIComponent(searchName)}`);
-        const data = await response.json();
-        
+        // 🔥 SUPABASE QUERY — case-insensitive search
+        const { data, error } = await sb
+            .from('balances')
+            .select('account_no, name, address')
+            .ilike('name', `%${searchName}%`)
+            .limit(50);
+
         let resultTitle = '';
         let resultHtml = '';
         
-        if (data.error) {
+        if (error) {
             resultTitle = `Search Failed`;
-            resultHtml = `<p style="color: #e53e3e; font-weight: bold;">${data.error}</p>`;
-        } else if (data.results && data.results.length > 0) {
+            resultHtml = `<p style="color: #e53e3e; font-weight: bold;">${error.message}</p>`;
+        } else if (data && data.length > 0) {
             resultTitle = `Search Results for "${searchName}"`;
-            resultHtml = formatNameSearchResults(data.results);
+            resultHtml = formatNameSearchResults(data);
         } else {
             resultTitle = `No Results`;
             resultHtml = `<p style="text-align: center; color: #718096; margin: 10px 0;">No accounts found matching "${searchName}".</p>`;
@@ -1010,9 +999,9 @@ function formatNameSearchResults(results) {
     `;
     
     results.forEach((result) => {
-        const accountNo = result['Account No.'] || result['Account No'] || 'N/A';
-        const name = maskName(result['Name'] || 'N/A');
-        const address = result['Address'] || 'N/A';
+        const accountNo = result['account_no'] || 'N/A';
+        const name = maskName(result['name'] || 'N/A');
+        const address = result['address'] || 'N/A';
         
         html += `
             <tr class="result-row" data-account="${accountNo}">
@@ -1042,8 +1031,15 @@ function addRowClickHandlers() {
     });
 }
 
+// ============================================================
+// 🔥 SUPABASE: FETCH FULL ACCOUNT DETAILS
+// ============================================================
 async function fetchAccountDetails(accountNo) {
     const cleanAcc = String(accountNo).replace(/[\s\-\–]/g, '');
+    let formattedAcc = cleanAcc;
+    if (cleanAcc.length === 9) {
+        formattedAcc = `${cleanAcc.slice(0,3)}-${cleanAcc.slice(3,6)}-${cleanAcc.slice(6,9)}`;
+    }
 
     const renderDetails = (data) => {
         currentBillData = data;
@@ -1060,23 +1056,19 @@ async function fetchAccountDetails(accountNo) {
         `;
     };
 
-    const cachedData = sessionStorage.getItem('acc_' + cleanAcc);
-    if (cachedData) {
-        renderDetails(JSON.parse(cachedData));
-        return;
-    }
-
     loadingMessage.style.display = 'flex';
     try {
-        const response = await fetch(`${DATA_WEB_APP_URL}?account=${cleanAcc}`);
-        const data = await response.json();
+        const { data, error } = await sb
+            .from('balances')
+            .select('*')
+            .eq('account_no', formattedAcc)
+            .maybeSingle();
         
-        if (!data.error) {
-            sessionStorage.setItem('acc_' + cleanAcc, JSON.stringify(data));
+        if (!error && data) {
             renderDetails(data);
 
             try {
-                if (data['Account No.'] && data['Name']) logInquiry(data['Account No.'], data['Name']);
+                if (data['account_no'] && data['name']) logInquiry(data['account_no'], data['name']);
             } catch (e) {}
         }
     } catch (error) {
@@ -1094,15 +1086,15 @@ async function goBackToSearchResults() {
 }
 
 async function logInquiry(accountNo, name) {
-    if (!LOG_WEB_APP_URL) return;
     try {
-        const params = new URLSearchParams({
-            account: accountNo,
-            name: name,
-            timestamp: new Date().toISOString()
+        await sb.from('inquiries').insert({
+            account_no: accountNo,
+            name: name
         });
-        await fetch(`${LOG_WEB_APP_URL}?${params.toString()}`, { method: 'GET', mode: 'no-cors' });
-    } catch (err) {}
+    } catch (err) {
+        // Silent fail — huwag i-block ang user
+        console.log('Log error:', err);
+    }
 }
 
 accountInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleSearch(); });
@@ -1118,7 +1110,6 @@ function closeReadingSchedule() {
 
 </script>
 
-<!-- Fullscreen Image Viewer Modal -->
 <div id="image-viewer-modal" onclick="closeReadingSchedule()">
     <button type="button" class="close-img-btn" onclick="closeReadingSchedule()">✕</button>
     <img src="readingdate.jpg" alt="Reading Schedule" onclick="event.stopPropagation()">
