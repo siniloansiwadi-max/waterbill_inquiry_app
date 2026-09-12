@@ -551,9 +551,14 @@
             <input type="text" id="regAccountName" readonly style="background: #f1f5f9; cursor: not-allowed;">
         </div>
 
-        <div class="input-wrapper" style="margin-bottom: 18px;">
+        <div class="input-wrapper" style="margin-bottom: 12px;">
             <label>Email Address:</label>
             <input type="email" id="regEmailAddress" placeholder="halimbawa: pangalan@gmail.com" required>
+        </div>
+
+        <div class="input-wrapper" style="margin-bottom: 18px;">
+            <label>Contact Number:</label>
+            <input type="tel" id="regContactNumber" placeholder="halimbawa: 09171234567" maxlength="11">
         </div>
 
         <div class="modal-button-row">
@@ -582,11 +587,6 @@ const SUPABASE_KEY = 'sb_publishable_kRq0ET-3jP4Ul6DoGSxjrQ_GqmVdPaI';
 
 // Initialize Supabase client
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-// ============================================================
-// 📧 EMAIL REGISTRATION (Google Apps Script - tuloy pa rin)
-// ============================================================
-const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxHOsuZ4MUOBxekFccfi84Wv5rSZxGDCyqLdd1pt0DyhIUMsWsRRTZd7K6JC66rs3o_/exec';
 
 // ============================================================
 // 📋 DISPLAY MAP
@@ -765,6 +765,7 @@ function closeEmailRegistrationModal() {
 async function submitEmailRegistration() {
     const rawAccountNo = document.getElementById('regAccountNo').value.trim();
     const email = document.getElementById('regEmailAddress').value.trim();
+    const contactNumber = document.getElementById('regContactNumber').value.trim();
     const btnSubmit = document.getElementById('btnSubmitRegistration');
 
     if (!rawAccountNo) {
@@ -784,6 +785,16 @@ async function submitEmailRegistration() {
         return;
     }
 
+    // Contact number validation (11 digits, nagsisimula sa 09)
+    if (contactNumber) {
+        const contactPattern = /^09\d{9}$/;
+        if (!contactPattern.test(contactNumber)) {
+            alert('❌ Mali ang format ng Contact Number!\n\nAng tinatanggap lamang ay 11-digit format tulad ng:\n• 09171234567');
+            return;
+        }
+    }
+
+    // I-standardize ang Account Number sa format na "XXX-XXX-XXX"
     const cleanDigits = rawAccountNo.replace(/\D/g, '');
     const formattedAccountNo = `${cleanDigits.slice(0, 3)}-${cleanDigits.slice(3, 6)}-${cleanDigits.slice(6, 9)}`;
 
@@ -791,22 +802,46 @@ async function submitEmailRegistration() {
     btnSubmit.textContent = '⏳ Sine-save...';
 
     try {
-        const response = await fetch(DATA_WEB_APP_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ 
-                accountNo: formattedAccountNo, 
-                email: email 
-            })
-        });
-        const res = await response.json();
+        // 🔥 SUPABASE: I-check kung existing na ang account
+        const { data: existing, error: checkError } = await sb
+            .from('emails')
+            .select('*')
+            .eq('account_number', formattedAccountNo)
+            .maybeSingle();
 
-        if (res.success) {
-            alert('🎉 Matagumpay na nairehistro ang iyong email!\nMakakatanggap ka na ng billing notifications tuwing pagkatapos ng reading sa inyong area.');
-            closeEmailRegistrationModal();
-        } else {
-            alert('❌ Nabigo ang pag-save: ' + (res.error || 'Unknown error'));
+        if (checkError && checkError.code !== 'PGRST116') {
+            throw new Error(checkError.message);
         }
+
+        if (existing) {
+            // I-update ang existing record
+            const { error: updateError } = await sb
+                .from('emails')
+                .update({
+                    email_address: email,
+                    contact_number: contactNumber || null,
+                    timestamp: new Date().toISOString()
+                })
+                .eq('account_number', formattedAccountNo);
+
+            if (updateError) throw new Error(updateError.message);
+        } else {
+            // I-insert ang bagong record
+            const { error: insertError } = await sb
+                .from('emails')
+                .insert({
+                    account_number: formattedAccountNo,
+                    email_address: email,
+                    contact_number: contactNumber || null,
+                    timestamp: new Date().toISOString()
+                });
+
+            if (insertError) throw new Error(insertError.message);
+        }
+
+        alert('🎉 Matagumpay na nairehistro ang iyong email!\nMakakatanggap ka na ng billing notifications tuwing pagkatapos ng reading sa inyong area.');
+        closeEmailRegistrationModal();
+
     } catch (err) {
         alert('❌ Error sa koneksyon: ' + err.message);
     } finally {
