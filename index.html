@@ -557,8 +557,8 @@
         </div>
 
         <div class="input-wrapper" style="margin-bottom: 18px;">
-            <label>Contact Number:</label>
-            <input type="tel" id="regContactNumber" placeholder="halimbawa: 09171234567" maxlength="11">
+            <label>Contact Number: <span style="color: #ef4444;">*</span></label>
+            <input type="tel" id="regContactNumber" placeholder="halimbawa: 09171234567" maxlength="11" required>
         </div>
 
         <div class="modal-button-row">
@@ -786,12 +786,18 @@ async function submitEmailRegistration() {
     }
 
     // Contact number validation (11 digits, nagsisimula sa 09)
-    if (contactNumber) {
-        const contactPattern = /^09\d{9}$/;
-        if (!contactPattern.test(contactNumber)) {
-            alert('❌ Mali ang format ng Contact Number!\n\nAng tinatanggap lamang ay 11-digit format tulad ng:\n• 09171234567');
-            return;
-        }
+    // ✅ COMPULSORY: Contact number validation (11 digits, nagsisimula sa 09)
+    if (!contactNumber) {
+        alert('❌ Kailangan ang Contact Number!\n\nPakilagay ang inyong 11-digit contact number tulad ng:\n• 09171234567');
+        document.getElementById('regContactNumber').focus();
+        return;
+    }
+    
+    const contactPattern = /^09\d{9}$/;
+    if (!contactPattern.test(contactNumber)) {
+        alert('❌ Mali ang format ng Contact Number!\n\nAng tinatanggap lamang ay 11-digit format tulad ng:\n• 09171234567');
+        document.getElementById('regContactNumber').focus();
+        return;
     }
 
     // I-standardize ang Account Number sa format na "XXX-XXX-XXX"
@@ -819,7 +825,7 @@ async function submitEmailRegistration() {
                 .from('emails')
                 .update({
                     email_address: email,
-                    contact_number: contactNumber || null,
+                    contact_number: contactNumber,  // ← Hindi na optional
                     timestamp: new Date().toISOString()
                 })
                 .eq('account_number', formattedAccountNo);
@@ -832,7 +838,7 @@ async function submitEmailRegistration() {
                 .insert({
                     account_number: formattedAccountNo,
                     email_address: email,
-                    contact_number: contactNumber || null,
+                    contact_number: contactNumber,
                     timestamp: new Date().toISOString()
                 });
 
@@ -1143,7 +1149,285 @@ function closeReadingSchedule() {
     document.getElementById('image-viewer-modal').style.display = 'none';
 }
 
+// ============================================================
+// 🔐 SECRET ADMIN PANEL
+// ============================================================
+
+// Dobol-click sa mascot
+document.getElementById('site-logo').addEventListener('dblclick', function() {
+    openPasswordModal();
+});
+
+function openPasswordModal() {
+    document.getElementById('password-modal').style.display = 'flex';
+    document.getElementById('passwordError').style.display = 'none';
+    document.getElementById('adminPasswordInput').value = '';
+    setTimeout(() => document.getElementById('adminPasswordInput').focus(), 100);
+}
+
+function closePasswordModal() {
+    document.getElementById('password-modal').style.display = 'none';
+}
+
+function verifyAdminPassword() {
+    const input = document.getElementById('adminPasswordInput').value;
+    const ADMIN_PASSWORD = 'pulpitobayagbag';
+    
+    if (input === ADMIN_PASSWORD) {
+        closePasswordModal();
+        openAdminPanel();
+    } else {
+        document.getElementById('passwordError').style.display = 'block';
+        document.getElementById('adminPasswordInput').value = '';
+        document.getElementById('adminPasswordInput').focus();
+    }
+}
+
+function openAdminPanel() {
+    document.getElementById('admin-panel').style.display = 'flex';
+    switchAdminTab('inquiries');
+    loadAdminInquiries();
+}
+
+function closeAdminPanel() {
+    document.getElementById('admin-panel').style.display = 'none';
+}
+
+function switchAdminTab(tab) {
+    const inquiryTab = document.getElementById('admin-inquiries-tab');
+    const emailTab = document.getElementById('admin-emails-tab');
+    const inquiryBtn = document.getElementById('tab-inquiries');
+    const emailBtn = document.getElementById('tab-emails');
+    
+    if (tab === 'inquiries') {
+        inquiryTab.style.display = 'block';
+        emailTab.style.display = 'none';
+        inquiryBtn.style.background = 'white';
+        inquiryBtn.style.borderBottom = '3px solid #1e3c72';
+        inquiryBtn.style.color = '#1e3c72';
+        emailBtn.style.background = 'transparent';
+        emailBtn.style.borderBottom = '3px solid transparent';
+        emailBtn.style.color = '#718096';
+        loadAdminInquiries();
+    } else {
+        inquiryTab.style.display = 'none';
+        emailTab.style.display = 'block';
+        emailBtn.style.background = 'white';
+        emailBtn.style.borderBottom = '3px solid #1e3c72';
+        emailBtn.style.color = '#1e3c72';
+        inquiryBtn.style.background = 'transparent';
+        inquiryBtn.style.borderBottom = '3px solid transparent';
+        inquiryBtn.style.color = '#718096';
+        loadAdminEmails();
+    }
+}
+
+async function loadAdminInquiries() {
+    const tbody = document.getElementById('adminInquiryTableBody');
+    const stats = document.getElementById('adminInquiryStats');
+    
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Loading...</td></tr>';
+    
+    try {
+        const { data, error } = await sb
+            .from('inquiries')
+            .select('*')
+            .order('inquiry_at', { ascending: false })
+            .limit(200);
+        
+        if (error) throw error;
+        
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Walang inquiries.</td></tr>';
+            stats.textContent = '';
+            return;
+        }
+        
+        stats.textContent = `📊 ${data.length} inquiries (pinakabago muna)`;
+        
+        tbody.innerHTML = data.map((inq, idx) => {
+            const date = new Date(inq.inquiry_at);
+            const formattedDate = date.toLocaleString('en-PH', {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', hour12: true
+            });
+            
+            return `
+                <tr style="border-bottom: 1px solid #edf2f7;">
+                    <td style="padding: 10px; color: #718096;">${idx + 1}</td>
+                    <td style="padding: 10px;"><strong>${inq.account_no || '-'}</strong></td>
+                    <td style="padding: 10px;">${inq.name || '-'}</td>
+                    <td style="padding: 10px; color: #718096; font-size: 11px;">${formattedDate}</td>
+                </tr>
+            `;
+        }).join('');
+        
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 20px; color: #ef4444;">❌ Error: ${err.message}</td></tr>`;
+    }
+}
+
+async function loadAdminEmails() {
+    const tbody = document.getElementById('adminEmailTableBody');
+    const stats = document.getElementById('adminEmailStats');
+    
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Loading...</td></tr>';
+    
+    try {
+        const { data, error } = await sb
+            .from('emails')
+            .select('*')
+            .order('timestamp', { ascending: false })
+            .limit(200);
+        
+        if (error) throw error;
+        
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Walang registered emails.</td></tr>';
+            stats.textContent = '';
+            return;
+        }
+        
+        stats.textContent = `📊 ${data.length} registered emails`;
+        
+        tbody.innerHTML = data.map((em, idx) => {
+            return `
+                <tr style="border-bottom: 1px solid #edf2f7;">
+                    <td style="padding: 10px; color: #718096;">${idx + 1}</td>
+                    <td style="padding: 10px;"><strong>${em.account_number || '-'}</strong></td>
+                    <td style="padding: 10px; font-size: 11px;">${em.email_address || '-'}</td>
+                    <td style="padding: 10px; font-size: 11px; color: #718096;">${em.contact_number || '-'}</td>
+                </tr>
+            `;
+        }).join('');
+        
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 20px; color: #ef4444;">❌ Error: ${err.message}</td></tr>`;
+    }
+}
+
 </script>
+
+<!-- 🔐 PASSWORD MODAL -->
+<div id="password-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; padding: 16px; z-index: 3000;">
+    <div style="background: white; border-radius: 20px; padding: 32px 28px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+        <div style="font-size: 3rem; margin-bottom: 12px;">🔐</div>
+        <h3 style="margin: 0 0 8px 0; color: #1e3c72; font-size: 1.2rem; font-weight: 700;">Admin Access</h3>
+        <p style="font-size: 13px; color: #718096; margin: 0 0 20px 0;">Enter password to continue</p>
+        
+        <div style="text-align: left; margin-bottom: 16px;">
+            <label style="font-size: 12px; font-weight: 700; color: #718096; text-transform: uppercase; letter-spacing: 0.5px;">Password</label>
+            <input type="password" id="adminPasswordInput" placeholder="Enter password..." 
+                   style="width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 15px; margin-top: 8px; font-family: inherit;"
+                   onkeypress="if(event.key==='Enter') verifyAdminPassword()">
+        </div>
+        
+        <div id="passwordError" style="color: #ef4444; font-size: 12px; font-weight: 600; margin-bottom: 12px; display: none;">
+            ❌ Mali ang password. Subukan muli.
+        </div>
+        
+        <div style="display: flex; gap: 8px;">
+            <button onclick="verifyAdminPassword()" 
+                    style="background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; flex: 2; padding: 12px; border: none; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; font-family: inherit;">
+                🔓 Unlock
+            </button>
+            <button onclick="closePasswordModal()" 
+                    style="background: #94a3b8; color: white; flex: 1; padding: 12px; border: none; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; font-family: inherit;">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 📊 ADMIN PANEL MODAL -->
+<div id="admin-panel" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; padding: 16px; z-index: 4000;">
+    <div style="background: white; border-radius: 20px; padding: 0; width: 100%; max-width: 900px; max-height: 90vh; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5); display: flex; flex-direction: column;">
+        
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #1e3c72, #2a5298); padding: 20px 24px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="font-size: 1.5rem;">🔐</div>
+                <div style="text-align: left;">
+                    <h3 style="margin: 0; color: white; font-size: 1.1rem; font-weight: 700;">Admin Panel</h3>
+                    <p style="margin: 0; color: rgba(255,255,255,0.7); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">SIWADI Internal Tools</p>
+                </div>
+            </div>
+            <button onclick="closeAdminPanel()" 
+                    style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;">
+                ✕
+            </button>
+        </div>
+        
+        <!-- Tabs -->
+        <div style="display: flex; gap: 0; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+            <button id="tab-inquiries" onclick="switchAdminTab('inquiries')" 
+                    style="flex: 1; padding: 14px; background: white; border: none; border-bottom: 3px solid #1e3c72; color: #1e3c72; font-weight: 700; font-size: 13px; cursor: pointer; font-family: inherit;">
+                📋 Inquiry Logs
+            </button>
+            <button id="tab-emails" onclick="switchAdminTab('emails')" 
+                    style="flex: 1; padding: 14px; background: transparent; border: none; border-bottom: 3px solid transparent; color: #718096; font-weight: 700; font-size: 13px; cursor: pointer; font-family: inherit;">
+                📧 Email Logs
+            </button>
+        </div>
+        
+        <!-- Content -->
+        <div style="padding: 20px; overflow-y: auto; flex: 1;">
+            
+            <!-- Inquiry Logs Tab -->
+            <div id="admin-inquiries-tab">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div id="adminInquiryStats" style="font-size: 13px; color: #718096;"></div>
+                    <button onclick="loadAdminInquiries()" 
+                            style="background: #1e3c72; color: white; padding: 8px 16px; border: none; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; font-family: inherit;">
+                        🔄 Refresh
+                    </button>
+                </div>
+                <div style="max-height: 400px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 12px;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                        <thead>
+                            <tr style="background: #f8fafc; position: sticky; top: 0;">
+                                <th style="padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">#</th>
+                                <th style="padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">Account No.</th>
+                                <th style="padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">Name</th>
+                                <th style="padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminInquiryTableBody">
+                            <tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Email Logs Tab -->
+            <div id="admin-emails-tab" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div id="adminEmailStats" style="font-size: 13px; color: #718096;"></div>
+                    <button onclick="loadAdminEmails()" 
+                            style="background: #1e3c72; color: white; padding: 8px 16px; border: none; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; font-family: inherit;">
+                        🔄 Refresh
+                    </button>
+                </div>
+                <div style="max-height: 400px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 12px;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                        <thead>
+                            <tr style="background: #f8fafc; position: sticky; top: 0;">
+                                <th style="padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">#</th>
+                                <th style="padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">Account No.</th>
+                                <th style="padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">Email</th>
+                                <th style="padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">Contact</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminEmailTableBody">
+                            <tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
 
 <div id="image-viewer-modal" onclick="closeReadingSchedule()">
     <button type="button" class="close-img-btn" onclick="closeReadingSchedule()">✕</button>
