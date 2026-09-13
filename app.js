@@ -1,0 +1,713 @@
+// ============================================================
+// 🔥 SUPABASE CONFIGURATION
+// ============================================================
+const SUPABASE_URL = 'https://eavuwdjjmofxuwhtompp.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_kRq0ET-3jP4Ul6DoGSxjrQ_GqmVdPaI';
+
+// Initialize Supabase client
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ============================================================
+// 📋 DISPLAY MAP
+// ============================================================
+const DISPLAY_MAP = {
+    'account_no': 'Account Number',
+    'name': 'Name',
+    'address': 'Billing Address',
+    'meter_no': 'Meter Number',
+    'status_for_app': 'Account Status',
+    'balance': 'Water Bill',
+    'arobalance': 'S.C. / Materials',
+    'total': 'Total Amount Due',
+    'reading_date': 'Reading Date',
+    'due_date': 'Payment Due Date',
+    'discon_date': 'Disconnection Date',
+    'status': 'Status',
+    'zone': 'Zone'
+};
+
+const loadingMessage = document.getElementById('loading-message');
+const accountInput = document.getElementById('accountNumber');
+const nameInput = document.getElementById('nameSearchInput');
+const modalContainer = document.getElementById('modal-container');
+const modalResult = document.getElementById('modal-result');
+const searchButton = document.getElementById('search-button');
+
+let currentBillData = null;
+let lastNameSearchQuery = '';
+
+function closeModal() {
+    modalContainer.style.display = 'none';
+    modalResult.innerHTML = '';
+    accountInput.value = '';
+    nameInput.value = '';
+    accountInput.focus();
+    document.getElementById('qr-modal-container').style.display = 'none';
+    currentBillData = null;
+}
+
+function maskName(fullName) {
+    if (!fullName || typeof fullName !== 'string') return '';
+    const nameParts = fullName.toUpperCase().trim().split(/\s+/);
+
+    let maskedParts = nameParts.map((part) => {
+        if (part.length <= 3) return part;
+        if (part.length >= 8) {
+            return part.substring(0, 2) + '*'.repeat(part.length - 4) + part.substring(part.length - 2);
+        }
+        return part.substring(0, 2) + '*'.repeat(part.length - 3) + part.substring(part.length - 1);
+    });
+
+    return maskedParts.join(' ');
+}
+
+function formatResult(data) {
+    let output = '<ul>';
+    for (const key in data) {
+        if (!data.hasOwnProperty(key)) continue;
+        if (key === 'id' || key === 'updated_at') continue;
+
+        let value = String(data[key] ?? '').replace(/"/g, '');
+        let label = DISPLAY_MAP[key] || key;
+
+        if (key.toLowerCase().includes('name')) {
+            value = maskName(value);
+        }
+
+        if (key.toLowerCase().includes('date') && value) {
+            const dateObj = new Date(value);
+            if (!isNaN(dateObj.getTime())) {
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const day = String(dateObj.getDate()).padStart(2, '0');
+                const year = String(dateObj.getFullYear()).slice(-2);
+                value = `${month}-${day}-${year}`;
+            }
+        }
+
+        if (key.toLowerCase().includes('balance') || key.toLowerCase().includes('total') || key.toLowerCase().includes('amount') || key.toLowerCase().includes('bill')) {
+            let num = parseFloat(value);
+            if (!isNaN(num)) value = `₱ ${num.toFixed(2)}`;
+        }
+
+        output += `<li><strong>${label}:</strong> <span>${value}</span></li>`;
+    }
+    output += '</ul>';
+    return output;
+}
+
+function generateQRCodeLink(billData) {
+    const params = new URLSearchParams({
+        account: billData['account_no'] || '',
+        name: billData['name'] || '',
+        address: billData['address'] || '',
+        meter: billData['meter_no'] || '',
+        waterBill: billData['balance'] || '0',
+        scMaterials: billData['arobalance'] || '0',
+        total: billData['total'] || '0',
+        dueDate: billData['due_date'] || '',
+        readingDate: billData['reading_date'] || ''
+    });
+
+    const baseUrl = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
+    const billPageUrl = `${baseUrl}bill_viewer.html?${params.toString()}`;
+
+    const qrContainer = document.getElementById('qrcode');
+    qrContainer.innerHTML = '';
+
+    new QRCode(qrContainer, {
+        text: billPageUrl,
+        width: 160,
+        height: 160,
+        colorDark: "#1e3c72",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.L
+    });
+}
+
+function showQRCode() {
+    if (!currentBillData) {
+        alert('Please search for an account first.');
+        return;
+    }
+    const qrContainer = document.getElementById('qr-modal-container');
+    if (qrContainer.style.display === 'none' || qrContainer.style.display === '') {
+        generateQRCodeLink(currentBillData);
+        qrContainer.style.display = 'block';
+    } else {
+        qrContainer.style.display = 'none';
+    }
+}
+
+// ============================================================
+// 📧 EMAIL REGISTRATION FUNCTIONS
+// ============================================================
+function openDirectEmailRegistrationModal() {
+    const accField = document.getElementById('regAccountNo');
+    const nameWrapper = document.getElementById('regAccountNameWrapper');
+
+    accField.value = accountInput.value.trim();
+    accField.readOnly = false;
+    accField.style.background = '#ffffff';
+    accField.style.cursor = 'text';
+
+    nameWrapper.style.display = 'none';
+    document.getElementById('regEmailAddress').value = '';
+
+    document.getElementById('email-modal-container').style.display = 'flex';
+}
+
+function openEmailRegistrationModal() {
+    if (!currentBillData) return;
+    const accountNo = currentBillData['account_no'] || '';
+    const rawName = currentBillData['name'] || '';
+
+    const accField = document.getElementById('regAccountNo');
+    const nameWrapper = document.getElementById('regAccountNameWrapper');
+
+    accField.value = accountNo;
+    accField.readOnly = true;
+    accField.style.background = '#f1f5f9';
+    accField.style.cursor = 'not-allowed';
+
+    nameWrapper.style.display = 'block';
+    document.getElementById('regAccountName').value = rawName;
+    document.getElementById('regEmailAddress').value = '';
+
+    document.getElementById('email-modal-container').style.display = 'flex';
+}
+
+function closeEmailRegistrationModal() {
+    document.getElementById('email-modal-container').style.display = 'none';
+}
+
+async function submitEmailRegistration() {
+    const rawAccountNo = document.getElementById('regAccountNo').value.trim();
+    const email = document.getElementById('regEmailAddress').value.trim();
+    const contactNumber = document.getElementById('regContactNumber').value.trim();
+    const btnSubmit = document.getElementById('btnSubmitRegistration');
+
+    if (!rawAccountNo) {
+        alert('Pakilagay ang inyong Account Number.');
+        return;
+    }
+
+    const validAccountPattern = /^(\d{3}-\d{3}-\d{3}|\d{9})$/;
+    if (!validAccountPattern.test(rawAccountNo)) {
+        alert('❌ Mali ang format ng Account Number!\n\nAng tinatanggap lamang ay 9-digit format tulad ng:\n• 063-101-074\n• 063101074\n\nPaki-check kung may kulang na numero o leading zero.');
+        return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailPattern.test(email)) {
+        alert('Pakilagay ang isang wastong email address.');
+        return;
+    }
+
+    if (!contactNumber) {
+        alert('❌ Kailangan ang Contact Number!\n\nPakilagay ang inyong 11-digit contact number tulad ng:\n• 09171234567');
+        document.getElementById('regContactNumber').focus();
+        return;
+    }
+
+    const contactPattern = /^09\d{9}$/;
+    if (!contactPattern.test(contactNumber)) {
+        alert('❌ Mali ang format ng Contact Number!\n\nAng tinatanggap lamang ay 11-digit format tulad ng:\n• 09171234567');
+        document.getElementById('regContactNumber').focus();
+        return;
+    }
+
+    const cleanDigits = rawAccountNo.replace(/\D/g, '');
+    const formattedAccountNo = `${cleanDigits.slice(0, 3)}-${cleanDigits.slice(3, 6)}-${cleanDigits.slice(6, 9)}`;
+
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = '⏳ Sine-save...';
+
+    try {
+        const { data: existing, error: checkError } = await sb
+            .from('emails')
+            .select('*')
+            .eq('account_number', formattedAccountNo)
+            .maybeSingle();
+
+        if (checkError && checkError.code !== 'PGRST116') {
+            throw new Error(checkError.message);
+        }
+
+        if (existing) {
+            const { error: updateError } = await sb
+                .from('emails')
+                .update({
+                    email_address: email,
+                    contact_number: contactNumber,
+                    timestamp: new Date().toISOString()
+                })
+                .eq('account_number', formattedAccountNo);
+
+            if (updateError) throw new Error(updateError.message);
+        } else {
+            const { error: insertError } = await sb
+                .from('emails')
+                .insert({
+                    account_number: formattedAccountNo,
+                    email_address: email,
+                    contact_number: contactNumber,
+                    timestamp: new Date().toISOString()
+                });
+
+            if (insertError) throw new Error(insertError.message);
+        }
+
+        alert('🎉 Matagumpay na nairehistro ang iyong email!\nMakakatanggap ka na ng billing notifications tuwing pagkatapos ng reading sa inyong area.');
+        closeEmailRegistrationModal();
+
+    } catch (err) {
+        alert('❌ Error sa koneksyon: ' + err.message);
+    } finally {
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = '💾 I-save ang Email';
+    }
+}
+
+// ============================================================
+// SEARCH CONTROLS
+// ============================================================
+function toggleSearchType(type) {
+    const searchLabel = document.getElementById('searchLabel');
+    const toggleOptions = document.querySelectorAll('.toggle-option');
+
+    toggleOptions.forEach(option => {
+        const radio = option.querySelector('input[type="radio"]');
+        if (radio && radio.value === type) {
+            option.classList.add('active');
+        } else {
+            option.classList.remove('active');
+        }
+    });
+
+    if (type === 'account') {
+        accountInput.style.display = 'block';
+        nameInput.style.display = 'none';
+        searchLabel.textContent = 'Account Number';
+        accountInput.placeholder = 'e.g., 011-101-001';
+        accountInput.focus();
+        nameInput.value = '';
+    } else {
+        accountInput.style.display = 'none';
+        nameInput.style.display = 'block';
+        searchLabel.textContent = 'Concessionaire Name';
+        nameInput.placeholder = 'Enter last name or full name...';
+        nameInput.focus();
+        accountInput.value = '';
+    }
+}
+
+function handleSearch() {
+    const searchType = document.querySelector('input[name="searchType"]:checked').value;
+    if (searchType === 'account') {
+        fetchAccountData();
+    } else {
+        fetchByName();
+    }
+}
+
+// ============================================================
+// 🔥 SUPABASE: ACCOUNT SEARCH
+// ============================================================
+async function fetchAccountData() {
+    let rawAccountNumber = accountInput.value.trim();
+    let searchKey = rawAccountNumber.replace(/[\s\-\–]/g, '');
+
+    if (!searchKey) {
+        alert("Please enter an account number.");
+        return;
+    }
+
+    if (searchKey.length === 9) {
+        searchKey = `${searchKey.slice(0,3)}-${searchKey.slice(3,6)}-${searchKey.slice(6,9)}`;
+    }
+
+    modalContainer.style.display = 'none';
+    loadingMessage.style.display = 'flex';
+    searchButton.disabled = true;
+
+    try {
+        const { data, error } = await sb
+            .from('balances')
+            .select('*')
+            .eq('account_no', searchKey)
+            .maybeSingle();
+
+        let resultTitle = `Results for Account: ${rawAccountNumber}`;
+        let resultHtml = '';
+
+        if (error) {
+            resultTitle = `Search Failed`;
+            resultHtml = `<p style="color: #e53e3e; font-weight: bold; margin: 0;">${error.message}</p>`;
+            currentBillData = null;
+            document.getElementById('register-email-btn').style.display = 'none';
+        } else if (!data) {
+            resultTitle = `No Results`;
+            resultHtml = `<p style="text-align: center; color: #718096; margin: 10px 0;">No account found with number "${rawAccountNumber}".</p>`;
+            currentBillData = null;
+            document.getElementById('register-email-btn').style.display = 'none';
+        } else {
+            resultHtml = formatResult(data);
+            currentBillData = data;
+
+            document.getElementById('register-email-btn').style.display = 'block';
+            document.getElementById('qr-modal-container').style.display = 'none';
+
+            try {
+                if (data['account_no'] && data['name']) logInquiry(data['account_no'], data['name']);
+            } catch (e) {}
+        }
+
+        modalResult.innerHTML = `
+            <h3>${resultTitle}</h3>
+            <div style="border: 1px solid #e2e8f0; padding: 12px; background: #f8fafc; border-radius: 12px;">
+                ${resultHtml}
+            </div>
+        `;
+        modalContainer.style.display = 'flex';
+    } catch (error) {
+        modalResult.innerHTML = `<h3>Network Error</h3><p>Could not connect to the server.</p>`;
+        modalContainer.style.display = 'flex';
+    } finally {
+        loadingMessage.style.display = 'none';
+        searchButton.disabled = false;
+    }
+}
+
+// ============================================================
+// 🔥 SUPABASE: NAME SEARCH
+// ============================================================
+async function fetchByName() {
+    const searchName = nameInput.value.trim();
+    lastNameSearchQuery = searchName;
+
+    if (!searchName || searchName.length < 2) {
+        alert("Please enter at least 2 characters.");
+        return;
+    }
+
+    modalContainer.style.display = 'none';
+    loadingMessage.style.display = 'flex';
+    searchButton.disabled = true;
+
+    try {
+        const { data, error } = await sb
+            .from('balances')
+            .select('account_no, name, address')
+            .ilike('name', `%${searchName}%`)
+            .limit(50);
+
+        let resultTitle = '';
+        let resultHtml = '';
+
+        if (error) {
+            resultTitle = `Search Failed`;
+            resultHtml = `<p style="color: #e53e3e; font-weight: bold;">${error.message}</p>`;
+        } else if (data && data.length > 0) {
+            resultTitle = `Search Results for "${searchName}"`;
+            resultHtml = formatNameSearchResults(data);
+        } else {
+            resultTitle = `No Results`;
+            resultHtml = `<p style="text-align: center; color: #718096; margin: 10px 0;">No accounts found matching "${searchName}".</p>`;
+        }
+
+        document.getElementById('register-email-btn').style.display = 'none';
+        modalResult.innerHTML = `
+            <h3>${resultTitle}</h3>
+            <div style="border: 1px solid #e2e8f0; padding: 10px; background: #f8fafc; border-radius: 12px;">
+                ${resultHtml}
+            </div>
+        `;
+        modalContainer.style.display = 'flex';
+        addRowClickHandlers();
+    } catch (error) {
+        modalResult.innerHTML = `<h3>Network Error</h3><p>Could not connect to the server.</p>`;
+        modalContainer.style.display = 'flex';
+    } finally {
+        loadingMessage.style.display = 'none';
+        searchButton.disabled = false;
+    }
+}
+
+function formatNameSearchResults(results) {
+    let html = `<div class="result-count">📊 ${results.length} record(s)</div>`;
+    html += `
+        <div style="overflow-x: auto;">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Account</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    results.forEach((result) => {
+        const accountNo = result['account_no'] || 'N/A';
+        const name = maskName(result['name'] || 'N/A');
+        const address = result['address'] || 'N/A';
+
+        html += `
+            <tr class="result-row" data-account="${accountNo}">
+                <td><strong>${accountNo}</strong></td>
+                <td>${name}</td>
+                <td>${address}</td>
+            </tr>
+        `;
+    });
+
+    html += `
+                </tbody>
+            </table>
+        </div>
+        <p style="font-size: 11px; color: #718096; margin: 8px 0 0 0; text-align: center;">
+            💡 Tap any row to view complete details
+        </p>
+    `;
+    return html;
+}
+
+function addRowClickHandlers() {
+    document.querySelectorAll('.result-row').forEach(row => {
+        row.addEventListener('click', function() {
+            fetchAccountDetails(this.getAttribute('data-account'));
+        });
+    });
+}
+
+// ============================================================
+// 🔥 SUPABASE: FETCH FULL ACCOUNT DETAILS
+// ============================================================
+async function fetchAccountDetails(accountNo) {
+    const cleanAcc = String(accountNo).replace(/[\s\-\–]/g, '');
+    let formattedAcc = cleanAcc;
+    if (cleanAcc.length === 9) {
+        formattedAcc = `${cleanAcc.slice(0,3)}-${cleanAcc.slice(3,6)}-${cleanAcc.slice(6,9)}`;
+    }
+
+    const renderDetails = (data) => {
+        currentBillData = data;
+        document.getElementById('register-email-btn').style.display = 'block';
+        document.getElementById('qr-modal-container').style.display = 'none';
+        modalResult.innerHTML = `
+            <h3>Account: ${accountNo}</h3>
+            <div style="border: 1px solid #e2e8f0; padding: 12px; background: #f8fafc; border-radius: 12px;">
+                ${formatResult(data)}
+            </div>
+            <button onclick="goBackToSearchResults()" style="margin-top: 12px; background: #64748b; color: white; padding: 8px 14px; font-size: 12px; border-radius: 8px;">
+                ← Back to List
+            </button>
+        `;
+    };
+
+    loadingMessage.style.display = 'flex';
+    try {
+        const { data, error } = await sb
+            .from('balances')
+            .select('*')
+            .eq('account_no', formattedAcc)
+            .maybeSingle();
+
+        if (!error && data) {
+            renderDetails(data);
+
+            try {
+                if (data['account_no'] && data['name']) logInquiry(data['account_no'], data['name']);
+            } catch (e) {}
+        }
+    } catch (error) {
+        console.error(error);
+    } finally {
+        loadingMessage.style.display = 'none';
+    }
+}
+
+async function goBackToSearchResults() {
+    if (lastNameSearchQuery) {
+        nameInput.value = lastNameSearchQuery;
+        await fetchByName();
+    }
+}
+
+async function logInquiry(accountNo, name) {
+    try {
+        await sb.from('inquiries').insert({
+            account_no: accountNo,
+            name: name
+        });
+    } catch (err) {
+        console.log('Log error:', err);
+    }
+}
+
+accountInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleSearch(); });
+nameInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleSearch(); });
+
+function openReadingSchedule() {
+    document.getElementById('image-viewer-modal').style.display = 'flex';
+}
+
+function closeReadingSchedule() {
+    document.getElementById('image-viewer-modal').style.display = 'none';
+}
+
+// ============================================================
+// 🔐 SECRET ADMIN PANEL
+// ============================================================
+document.getElementById('site-logo').addEventListener('dblclick', function() {
+    openPasswordModal();
+});
+
+function openPasswordModal() {
+    document.getElementById('password-modal').style.display = 'flex';
+    document.getElementById('passwordError').style.display = 'none';
+    document.getElementById('adminPasswordInput').value = '';
+    setTimeout(() => document.getElementById('adminPasswordInput').focus(), 100);
+}
+
+function closePasswordModal() {
+    document.getElementById('password-modal').style.display = 'none';
+}
+
+function verifyAdminPassword() {
+    const input = document.getElementById('adminPasswordInput').value;
+    const ADMIN_PASSWORD = 'pulpitobayagbag';
+
+    if (input === ADMIN_PASSWORD) {
+        closePasswordModal();
+        openAdminPanel();
+    } else {
+        document.getElementById('passwordError').style.display = 'block';
+        document.getElementById('adminPasswordInput').value = '';
+        document.getElementById('adminPasswordInput').focus();
+    }
+}
+
+function openAdminPanel() {
+    document.getElementById('admin-panel').style.display = 'flex';
+    switchAdminTab('inquiries');
+    loadAdminInquiries();
+}
+
+function closeAdminPanel() {
+    document.getElementById('admin-panel').style.display = 'none';
+}
+
+function switchAdminTab(tab) {
+    const inquiryTab = document.getElementById('admin-inquiries-tab');
+    const emailTab = document.getElementById('admin-emails-tab');
+    const inquiryBtn = document.getElementById('tab-inquiries');
+    const emailBtn = document.getElementById('tab-emails');
+
+    if (tab === 'inquiries') {
+        inquiryTab.style.display = 'block';
+        emailTab.style.display = 'none';
+        inquiryBtn.style.background = 'white';
+        inquiryBtn.style.borderBottom = '3px solid #1e3c72';
+        inquiryBtn.style.color = '#1e3c72';
+        emailBtn.style.background = 'transparent';
+        emailBtn.style.borderBottom = '3px solid transparent';
+        emailBtn.style.color = '#718096';
+        loadAdminInquiries();
+    } else {
+        inquiryTab.style.display = 'none';
+        emailTab.style.display = 'block';
+        emailBtn.style.background = 'white';
+        emailBtn.style.borderBottom = '3px solid #1e3c72';
+        emailBtn.style.color = '#1e3c72';
+        inquiryBtn.style.background = 'transparent';
+        inquiryBtn.style.borderBottom = '3px solid transparent';
+        inquiryBtn.style.color = '#718096';
+        loadAdminEmails();
+    }
+}
+
+async function loadAdminInquiries() {
+    const tbody = document.getElementById('adminInquiryTableBody');
+    const stats = document.getElementById('adminInquiryStats');
+
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Loading...</td></tr>';
+
+    try {
+        const { data, error } = await sb
+            .from('inquiries')
+            .select('*')
+            .order('inquiry_at', { ascending: false })
+            .limit(200);
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Walang inquiries.</td></tr>';
+            stats.textContent = '';
+            return;
+        }
+
+        stats.textContent = `📊 ${data.length} inquiries (pinakabago muna)`;
+
+        tbody.innerHTML = data.map((inq, idx) => {
+            const date = new Date(inq.inquiry_at);
+            const formattedDate = date.toLocaleString('en-PH', {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', hour12: true
+            });
+
+            return `
+                <tr style="border-bottom: 1px solid #edf2f7;">
+                    <td style="padding: 10px; color: #718096;">${idx + 1}</td>
+                    <td style="padding: 10px;"><strong>${inq.account_no || '-'}</strong></td>
+                    <td style="padding: 10px;">${inq.name || '-'}</td>
+                    <td style="padding: 10px; color: #718096; font-size: 11px;">${formattedDate}</td>
+                </tr>
+            `;
+        }).join('');
+
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 20px; color: #ef4444;">❌ Error: ${err.message}</td></tr>`;
+    }
+}
+
+async function loadAdminEmails() {
+    const tbody = document.getElementById('adminEmailTableBody');
+    const stats = document.getElementById('adminEmailStats');
+
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Loading...</td></tr>';
+
+    try {
+        const { data, error } = await sb
+            .from('emails')
+            .select('*')
+            .order('timestamp', { ascending: false })
+            .limit(200);
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Walang registered emails.</td></tr>';
+            stats.textContent = '';
+            return;
+        }
+
+        stats.textContent = `📊 ${data.length} registered emails`;
+
+        tbody.innerHTML = data.map((em, idx) => {
+            return `
+                <tr style="border-bottom: 1px solid #edf2f7;">
+                    <td style="padding: 10px; color: #718096;">${idx + 1}</td>
+                    <td style="padding: 10px;"><strong>${em.account_number || '-'}</strong></td>
+                    <td style="padding: 10px; font-size: 11px;">${em.email_address || '-'}</td>
+                    <td style="padding: 10px; font-size: 11px; color: #718096;">${em.contact_number || '-'}</td>
+                </tr>
+            `;
+        }).join('');
+
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 20px; color: #ef4444;">❌ Error: ${err.message}</td></tr>`;
+    }
+}
