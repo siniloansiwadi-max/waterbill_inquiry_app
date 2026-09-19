@@ -1,13 +1,16 @@
+/* ============================================================
+   🎨 FLAT DESIGN — SIWADI Water Bill Inquiry
+   ============================================================ */
+
 :root {
     --primary: #1e3c72;
-    --primary-dark: #12264c;
     --primary-light: #2a5298;
     --accent-green: #00a86b;
-    --accent-green-dark: #007a4d;
     --accent-blue: #0284c7;
-    --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    --card-bg: rgba(255, 255, 255, 0.95);
-    --card-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    --accent-orange: #d97706;
+    --accent-gray: #475569;
+    --bg-body: #f1f5f9;
+    --bg-card: #ffffff;
     --text-main: #2d3748;
     --text-muted: #718096;
     --border-color: #e2e8f0;
@@ -19,7 +22,7 @@
 }
 
 body {
-    background: var(--bg-gradient);
+    background: var(--bg-body);
     min-height: 100vh;
     margin: 0;
     padding: 20px 12px;
@@ -31,40 +34,56 @@ body {
     color: var(--text-main);
 }
 
+/* ============================================================
+   🎨 CONTAINER
+   ============================================================ */
 .container {
-    background: var(--card-bg);
-    backdrop-filter: blur(10px);
-    padding: 28px 24px;
-    border-radius: 20px;
-    box-shadow: var(--card-shadow);
+    background: var(--bg-card);
+    padding: 32px 24px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
     text-align: center;
     width: 100%;
     max-width: 480px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================================
+   🎨 LOGO
+   ============================================================ */
+#site-logo {
+    width: 100px;
+    height: auto;
+    margin: 0 auto 16px auto;
+    display: block;
 }
 
 h1 {
     color: var(--primary);
-    margin: 0 0 20px 0;
-    font-size: 1.6rem;
+    margin: 0 0 4px 0;
+    font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: -0.5px;
 }
 
-#site-logo {
-    width: 90px;
-    height: auto;
-    margin: 0 auto 12px auto;
-    display: block;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+.subtitle {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin: 0 0 24px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
 }
 
+/* ============================================================
+   🎨 SEARCH TOGGLE
+   ============================================================ */
 .search-type-toggle {
     display: flex;
-    background: #edf2f7;
+    background: #f8fafc;
     padding: 4px;
-    border-radius: 12px;
-    margin-bottom: 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
     border: 1px solid var(--border-color);
 }
 
@@ -78,9 +97,9 @@ h1 {
     font-size: 13px;
     font-weight: 600;
     color: var(--text-muted);
-    border-radius: 9px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: all 0.15s ease;
 }
 
 .toggle-option input[type="radio"] {
@@ -88,11 +107,13 @@ h1 {
 }
 
 .toggle-option.active {
-    background: white;
-    color: var(--primary);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    background: var(--primary);
+    color: white;
 }
 
+/* ============================================================
+   🎨 INPUTS
+   ============================================================ */
 .input-wrapper {
     display: flex;
     flex-direction: column;
@@ -112,21 +133,24 @@ h1 {
 .input-wrapper input {
     width: 100%;
     padding: 14px 16px;
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
     font-size: 15px;
     font-family: inherit;
     color: var(--text-main);
     background: #fff;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
 }
 
 .input-wrapper input:focus {
     outline: none;
-    border-color: var(--primary-light);
-    box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.15);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
 }
 
+/* ============================================================
+   🎨 BUTTONS
+   ============================================================ */
 .button-group {
     display: flex;
     flex-direction: column;
@@ -136,12 +160,12 @@ h1 {
 button {
     font-family: inherit;
     border: none;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: 700;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
     padding: 14px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
     width: 100%;
     display: flex;
     align-items: center;
@@ -149,46 +173,62 @@ button {
     gap: 8px;
 }
 
-#ask-tubibot-button-top {
-    background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark));
-    color: white;
-    box-shadow: 0 4px 14px rgba(0, 168, 107, 0.35);
-}
-
-#ask-tubibot-button-top:active {
+button:active {
     transform: scale(0.98);
 }
 
-#register-email-front-btn {
-    background: linear-gradient(135deg, var(--accent-blue), #0369a1);
-    color: white;
-    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
-}
-
-#register-email-front-btn:active {
-    transform: scale(0.98);
-}
-
-#search-button {
-    background: linear-gradient(135deg, var(--primary-light), var(--primary));
-    color: white;
-    box-shadow: 0 4px 14px rgba(30, 60, 114, 0.3);
-}
-
-#search-button:active {
-    transform: scale(0.98);
-}
-
-#search-button:disabled {
-    opacity: 0.6;
+button:disabled {
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
+#search-button {
+    background: var(--primary);
+    color: white;
+}
+
+#search-button:hover {
+    background: var(--primary-light);
+}
+
+#register-email-front-btn {
+    background: var(--accent-blue);
+    color: white;
+}
+
+#ask-tubibot-button-top {
+    background: var(--accent-green);
+    color: white;
+}
+
+#calculator-btn {
+    background: var(--accent-orange);
+    color: white;
+}
+
+#reading-sched-btn {
+    background: var(--accent-gray);
+    color: white;
+}
+
+/* ============================================================
+   🎨 ACTION GRID
+   ============================================================ */
+.action-button-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+}
+
+/* ============================================================
+   🎨 LOADING
+   ============================================================ */
 #loading-message {
-    margin-top: 15px;
-    color: var(--primary-light);
+    margin-top: 16px;
+    color: var(--primary);
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     display: none;
     align-items: center;
     justify-content: center;
@@ -196,8 +236,8 @@ button {
 }
 
 .spinner {
-    border: 3px solid #e2e8f0;
-    border-top: 3px solid var(--primary-light);
+    border: 3px solid var(--border-color);
+    border-top: 3px solid var(--primary);
     border-radius: 50%;
     width: 16px;
     height: 16px;
@@ -209,6 +249,178 @@ button {
     100% { transform: rotate(360deg); }
 }
 
+/* ============================================================
+   🎨 MODALS
+   ============================================================ */
+#modal-container,
+#email-modal-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    z-index: 1000;
+}
+
+#modal-content,
+#email-modal-content {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    width: 100%;
+    max-width: 440px;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+#modal-result h3 {
+    margin: 0 0 12px 0;
+    color: var(--primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+#modal-result ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#modal-result ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 13.5px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#modal-result ul li strong {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* ============================================================
+   🎨 RESULTS TABLE
+   ============================================================ */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 12px;
+}
+
+.results-table th {
+    background: var(--primary);
+    color: white;
+    padding: 10px 8px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.results-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.results-table tr:hover {
+    background-color: #f8fafc;
+    cursor: pointer;
+}
+
+.result-count {
+    background: var(--primary);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    display: inline-block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+/* ============================================================
+   🎨 DISCLAIMER
+   ============================================================ */
+.modal-disclaimer {
+    background: #f8fafc;
+    border-left: 3px solid var(--primary);
+    padding: 12px;
+    border-radius: 6px;
+    margin: 16px 0;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: left;
+}
+
+.modal-disclaimer h4 {
+    margin: 0 0 6px 0;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.modal-disclaimer ul {
+    margin: 0;
+    padding-left: 16px;
+}
+
+.modal-disclaimer ul li {
+    padding: 2px 0;
+    border: none;
+    display: list-item;
+}
+
+/* ============================================================
+   🎨 MODAL BUTTONS
+   ============================================================ */
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.modal-button-row {
+    display: flex;
+    gap: 8px;
+}
+
+.modal-button {
+    padding: 12px;
+    font-size: 13px;
+}
+
+#register-email-btn { background: var(--accent-blue); color: white; }
+#qr-code-button { background: var(--accent-green); color: white; }
+#new-inquiry-button { background: var(--accent-gray); color: white; }
+
+/* ============================================================
+   🎨 QR CODE
+   ============================================================ */
+.qr-modal-container {
+    text-align: center;
+    margin: 12px 0;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+    display: none;
+}
+
+#qrcode {
+    display: inline-block;
+    padding: 8px;
+    background: white;
+    border-radius: 8px;
+}
+
+/* ============================================================
+   🎨 MAIN SITE BUTTON
+   ============================================================ */
 .new-button-container {
     margin-top: 20px;
     display: flex;
@@ -223,193 +435,25 @@ button {
 }
 
 .action-btn {
-    background: rgba(255, 255, 255, 0.15) !important;
-    backdrop-filter: blur(8px);
-    color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: white !important;
+    color: var(--primary) !important;
+    border: 1px solid var(--border-color);
     font-size: 13px;
     padding: 12px 10px;
     margin: 0 !important;
 }
 
 .action-btn:hover {
-    background: rgba(255, 255, 255, 0.25) !important;
+    background: #f8fafc !important;
 }
 
-#modal-container, #email-modal-container {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(6px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-    z-index: 1000;
-}
-
-#modal-content, #email-modal-content {
-    background: white;
-    border-radius: 18px;
-    padding: 22px;
-    width: 100%;
-    max-width: 440px;
-    max-height: 88vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-
-#modal-result h3 {
-    margin: 0 0 12px 0;
-    color: var(--primary);
-    font-size: 1.15rem;
-}
-
-#modal-result ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#modal-result ul li {
-    padding: 8px 0;
-    border-bottom: 1px solid #edf2f7;
-    font-size: 13.5px;
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-#modal-result ul li strong {
-    color: var(--text-muted);
-    font-weight: 600;
-}
-
-.results-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 12px 0;
-    font-size: 12px;
-}
-
-.results-table th {
-    background: var(--primary);
-    color: white;
-    padding: 8px 6px;
-    text-align: left;
-    font-size: 11px;
-    font-weight: 600;
-}
-
-.results-table td {
-    padding: 8px 6px;
-    border-bottom: 1px solid #edf2f7;
-}
-
-.results-table tr:hover {
-    background-color: #f0f4ff;
-    cursor: pointer;
-}
-
-.result-count {
-    background: var(--primary-light);
-    color: white;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-    display: inline-block;
-    margin-bottom: 8px;
-}
-
-.modal-disclaimer {
-    background: #f8fafc;
-    border-left: 3px solid var(--primary-light);
-    padding: 10px 12px;
-    border-radius: 8px;
-    margin: 14px 0;
-    font-size: 11px;
-    color: var(--text-muted);
-    text-align: left;
-}
-
-.modal-disclaimer h4 {
-    margin: 0 0 4px 0;
-    color: var(--primary);
-    font-size: 12px;
-}
-
-.modal-disclaimer ul {
-    margin: 0;
-    padding-left: 14px;
-}
-
-.modal-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 14px;
-}
-
-.modal-button-row {
-    display: flex;
-    gap: 8px;
-}
-
-.modal-button {
-    padding: 12px;
-    font-size: 13px;
-}
-
-#register-email-btn { background: #0284c7; color: white; }
-#qr-code-button { background: var(--accent-green); color: white; }
-#new-inquiry-button { background: #64748b; color: white; }
-
-.qr-modal-container {
-    text-align: center;
-    margin: 12px 0;
-    padding: 12px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    display: none;
-}
-
-#qrcode {
-    display: inline-block;
-    padding: 8px;
-    background: white;
-    border-radius: 8px;
-}
-
-@media (max-width: 380px) {
-    .container { padding: 20px 16px; }
-    h1 { font-size: 1.35rem; }
-    .modal-button-row { flex-direction: column; }
-}
-
-.action-button-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    width: 100%;
-}
-
-#calculator-btn {
-    background: linear-gradient(135deg, #d97706, #b45309);
-    color: white;
-    box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
-}
-
-#reading-sched-btn {
-    background: linear-gradient(135deg, #475569, #334155);
-    color: white;
-    box-shadow: 0 4px 14px rgba(71, 85, 105, 0.35);
-}
-
+/* ============================================================
+   🎨 IMAGE VIEWER
+   ============================================================ */
 #image-viewer-modal {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.92);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.9);
     display: none;
     justify-content: center;
     align-items: center;
@@ -420,25 +464,33 @@ button {
 #image-viewer-modal img {
     max-width: 100%;
     max-height: 90vh;
-    border-radius: 12px;
+    border-radius: 8px;
     object-fit: contain;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
 .close-img-btn {
     position: absolute;
     top: 18px;
     right: 18px;
-    background: rgba(255, 255, 255, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
     font-size: 20px;
     width: 44px;
     height: 44px;
-    border-radius: 50%;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 2010;
+}
+
+/* ============================================================
+   🎨 RESPONSIVE
+   ============================================================ */
+@media (max-width: 380px) {
+    .container { padding: 24px 16px; }
+    h1 { font-size: 1.3rem; }
+    .modal-button-row { flex-direction: column; }
 }
