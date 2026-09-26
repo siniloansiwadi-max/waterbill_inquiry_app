@@ -56,10 +56,12 @@
         </div>
 
         <div class="action-button-grid">
-            <button id="calculator-btn" onclick="location.href='calculator.html'">🧮 Usage Calculator</button>
-            <button id="reading-sched-btn" onclick="openReadingSchedule()">📅 Reading Schedule</button>
+                    <button id="calculator-btn" onclick="location.href='calculator.html'">🧮 Usage Calculator</button>
+                    <button id="reading-sched-btn" onclick="openReadingSchedule()">📅 Reading Schedule</button>
+                </div>
+
+                <button id="report-complaint-btn" onclick="openComplaintModal()">🚨 Report Leak/Complaints</button>
         </div>
-    </div>
 
     <div id="loading-message">
         <div class="spinner"></div> Paki antay po. Lalabas po yan promise. Wag Mainip.
@@ -124,11 +126,55 @@
             <input type="tel" id="regContactNumber" placeholder="halimbawa: 09171234567" maxlength="11" required>
         </div>
 
-        <div class="modal-button-row">
+    <div class="modal-button-row">
             <button id="btnSubmitRegistration" style="background: #16a34a; color: white; flex: 2;" onclick="submitEmailRegistration()">
                 💾 I-save ang Email
             </button>
             <button style="background: #94a3b8; color: white; flex: 1;" onclick="closeEmailRegistrationModal()">
+                Kanselahin
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 🚨 REPORT LEAK / COMPLAINTS MODAL -->
+<div id="complaint-modal-container">
+    <div id="complaint-modal-content">
+        <h3 style="margin: 0 0 6px 0; color: #dc2626;">🚨 Report Leak / Complaints</h3>
+        <p style="font-size: 12px; color: #718096; margin-top: 0; margin-bottom: 14px;">
+            Pakipunan ang sumusunod na impormasyon upang mai-aksyunan agad ng aming tanggapan.
+        </p>
+
+        <div class="input-wrapper" style="margin-bottom: 10px;">
+            <label>Reference No. (Automatic):</label>
+            <input type="text" id="compRefNo" readonly style="background: #f1f5f9; cursor: not-allowed; font-weight: 700; color: #dc2626;">
+        </div>
+
+        <div class="input-wrapper" style="margin-bottom: 10px;">
+            <label>Account Number: <span style="color: #ef4444;">*</span></label>
+            <input type="text" id="compAccountNo" placeholder="halimbawa: 011-101-001 o 011101001" required>
+        </div>
+
+        <div class="input-wrapper" style="margin-bottom: 10px;">
+            <label>Account Name / Pangalan: <span style="color: #ef4444;">*</span></label>
+            <input type="text" id="compAccountName" placeholder="Buong Pangalan ng Concessionaire / Nag-uulat" required>
+        </div>
+
+        <div class="input-wrapper" style="margin-bottom: 10px;">
+            <label>Contact Number: <span style="color: #ef4444;">*</span></label>
+            <input type="tel" id="compContactNo" placeholder="halimbawa: 09171234567" maxlength="11" required>
+        </div>
+
+        <div class="input-wrapper" style="margin-bottom: 16px;">
+            <label>Complaints / Detalye ng Ulat: <span style="color: #ef4444;">*</span></label>
+            <textarea id="compDetails" rows="4" placeholder="Ilarawan ang problema (hal. Tubig na tumatagas, walang tulo, sirang metro, eksaktong lokasyon/landmark)..." style="width: 100%; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: 8px; font-family: inherit; font-size: 14px; resize: vertical;" required></textarea>
+        </div>
+
+        <div class="modal-button-row">
+            <button id="btnSubmitComplaint" style="background: #dc2626; color: white; flex: 2;" onclick="submitComplaint()">
+                📤 I-submit ang Report
+            </button>
+            <button style="background: #94a3b8; color: white; flex: 1;" onclick="closeComplaintModal()">
                 Kanselahin
             </button>
         </div>
@@ -199,6 +245,10 @@
                     style="flex: 1; padding: 14px; background: transparent; border: none; border-bottom: 3px solid transparent; color: #718096; font-weight: 700; font-size: 13px; cursor: pointer; font-family: inherit;">
                 📧 Email Logs
             </button>
+            <button id="tab-complaints" onclick="switchAdminTab('complaints')"
+                    style="flex: 1; padding: 14px; background: transparent; border: none; border-bottom: 3px solid transparent; color: #718096; font-weight: 700; font-size: 13px; cursor: pointer; font-family: inherit;">
+                🚨 Complaints Logs
+            </button>
         </div>
 
         <div style="padding: 20px; overflow-y: auto; flex: 1;">
@@ -247,6 +297,33 @@
                             </tr>
                         </thead>
                         <tbody id="adminEmailTableBody">
+                            <tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 🚨 COMPLAINTS TAB -->
+            <div id="admin-complaints-tab" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div id="adminComplaintStats" style="font-size: 13px; color: #718096;"></div>
+                    <button onclick="loadAdminComplaints()"
+                            style="background: #1e3c72; color: white; padding: 8px 16px; border: none; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; font-family: inherit;">
+                        🔄 Refresh
+                    </button>
+                </div>
+                <div style="max-height: 400px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                        <thead>
+                            <tr style="background: #f8fafc; position: sticky; top: 0;">
+                                <th style="padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">Ref / Date</th>
+                                <th style="padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">Account No.</th>
+                                <th style="padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">Name & Contact</th>
+                                <th style="padding: 10px; text-align: left; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">Complaint Details</th>
+                                <th style="padding: 10px; text-align: center; font-size: 10px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #e2e8f0;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminComplaintTableBody">
                             <tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Loading...</td></tr>
                         </tbody>
                     </table>
