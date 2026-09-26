@@ -225,7 +225,7 @@ async function submitEmailRegistration() {
     try {
         const { data: existing, error: checkError } = await sb
             .from('emails')
-            .select('*')
+            .select('id')
             .eq('account_number', formattedAccountNo)
             .maybeSingle();
 
@@ -333,7 +333,7 @@ async function fetchAccountData() {
     try {
         const { data, error } = await sb
             .from('balances')
-            .select('*')
+            .select('account_no, name, address, meter_no, status_for_app, balance, arobalance, total, reading_date, due_date, discon_date, status, zone')
             .eq('account_no', searchKey)
             .maybeSingle();
 
@@ -399,7 +399,7 @@ async function fetchByName() {
             .from('balances')
             .select('account_no, name, address')
             .ilike('name', `%${searchName}%`)
-            .limit(50);
+            .limit(20);
 
         let resultTitle = '';
         let resultHtml = '';
@@ -423,7 +423,7 @@ async function fetchByName() {
             </div>
         `;
         modalContainer.style.display = 'flex';
-        addRowClickHandlers();
+
     } catch (error) {
         modalResult.innerHTML = `<h3>Network Error</h3><p>Could not connect to the server.</p>`;
         modalContainer.style.display = 'flex';
@@ -473,13 +473,14 @@ function formatNameSearchResults(results) {
     return html;
 }
 
-function addRowClickHandlers() {
-    document.querySelectorAll('.result-row').forEach(row => {
-        row.addEventListener('click', function() {
-            fetchAccountDetails(this.getAttribute('data-account'));
-        });
-    });
-}
+// Isang beses lang maglalagay ng click listener sa parent container
+modalResult.addEventListener('click', function(e) {
+    const row = e.target.closest('.result-row');
+    if (row) {
+        const accNo = row.getAttribute('data-account');
+        if (accNo) fetchAccountDetails(accNo);
+    }
+});
 
 // ============================================================
 // 🔥 SUPABASE: FETCH FULL ACCOUNT DETAILS
@@ -510,7 +511,7 @@ async function fetchAccountDetails(accountNo) {
     try {
         const { data, error } = await sb
             .from('balances')
-            .select('*')
+            .select('account_no, name, address, meter_no, status_for_app, balance, arobalance, total, reading_date, due_date, discon_date, status, zone')
             .eq('account_no', formattedAcc)
             .maybeSingle();
 
@@ -808,41 +809,24 @@ async function deleteComplaint(id, refNo) {
 // 🚨 REPORT LEAK / COMPLAINTS TO SUPABASE
 // ============================================================
 
-// 1. Tagagawa ng awtomatikong Reference Number
-async function generateComplaintRefNo() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+
+// 1. Tagagawa ng awtomatikong Reference Number (Client-side, 0 Database reads)
+function generateComplaintRefNo() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
     const datePrefix = `REF-${year}${month}${day}-`;
 
-    try {
-        // Alamin kung ilan na ang nagawang reference number na nagsisimula sa REF-YYYYMMDD-
-        const { count, error } = await sb
-            .from('complaints')
-            .select('*', { count: 'exact', head: true })
-            .ilike('reference_no', `${datePrefix}%`);
+    // 4-character random unique alphanumeric code (hal. 7K2M, B9X1)
+    const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
 
-        if (error) throw error;
-
-        // Kung wala pa, magsisimula sa 1 (001), kung mayroon na ay +1 sa total count
-        const nextSequence = (count || 0) + 1;
-        const paddedSeq = String(nextSequence).padStart(3, '0'); // magiging 001, 002, 003...
-
-        return `${datePrefix}${paddedSeq}`;
-    } catch (err) {
-        console.error('Sequence counter error, fallback to timestamp:', err);
-        return `${datePrefix}001`;
-    }
+    return `${datePrefix}${randomSuffix}`;
 }
 
 // 2. Tagapagbukas ng modal at auto-fill ng mga detalye kung may sinearch na
 async function openComplaintModal() {
-    document.getElementById('compRefNo').value = 'Generating...';
-    
-    // Hintayin ang bagong sequence number mula sa Supabase
-    const nextRefNo = await generateComplaintRefNo();
-    document.getElementById('compRefNo').value = nextRefNo;
+    document.getElementById('compRefNo').value = generateComplaintRefNo();
 
     if (currentBillData) {
         document.getElementById('compAccountNo').value = currentBillData['account_no'] || '';
