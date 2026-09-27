@@ -326,6 +326,36 @@ async function fetchAccountData() {
         searchKey = `${searchKey.slice(0,3)}-${searchKey.slice(3,6)}-${searchKey.slice(6,9)}`;
     }
 
+    // 🔥 CACHE CHECK — bago mag-query sa Supabase
+    const cacheKey = `account_${searchKey}`;
+    const cacheTimeKey = `${cacheKey}_time`;
+    const CACHE_DURATION = 1000 * 60 * 60; // 1 oras (60 min * 60 sec * 1000 ms)
+    const cached = localStorage.getItem(cacheKey);
+    const cachedTime = localStorage.getItem(cacheTimeKey);
+
+    if (cached && cachedTime && (Date.now() - parseInt(cachedTime)) < CACHE_DURATION) {
+        try {
+            const data = JSON.parse(cached);
+            modalContainer.style.display = 'none';
+            loadingMessage.style.display = 'none';
+
+            modalResult.innerHTML = `
+                <h3>Results for Account: ${rawAccountNumber}</h3>
+                <div style="border: 1px solid #e2e8f0; padding: 12px; background: #f8fafc; border-radius: 12px;">
+                    ${formatResult(data)}
+                </div>
+            `;
+            currentBillData = data;
+            document.getElementById('register-email-btn').style.display = 'block';
+            document.getElementById('qr-modal-container').style.display = 'none';
+            modalContainer.style.display = 'flex';
+            return; // ⛔ huwag nang mag-query sa Supabase
+        } catch (e) {
+            // kung sira ang cache, ituloy lang sa normal na query
+        }
+    }
+
+    // 🟢 NORMAL QUERY SA SUPABASE (kung walang cache o expired na)
     modalContainer.style.display = 'none';
     loadingMessage.style.display = 'flex';
     searchButton.disabled = true;
@@ -353,6 +383,14 @@ async function fetchAccountData() {
         } else {
             resultHtml = formatResult(data);
             currentBillData = data;
+
+            // 💾 I-save sa cache
+            try {
+                localStorage.setItem(cacheKey, JSON.stringify(data));
+                localStorage.setItem(cacheTimeKey, Date.now().toString());
+            } catch (e) {
+                console.log('Cache save error:', e);
+            }
 
             document.getElementById('register-email-btn').style.display = 'block';
             document.getElementById('qr-modal-container').style.display = 'none';
@@ -390,6 +428,39 @@ async function fetchByName() {
         return;
     }
 
+    // 🔥 CACHE CHECK
+    const cacheKey = `name_${searchName.toLowerCase()}`;
+    const cacheTimeKey = `${cacheKey}_time`;
+    const CACHE_DURATION = 1000 * 60 * 60; // 1 oras
+    const cached = localStorage.getItem(cacheKey);
+    const cachedTime = localStorage.getItem(cacheTimeKey);
+
+    if (cached && cachedTime && (Date.now() - parseInt(cachedTime)) < CACHE_DURATION) {
+        try {
+            const data = JSON.parse(cached);
+            modalContainer.style.display = 'none';
+            loadingMessage.style.display = 'none';
+
+            let resultHtml = '';
+            if (data && data.length > 0) {
+                resultHtml = formatNameSearchResults(data);
+            } else {
+                resultHtml = `<p style="text-align: center; color: #718096; margin: 10px 0;">No accounts found starting with "${searchName}".</p>`;
+            }
+
+            document.getElementById('register-email-btn').style.display = 'none';
+            modalResult.innerHTML = `
+                <h3>Search Results for "${searchName}"</h3>
+                <div style="border: 1px solid #e2e8f0; padding: 10px; background: #f8fafc; border-radius: 12px;">
+                    ${resultHtml}
+                </div>
+            `;
+            modalContainer.style.display = 'flex';
+            return;
+        } catch (e) {}
+    }
+
+    // 🟢 NORMAL QUERY
     modalContainer.style.display = 'none';
     loadingMessage.style.display = 'flex';
     searchButton.disabled = true;
@@ -398,7 +469,7 @@ async function fetchByName() {
         const { data, error } = await sb
             .from('balances')
             .select('account_no, name, address')
-            .ilike('name', `%${searchName}%`)
+            .ilike('name', `${searchName}%`)
             .limit(20);
 
         let resultTitle = '';
@@ -412,8 +483,14 @@ async function fetchByName() {
             resultHtml = formatNameSearchResults(data);
         } else {
             resultTitle = `No Results`;
-            resultHtml = `<p style="text-align: center; color: #718096; margin: 10px 0;">No accounts found matching "${searchName}".</p>`;
+            resultHtml = `<p style="text-align: center; color: #718096; margin: 10px 0;">No accounts found starting with "${searchName}".</p>`;
         }
+
+        // 💾 I-save sa cache
+        try {
+            localStorage.setItem(cacheKey, JSON.stringify(data || []));
+            localStorage.setItem(cacheTimeKey, Date.now().toString());
+        } catch (e) {}
 
         document.getElementById('register-email-btn').style.display = 'none';
         modalResult.innerHTML = `
@@ -537,11 +614,27 @@ async function goBackToSearchResults() {
 }
 
 async function logInquiry(accountNo, name) {
+    // ❌ Huwag i-log kung walang account number o name
+    if (!accountNo || !name) return;
+
+    // 🔥 CHECK: Nai-log na ba ito kamakailan?
+    const logKey = `logged_${accountNo}`;
+    const logTimeKey = `${logKey}_time`;
+    const lastLogged = localStorage.getItem(logTimeKey);
+    const LOG_COOLDOWN = 1000 * 60 * 60; // 1 oras — huwag i-log kung within 1 oras
+
+    if (lastLogged && (Date.now() - parseInt(lastLogged)) < LOG_COOLDOWN) {
+        // Nai-log na kamakailan — skip
+        return;
+    }
+
     try {
         await sb.from('inquiries').insert({
             account_no: accountNo,
             name: name
         });
+        // 💾 I-save ang timestamp para hindi maulit sa loob ng 1 oras
+        localStorage.setItem(logTimeKey, Date.now().toString());
     } catch (err) {
         console.log('Log error:', err);
     }
