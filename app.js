@@ -469,8 +469,8 @@ async function fetchByName() {
         const { data, error } = await sb
             .from('balances')
             .select('account_no, name, address')
-            .ilike('name', `${searchName}%`)
-            .limit(20);
+            .or(`name.ilike.${searchName}%,name.ilike.% ${searchName}%`)
+            .limit(30);
 
         let resultTitle = '';
         let resultHtml = '';
