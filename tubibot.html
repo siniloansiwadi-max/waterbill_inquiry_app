@@ -454,8 +454,7 @@
     </div>
 
     <script>
-        // Google Sheets API URL (kapareho ng sa index.html)
-        const DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxHOsuZ4MUOBxekFccfi84Wv5rSZxGDCyqLdd1pt0DyhIUMsWsRRTZd7K6JC66rs3o_/exec';
+
         // Google Sheets Logging URL (palitan ng URL mula sa deployment)
         const LOG_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyrjG2xOnM7ldjeCP99vQ172MQRsWGXCQeJhJ_D47FESJSLIYRcH_731LhlFAnFXe3Wtw/exec';
 
@@ -482,29 +481,14 @@
             return now.toLocaleTimeString('en-PH', { hour: '2-digit', minute: '2-digit', hour12: true });
         }
 
-        let waitingForAccount = false;
-
         function findBestAnswer(question) {
             const q = question.toLowerCase();
             
-            // ===== CHECK KUNG NAG-AANTAY NG ACCOUNT NUMBER =====
-            if (waitingForAccount) {
-                waitingForAccount = false;
-                // I-check kung mukhang account number ang input (e.g., 011-101-002 or 011101002)
-                const accountPattern = /^[0-9]{3}[-]?[0-9]{3}[-]?[0-9]{3}$/;
-                if (accountPattern.test(q.replace(/\s/g, ''))) {
-                    return { type: 'fetch_bill', account: q };
-                } else {
-                    return "Pasensya na po, hindi po iyan mukhang valid na account number. Puwede po bang pakiusapan na i-type ang inyong account number sa format na: <strong>011-101-002</strong> o <strong>011101002</strong>. Subukan po nating muli? 😊";
-                }
-            }
-            
-            // ===== CHECK KUNG BILL INQUIRY =====
+            // ===== CHECK KUNG BILL INQUIRY (i-redirect sa index.html) =====
             const billKeywords = ["magkano ang bill", "water bill", "magkano bill ko", "alamin ang bill", "check bill", "tingnan ang bill", "balance", "how much", "magkano babayaran", "amount due", "total bill", "bill inquiry", "bill ko"];
             for (const kw of billKeywords) {
                 if (q.includes(kw)) {
-                    waitingForAccount = true;
-                    return "Para po malaman ang inyong water bill, pakiusap pong i-type ang inyong <strong>Account Number</strong> (halimbawa: <strong>011-101-002</strong> o <strong>011101002</strong>). 💧🔍";
+                    return "Para po malaman ang inyong water bill, pumunta po sa <a href='index.html' style='color: #1e3c72; font-weight: bold; text-decoration: underline;'>Water Bill Inquiry page</a>. Ilagay po ang inyong account number o gamitin ang Name Search. 💧🔍";
                 }
             }
             
@@ -536,72 +520,8 @@
             return typeof DEFAULT_ANSWER !== 'undefined' ? DEFAULT_ANSWER : "Pasensya na po. Para sa inyong katanungan, maaari po kayong tumawag sa (049) 501-6656 o bumisita sa opisina ng SIWADI.";
         }
 
-            async function fetchBillData(accountNumber) {
-        const cleanAccount = accountNumber.replace(/[\s\-\–]/g, '');
-        const apiUrl = `${DATA_WEB_APP_URL}?account=${cleanAccount}`;
-        
-        try {
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-            
-            if (data.error) {
-                return `❌ <strong>Account Not Found:</strong> ${data.error}. Paki-double check po ang inyong account number.`;
-            }
-            
-            // Format ang bill data
-            let result = `📄 <strong>Bill Details</strong><br>`;
-            result += `<strong>Account No:</strong> ${data['Account No.'] || 'N/A'}<br>`;
-            result += `<strong>Name:</strong> ${maskNameForTubibot(data['Name'] || 'N/A')}<br>`;
-            result += `<strong>Address:</strong> ${data['Address'] || 'N/A'}<br>`;
-            result += `<strong>Water Bill:</strong> ₱ ${parseFloat(data['BALANCE'] || 0).toFixed(2)}<br>`;
-            result += `<strong>S.C. / Materials:</strong> ₱ ${parseFloat(data['AROBALANCE'] || 0).toFixed(2)}<br>`;
-            result += `<strong>Total Amount Due:</strong> <span style='color: #c00; font-weight: bold;'>₱ ${parseFloat(data['Total'] || 0).toFixed(2)}</span><br>`;
-            result += `<strong>Due Date:</strong> ${formatDate(data['Due Date'])}<br>`;
-            result += `<strong>Disconnection Date:</strong> ${formatDate(data['Discon Date'])}<br><br>`;
-            result += `💡 <strong>Paalala:</strong> Magbayad bago ang due date upang maiwasan ang disconnection. May iba pa po ba kayong katanungan? 😊💧`;
-            
-            return result;
-            
-        } catch (error) {
-            return "❌ Pasensya na po, may problema sa pagkonekta sa server. Subukan muli o tumawag sa (049) 501-6656.";
-        }
-    }
-
-    // Simple name masking para kay Tubibot
-    function maskNameForTubibot(fullName) {
-        if (!fullName || typeof fullName !== 'string') return 'N/A';
-        const nameParts = fullName.toUpperCase().trim().split(/\s+/);
-        let maskedParts = nameParts.map((part) => {
-            if (part.length <= 3) return part;
-            if (part.length >= 8) {
-                const firstTwo = part.substring(0, 2);
-                const lastTwo = part.substring(part.length - 2);
-                const middleLength = part.length - 4;
-                const asterisks = '*'.repeat(middleLength);
-                return firstTwo + asterisks + lastTwo;
-            }
-            const firstTwo = part.substring(0, 2);
-            const lastOne = part.substring(part.length - 1);
-            const middleLength = part.length - 3;
-            const asterisks = '*'.repeat(middleLength);
-            return firstTwo + asterisks + lastOne;
-        });
-        return maskedParts.join(' ');
-    }
-
-    function formatDate(dateString) {
-        if (!dateString) return 'N/A';
-        try {
-            const dateObj = new Date(dateString);
-            if (isNaN(dateObj.getTime())) return dateString;
-            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-            const day = String(dateObj.getDate()).padStart(2, '0');
-            const year = String(dateObj.getFullYear()).slice(-2);
-            return `${month}-${day}-${year}`;
-        } catch(e) {
-            return dateString;
-        }
-    }
+    // (Tinanggal ang fetchBillData, maskNameForTubibot, at formatDate — hindi na kailangan
+    //  dahil ang bill inquiry ay nasa index.html na)
 
 
         // Add message to chat
@@ -664,27 +584,16 @@
         msgsDiv.scrollTop = msgsDiv.scrollHeight;
 
         // Get reply after delay
-        setTimeout(async function() {
+        setTimeout(function() {
             // Remove typing indicator
             const tw = document.getElementById('typing-wrapper');
             if (tw) tw.remove();
 
             const reply = findBestAnswer(msg);
+            addMessage('bot', reply);
             
-            // CHECK KUNG BILL FETCH ANG SAGOT
-            if (reply && reply.type === 'fetch_bill') {
-                const loadingMsg = addMessage('bot', '⏳ Kinukuha ko po ang inyong bill... Sandali lang po. 💧');
-                const billResult = await fetchBillData(reply.account);
-                loadingMsg.innerHTML = billResult.replace(/\n/g, '<br>');
-                
-                // 🔥 LOG SA GOOGLE SHEETS
-                logConversation(msg, billResult);
-            } else {
-                addMessage('bot', reply);
-                
-                // 🔥 LOG SA GOOGLE SHEETS
-                logConversation(msg, reply);
-            }
+            // 🔥 LOG SA GOOGLE SHEETS (kung gusto mong i-keep ang logging)
+            logConversation(msg, reply);
         }, 800);
     }
 
