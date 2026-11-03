@@ -28,19 +28,16 @@ const DISPLAY_MAP = {
 
 const loadingMessage = document.getElementById('loading-message');
 const accountInput = document.getElementById('accountNumber');
-const nameInput = document.getElementById('nameSearchInput');
 const modalContainer = document.getElementById('modal-container');
 const modalResult = document.getElementById('modal-result');
 const searchButton = document.getElementById('search-button');
 
 let currentBillData = null;
-let lastNameSearchQuery = '';
 
 function closeModal() {
     modalContainer.style.display = 'none';
     modalResult.innerHTML = '';
     accountInput.value = '';
-    nameInput.value = '';
     accountInput.focus();
     document.getElementById('qr-modal-container').style.display = 'none';
     currentBillData = null;
@@ -271,44 +268,7 @@ async function submitEmailRegistration() {
 // ============================================================
 // SEARCH CONTROLS
 // ============================================================
-function toggleSearchType(type) {
-    const searchLabel = document.getElementById('searchLabel');
-    const toggleOptions = document.querySelectorAll('.toggle-option');
 
-    toggleOptions.forEach(option => {
-        const radio = option.querySelector('input[type="radio"]');
-        if (radio && radio.value === type) {
-            option.classList.add('active');
-        } else {
-            option.classList.remove('active');
-        }
-    });
-
-    if (type === 'account') {
-        accountInput.style.display = 'block';
-        nameInput.style.display = 'none';
-        searchLabel.textContent = 'Account Number';
-        accountInput.placeholder = 'e.g., 011-101-001';
-        accountInput.focus();
-        nameInput.value = '';
-    } else {
-        accountInput.style.display = 'none';
-        nameInput.style.display = 'block';
-        searchLabel.textContent = 'Concessionaire Name';
-        nameInput.placeholder = 'Enter last name or full name...';
-        nameInput.focus();
-        accountInput.value = '';
-    }
-}
-
-function handleSearch() {
-    const searchType = document.querySelector('input[name="searchType"]:checked').value;
-    if (searchType === 'account') {
-        fetchAccountData();
-    } else {
-        fetchByName();
-    }
-}
 
 // ============================================================
 // 🔥 SUPABASE: ACCOUNT SEARCH
@@ -348,6 +308,10 @@ async function fetchAccountData() {
             currentBillData = data;
             document.getElementById('register-email-btn').style.display = 'block';
             document.getElementById('qr-modal-container').style.display = 'none';
+
+            // 📝 I-log din ang inquiry kahit cache hit (para mabilang lahat)
+            logInquiry(data['account_no'], data['name']);
+
             modalContainer.style.display = 'flex';
             return; // ⛔ huwag nang mag-query sa Supabase
         } catch (e) {
@@ -395,9 +359,7 @@ async function fetchAccountData() {
             document.getElementById('register-email-btn').style.display = 'block';
             document.getElementById('qr-modal-container').style.display = 'none';
 
-            try {
-                if (data['account_no'] && data['name']) logInquiry(data['account_no'], data['name']);
-            } catch (e) {}
+            // (logInquiry removed — admin panel removed)
         }
 
         modalResult.innerHTML = `
@@ -416,216 +378,24 @@ async function fetchAccountData() {
     }
 }
 
-// ============================================================
-// 🔥 SUPABASE: NAME SEARCH
-// ============================================================
-async function fetchByName() {
-    const searchName = nameInput.value.trim();
-    lastNameSearchQuery = searchName;
+// (fetchAccountDetails removed — name search removed)
 
-    if (!searchName || searchName.length < 2) {
-        alert("Please enter at least 2 characters.");
-        return;
-    }
-
-    // 🔥 CACHE CHECK
-    const cacheKey = `name_${searchName.toLowerCase()}`;
-    const cacheTimeKey = `${cacheKey}_time`;
-    const CACHE_DURATION = 1000 * 60 * 60; // 1 oras
-    const cached = localStorage.getItem(cacheKey);
-    const cachedTime = localStorage.getItem(cacheTimeKey);
-
-    if (cached && cachedTime && (Date.now() - parseInt(cachedTime)) < CACHE_DURATION) {
-        try {
-            const data = JSON.parse(cached);
-            modalContainer.style.display = 'none';
-            loadingMessage.style.display = 'none';
-
-            let resultHtml = '';
-            if (data && data.length > 0) {
-                resultHtml = formatNameSearchResults(data);
-            } else {
-                resultHtml = `<p style="text-align: center; color: #718096; margin: 10px 0;">No accounts found starting with "${searchName}".</p>`;
-            }
-
-            document.getElementById('register-email-btn').style.display = 'none';
-            modalResult.innerHTML = `
-                <h3>Search Results for "${searchName}"</h3>
-                <div style="border: 1px solid #e2e8f0; padding: 10px; background: #f8fafc; border-radius: 12px;">
-                    ${resultHtml}
-                </div>
-            `;
-            modalContainer.style.display = 'flex';
-            return;
-        } catch (e) {}
-    }
-
-    // 🟢 NORMAL QUERY
-    modalContainer.style.display = 'none';
-    loadingMessage.style.display = 'flex';
-    searchButton.disabled = true;
-
-    try {
-        const { data, error } = await sb
-            .from('balances')
-            .select('account_no, name, address')
-            .or(`name.ilike.${searchName}%,name.ilike.% ${searchName}%`)
-            .limit(30);
-
-        let resultTitle = '';
-        let resultHtml = '';
-
-        if (error) {
-            resultTitle = `Search Failed`;
-            resultHtml = `<p style="color: #e53e3e; font-weight: bold;">${error.message}</p>`;
-        } else if (data && data.length > 0) {
-            resultTitle = `Search Results for "${searchName}"`;
-            resultHtml = formatNameSearchResults(data);
-        } else {
-            resultTitle = `No Results`;
-            resultHtml = `<p style="text-align: center; color: #718096; margin: 10px 0;">No accounts found starting with "${searchName}".</p>`;
-        }
-
-        // 💾 I-save sa cache
-        try {
-            localStorage.setItem(cacheKey, JSON.stringify(data || []));
-            localStorage.setItem(cacheTimeKey, Date.now().toString());
-        } catch (e) {}
-
-        document.getElementById('register-email-btn').style.display = 'none';
-        modalResult.innerHTML = `
-            <h3>${resultTitle}</h3>
-            <div style="border: 1px solid #e2e8f0; padding: 10px; background: #f8fafc; border-radius: 12px;">
-                ${resultHtml}
-            </div>
-        `;
-        modalContainer.style.display = 'flex';
-
-    } catch (error) {
-        modalResult.innerHTML = `<h3>Network Error</h3><p>Could not connect to the server.</p>`;
-        modalContainer.style.display = 'flex';
-    } finally {
-        loadingMessage.style.display = 'none';
-        searchButton.disabled = false;
-    }
-}
-
-function formatNameSearchResults(results) {
-    let html = `<div class="result-count">📊 ${results.length} record(s)</div>`;
-    html += `
-        <div style="overflow-x: auto;">
-            <table class="results-table">
-                <thead>
-                    <tr>
-                        <th>Account</th>
-                        <th>Name</th>
-                        <th>Address</th>
-                    </tr>
-                </thead>
-                <tbody>
-    `;
-
-    results.forEach((result) => {
-        const accountNo = result['account_no'] || 'N/A';
-        const name = maskName(result['name'] || 'N/A');
-        const address = result['address'] || 'N/A';
-
-        html += `
-            <tr class="result-row" data-account="${accountNo}">
-                <td><strong>${accountNo}</strong></td>
-                <td>${name}</td>
-                <td>${address}</td>
-            </tr>
-        `;
-    });
-
-    html += `
-                </tbody>
-            </table>
-        </div>
-        <p style="font-size: 11px; color: #718096; margin: 8px 0 0 0; text-align: center;">
-            💡 Tap any row to view complete details
-        </p>
-    `;
-    return html;
-}
-
-// Isang beses lang maglalagay ng click listener sa parent container
-modalResult.addEventListener('click', function(e) {
-    const row = e.target.closest('.result-row');
-    if (row) {
-        const accNo = row.getAttribute('data-account');
-        if (accNo) fetchAccountDetails(accNo);
-    }
-});
 
 // ============================================================
-// 🔥 SUPABASE: FETCH FULL ACCOUNT DETAILS
+// 📝 INQUIRY LOGGING (Supabase — view via Dashboard)
+// Cooldown: 1 oras per account para makatipid sa Supabase free tier
 // ============================================================
-async function fetchAccountDetails(accountNo) {
-    const cleanAcc = String(accountNo).replace(/[\s\-\–]/g, '');
-    let formattedAcc = cleanAcc;
-    if (cleanAcc.length === 9) {
-        formattedAcc = `${cleanAcc.slice(0,3)}-${cleanAcc.slice(3,6)}-${cleanAcc.slice(6,9)}`;
-    }
-
-    const renderDetails = (data) => {
-        currentBillData = data;
-        document.getElementById('register-email-btn').style.display = 'block';
-        document.getElementById('qr-modal-container').style.display = 'none';
-        modalResult.innerHTML = `
-            <h3>Account: ${accountNo}</h3>
-            <div style="border: 1px solid #e2e8f0; padding: 12px; background: #f8fafc; border-radius: 12px;">
-                ${formatResult(data)}
-            </div>
-            <button onclick="goBackToSearchResults()" style="margin-top: 12px; background: #64748b; color: white; padding: 8px 14px; font-size: 12px; border-radius: 8px;">
-                ← Back to List
-            </button>
-        `;
-    };
-
-    loadingMessage.style.display = 'flex';
-    try {
-        const { data, error } = await sb
-            .from('balances')
-            .select('account_no, name, address, meter_no, status_for_app, balance, arobalance, total, reading_date, due_date, discon_date, status, zone')
-            .eq('account_no', formattedAcc)
-            .maybeSingle();
-
-        if (!error && data) {
-            renderDetails(data);
-
-            try {
-                if (data['account_no'] && data['name']) logInquiry(data['account_no'], data['name']);
-            } catch (e) {}
-        }
-    } catch (error) {
-        console.error(error);
-    } finally {
-        loadingMessage.style.display = 'none';
-    }
-}
-
-async function goBackToSearchResults() {
-    if (lastNameSearchQuery) {
-        nameInput.value = lastNameSearchQuery;
-        await fetchByName();
-    }
-}
-
 async function logInquiry(accountNo, name) {
-    // ❌ Huwag i-log kung walang account number o name
     if (!accountNo || !name) return;
 
-    // 🔥 CHECK: Nai-log na ba ito kamakailan?
+    // 🔥 COOLDOWN CHECK — nai-log na ba ito sa loob ng 1 oras?
     const logKey = `logged_${accountNo}`;
     const logTimeKey = `${logKey}_time`;
     const lastLogged = localStorage.getItem(logTimeKey);
-    const LOG_COOLDOWN = 1000 * 60 * 60; // 1 oras — huwag i-log kung within 1 oras
+    const LOG_COOLDOWN = 1000 * 60 * 60; // 1 oras
 
     if (lastLogged && (Date.now() - parseInt(lastLogged)) < LOG_COOLDOWN) {
-        // Nai-log na kamakailan — skip
-        return;
+        return; // Nai-log na kamakailan — skip para tipid sa Supabase
     }
 
     try {
@@ -636,12 +406,10 @@ async function logInquiry(accountNo, name) {
         // 💾 I-save ang timestamp para hindi maulit sa loob ng 1 oras
         localStorage.setItem(logTimeKey, Date.now().toString());
     } catch (err) {
-        console.log('Log error:', err);
+        console.log('Inquiry log error:', err);
     }
 }
 
-accountInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleSearch(); });
-nameInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleSearch(); });
 
 function openReadingSchedule() {
     document.getElementById('image-viewer-modal').style.display = 'flex';
@@ -651,252 +419,6 @@ function closeReadingSchedule() {
     document.getElementById('image-viewer-modal').style.display = 'none';
 }
 
-// ============================================================
-// 🔐 SECRET ADMIN PANEL
-// ============================================================
-document.getElementById('site-logo').addEventListener('dblclick', function() {
-    openPasswordModal();
-});
-
-function openPasswordModal() {
-    document.getElementById('password-modal').style.display = 'flex';
-    document.getElementById('passwordError').style.display = 'none';
-    document.getElementById('adminPasswordInput').value = '';
-    setTimeout(() => document.getElementById('adminPasswordInput').focus(), 100);
-}
-
-function closePasswordModal() {
-    document.getElementById('password-modal').style.display = 'none';
-}
-
-function verifyAdminPassword() {
-    const input = document.getElementById('adminPasswordInput').value;
-    const ADMIN_PASSWORD = 'pulpitobayagbag';
-
-    if (input === ADMIN_PASSWORD) {
-        closePasswordModal();
-        openAdminPanel();
-    } else {
-        document.getElementById('passwordError').style.display = 'block';
-        document.getElementById('adminPasswordInput').value = '';
-        document.getElementById('adminPasswordInput').focus();
-    }
-}
-
-function openAdminPanel() {
-    document.getElementById('admin-panel').style.display = 'flex';
-    switchAdminTab('inquiries');
-    loadAdminInquiries();
-}
-
-function closeAdminPanel() {
-    document.getElementById('admin-panel').style.display = 'none';
-}
-
-function switchAdminTab(tab) {
-    const inquiryTab = document.getElementById('admin-inquiries-tab');
-    const emailTab = document.getElementById('admin-emails-tab');
-    const complaintTab = document.getElementById('admin-complaints-tab');
-
-    const inquiryBtn = document.getElementById('tab-inquiries');
-    const emailBtn = document.getElementById('tab-emails');
-    const complaintBtn = document.getElementById('tab-complaints');
-
-    // Reset styles
-    [inquiryTab, emailTab, complaintTab].forEach(el => { if (el) el.style.display = 'none'; });
-    [inquiryBtn, emailBtn, complaintBtn].forEach(btn => {
-        if (btn) {
-            btn.style.background = 'transparent';
-            btn.style.borderBottom = '3px solid transparent';
-            btn.style.color = '#718096';
-        }
-    });
-
-    if (tab === 'inquiries') {
-        inquiryTab.style.display = 'block';
-        inquiryBtn.style.background = 'white';
-        inquiryBtn.style.borderBottom = '3px solid #1e3c72';
-        inquiryBtn.style.color = '#1e3c72';
-        loadAdminInquiries();
-    } else if (tab === 'emails') {
-        emailTab.style.display = 'block';
-        emailBtn.style.background = 'white';
-        emailBtn.style.borderBottom = '3px solid #1e3c72';
-        emailBtn.style.color = '#1e3c72';
-        loadAdminEmails();
-    } else if (tab === 'complaints') {
-        complaintTab.style.display = 'block';
-        complaintBtn.style.background = 'white';
-        complaintBtn.style.borderBottom = '3px solid #dc2626';
-        complaintBtn.style.color = '#dc2626';
-        loadAdminComplaints();
-    }
-}
-
-async function loadAdminInquiries() {
-    const tbody = document.getElementById('adminInquiryTableBody');
-    const stats = document.getElementById('adminInquiryStats');
-
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Loading...</td></tr>';
-
-    try {
-        const { data, error } = await sb
-            .from('inquiries')
-            .select('*')
-            .order('inquiry_at', { ascending: false })
-            .limit(200);
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Walang inquiries.</td></tr>';
-            stats.textContent = '';
-            return;
-        }
-
-        stats.textContent = `📊 ${data.length} inquiries (pinakabago muna)`;
-
-        tbody.innerHTML = data.map((inq, idx) => {
-            const date = new Date(inq.inquiry_at);
-            const formattedDate = date.toLocaleString('en-PH', {
-                year: 'numeric', month: '2-digit', day: '2-digit',
-                hour: '2-digit', minute: '2-digit', hour12: true
-            });
-
-            return `
-                <tr style="border-bottom: 1px solid #edf2f7;">
-                    <td style="padding: 10px; color: #718096;">${idx + 1}</td>
-                    <td style="padding: 10px;"><strong>${inq.account_no || '-'}</strong></td>
-                    <td style="padding: 10px;">${inq.name || '-'}</td>
-                    <td style="padding: 10px; color: #718096; font-size: 11px;">${formattedDate}</td>
-                </tr>
-            `;
-        }).join('');
-
-    } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 20px; color: #ef4444;">❌ Error: ${err.message}</td></tr>`;
-    }
-}
-
-async function loadAdminEmails() {
-    const tbody = document.getElementById('adminEmailTableBody');
-    const stats = document.getElementById('adminEmailStats');
-
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Loading...</td></tr>';
-
-    try {
-        const { data, error } = await sb
-            .from('emails')
-            .select('*')
-            .order('timestamp', { ascending: false })
-            .limit(200);
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #718096;">Walang registered emails.</td></tr>';
-            stats.textContent = '';
-            return;
-        }
-
-        stats.textContent = `📊 ${data.length} registered emails`;
-
-        tbody.innerHTML = data.map((em, idx) => {
-            return `
-                <tr style="border-bottom: 1px solid #edf2f7;">
-                    <td style="padding: 10px; color: #718096;">${idx + 1}</td>
-                    <td style="padding: 10px;"><strong>${em.account_number || '-'}</strong></td>
-                    <td style="padding: 10px; font-size: 11px;">${em.email_address || '-'}</td>
-                    <td style="padding: 10px; font-size: 11px; color: #718096;">${em.contact_number || '-'}</td>
-                </tr>
-            `;
-        }).join('');
-
-    } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 20px; color: #ef4444;">❌ Error: ${err.message}</td></tr>`;
-    }
-}
-
-async function loadAdminComplaints() {
-    const tbody = document.getElementById('adminComplaintTableBody');
-    const stats = document.getElementById('adminComplaintStats');
-
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #718096;">Loading...</td></tr>';
-
-    try {
-        const { data, error } = await sb
-            .from('complaints')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .limit(200);
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #718096;">Walang naitalang reports o complaints.</td></tr>';
-            stats.textContent = '';
-            return;
-        }
-
-        stats.textContent = `📊 ${data.length} complaint report(s) (pinakabago muna)`;
-
-        tbody.innerHTML = data.map((item) => {
-            const date = new Date(item.created_at);
-            const formattedDate = date.toLocaleString('en-PH', {
-                year: 'numeric', month: '2-digit', day: '2-digit',
-                hour: '2-digit', minute: '2-digit', hour12: true
-            });
-
-            return `
-                <tr style="border-bottom: 1px solid #edf2f7; vertical-align: top;">
-                    <td style="padding: 10px;">
-                        <span style="font-weight: 700; color: #dc2626; font-size: 11px;">${item.reference_no || '-'}</span><br>
-                        <span style="color: #718096; font-size: 10px;">${formattedDate}</span>
-                    </td>
-                    <td style="padding: 10px;"><strong>${item.account_no || 'N/A'}</strong></td>
-                    <td style="padding: 10px;">
-                        <div><strong>${item.account_name || '-'}</strong></div>
-                        <div style="color: #0284c7; font-size: 11px;">📱 ${item.contact_no || '-'}</div>
-                    </td>
-                    <td style="padding: 10px; font-size: 11.5px; line-height: 1.4; color: #2d3748; max-width: 230px; word-break: break-word;">
-                        ${item.complaint_details || '-'}
-                    </td>
-                    <td style="padding: 10px; text-align: center;">
-                        <button onclick="deleteComplaint(${item.id}, '${item.reference_no}')" 
-                                title="Burahin ang complaint"
-                                style="background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; width: auto;">
-                            🗑️ Delete
-                        </button>
-                    </td>
-                </tr>
-            `;
-        }).join('');
-
-    } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 20px; color: #ef4444;">❌ Error: ${err.message}</td></tr>`;
-    }
-}
-
-// Function para magbura ng record sa complaints table
-async function deleteComplaint(id, refNo) {
-    const confirmed = confirm(`Sigurado ka bang nais mong burahin ang complaint report na ito?\n\nReference: ${refNo}`);
-    if (!confirmed) return;
-
-    try {
-        const { error } = await sb
-            .from('complaints')
-            .delete()
-            .eq('id', id);
-
-        if (error) throw new Error(error.message);
-
-        alert(`✅ Matagumpay na nabura ang complaint (${refNo})!`);
-        loadAdminComplaints(); // I-refresh ang listahan
-
-    } catch (err) {
-        alert('❌ Nabigong burahin ang complaint: ' + err.message);
-    }
-}
 
 // ============================================================
 // 🚨 REPORT LEAK / COMPLAINTS TO SUPABASE
